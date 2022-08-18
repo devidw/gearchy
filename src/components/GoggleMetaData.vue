@@ -14,6 +14,7 @@
           :options="typeOptions"
           emit-value
           map-options
+          dropdown-icon="eva-arrow-down-outline"
         />
       </div>
       <div class="w-2/3 pl-3">

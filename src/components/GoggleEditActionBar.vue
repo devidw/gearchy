@@ -5,7 +5,7 @@
     class="rounded-4 px-4 py-1 flex justify-between"
   >
     <div>
-      <q-btn round flat icon="eva-save-outline" @click="updateGoggle()" />
+      <q-btn round flat icon="eva-save-outline" @click="updateGist()" />
     </div>
     <div>
       <q-btn
@@ -30,7 +30,7 @@
         flat
         icon="eva-trash-2-outline"
         class="opacity-70"
-        @click="deleteGoggle()"
+        @click="deleteGist()"
       />
     </div>
   </div>
@@ -38,9 +38,9 @@
 
 <script setup lang="ts">
 import { openURL } from 'quasar'
-import { useGoggleStore } from 'src/stores/goggle'
+import { useGistStore } from 'stores/gist'
 
-const { updateGoggle, deleteGoggle } = useGoggleStore()
+const { updateGist, deleteGist } = useGistStore()
 
 const props = defineProps(['url'])
 </script>

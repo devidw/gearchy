@@ -7,7 +7,7 @@
         vertical
         label
         label-always
-        v-model="rule!.value"
+        v-model="goggle[props.action][props.index].value"
         :min="1"
         :max="10"
         reverse
@@ -16,13 +16,21 @@
     </div>
     <div class="w-7/10 flex">
       <div class="sm:w-1/2">
-        <q-input v-model="rule!.pattern" type="text" label="Pattern" />
-        <q-input v-model="rule!.site" type="text" label="Site" />
+        <q-input
+          v-model="goggle[props.action][props.index].pattern"
+          type="text"
+          label="Pattern"
+        />
+        <q-input
+          v-model="goggle[props.action][props.index].site"
+          type="text"
+          label="Site"
+        />
       </div>
       <div class="sm:w-1/2 pl-3">
         <q-select
           :disable="!hasPattern()"
-          v-model="rule!.options"
+          v-model="goggle[props.action][props.index].options"
           :options="options"
           label="Match"
           class="h-full cursor-pointer"
@@ -40,7 +48,12 @@
       hover="text-opacity-50"
     >
       <q-btn flat round icon="eva-arrow-upward-outline" />
-      <q-btn flat round icon="eva-close-outline" />
+      <q-btn
+        flat
+        round
+        icon="eva-close-outline"
+        @click="removeActionRule(props.action, props.index)"
+      />
       <q-btn flat round icon="eva-arrow-downward-outline" />
     </div>
   </div>
@@ -48,9 +61,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useGoggleStore } from 'stores/goggle'
 
-const props = defineProps(['rule'])
-const rule = ref(props.rule)
+const props = defineProps<{
+  action: 'discard' | 'boost' | 'downrank'
+  index: number
+}>()
+
+const { goggle } = storeToRefs(useGoggleStore())
+const { removeActionRule } = useGoggleStore()
+
 const options = ref([
   { label: 'in URL', value: 'inURL' },
   { label: 'in title', value: 'inTitle' },
@@ -58,12 +79,13 @@ const options = ref([
   { label: 'in content', value: 'inContent' },
 ])
 
-const hasPattern = () => rule.value.pattern !== ''
+const hasPattern = () => goggle.value[props.action][props.index].pattern !== ''
 const hasPatternOrSite = () =>
-  rule.value.pattern !== '' || rule.value.site !== ''
+  goggle.value[props.action][props.index].pattern !== '' ||
+  goggle.value[props.action][props.index].site !== ''
 </script>
 
-<style lang="sass" scoped>
+<style scoped lang="sass">
 .q-checkbox__label
   @apply text-capitalize
 </style>

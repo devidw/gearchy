@@ -32,17 +32,19 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { useGoggleStore } from 'src/stores/goggle'
+import { useGistStore } from 'stores/gist'
+import { useGoggleStore } from 'stores/goggle'
 import GoggleEditActionBar from 'components/GoggleEditActionBar.vue'
 import GoggleMetaData from 'components/GoggleMetaData.vue'
 import GoggleRules from 'components/GoggleRules.vue'
 
 const route = useRoute()
 const tab = ref('meta')
-const { loading, gist, goggle } = storeToRefs(useGoggleStore())
-const { fetchGoggle } = useGoggleStore()
+const { loading, gist } = storeToRefs(useGistStore())
+const { goggle } = storeToRefs(useGoggleStore())
+const { fetchGist } = useGistStore()
 
-fetchGoggle(route.params.id)
+fetchGist(route.params.id)
 </script>
 
 <style lang="sass">

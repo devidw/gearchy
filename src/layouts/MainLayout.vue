@@ -74,12 +74,12 @@
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
-import { useGoggleStore } from 'src/stores/goggle'
+import { useGistStore } from 'stores/gist'
 import NoticeBanner from 'components/NoticeBanner.vue'
 
 const $q = useQuasar()
 const rightDrawerOpen = ref(false)
-const { loading, error } = storeToRefs(useGoggleStore())
+const { loading, error } = storeToRefs(useGistStore())
 
 watch(loading, (loading) => {
   if (loading) {

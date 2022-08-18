@@ -1,17 +1,21 @@
 import { defineStore } from 'pinia'
-import { components } from '@octokit/openapi-types'
-import { api } from '../services/api'
+import { useGistStore } from './gist'
 
-type Gist = components['schemas']['base-gist']
+type GoggleActionObject = {
+  value?: number
+  pattern?: string
+  site?: string
+  options?: string[]
+}
 
 export const useGoggleStore = defineStore('goggle', {
   state: () => ({
-    login: '',
-    gists: [],
-    gist: {} as Gist,
-    goggle: {},
-    loading: false,
-    error: null as unknown | null | Error,
+    goggle: {} as {
+      metaData: object,
+      discard: GoggleActionObject[],
+      boost: GoggleActionObject[],
+      downrank: GoggleActionObject[],
+    },
   }),
 
   getters: {
@@ -21,133 +25,17 @@ export const useGoggleStore = defineStore('goggle', {
   },
 
   actions: {
-    async fetchGoggles() {
-      this.loading = true
-      this.error = null
-      try {
-        const { viewer: { gists: { edges }, login }
-        } = await api.graphql(
-          `query GetGists {
-            viewer {
-              gists(first: 100, privacy: ALL) {
-                edges {
-                  node {
-                    name: id
-                    url
-                    description
-                    files {
-                      extension
-                      name
-                    }
-                    public: isPublic
-                  }
-                }
-              }
-              login
-            }
-          }`
-        )
-        this.login = login
-        const filtered = edges.filter((node: { files: { extension: string }[] }) => node.files[0].extension === '.goggle')
-        this.gists = filtered.map((node: object) => node)
-        this.loading = false
-      } catch (e) {
-        this.error = e
-        this.loading = false
-      }
-    },
-    async fetchGoggle(id: string) {
-      this.loading = true
-      this.error = null
-      try {
-        const { viewer: { gist, login } } = await api.graphql(
-          `query GetGist($name: String!) {
-            viewer {
-              gist(name: $name) {
-                url
-                name: id
-                description
-                files {
-                  text
-                }
-                public: isPublic
-              }
-              login
-            }
-          }`,
-          { name: id })
-        this.login = login
-        this.gist = gist
-        this.parseGoggle()
-        this.loading = false
-      } catch (e) {
-        this.error = e
-        this.loading = false
-      }
-    },
-    async createGoggle() {
-      try {
-        this.loading = true
-        this.error = null
-        const res = await api.request('POST /gists', {
-          public: false,
-          files: {
-            'index.goggle': {
-              content: '!'
-            }
-          }
-        })
-        this.gist.public = false
-        this.gist.url = res.data.html_url
-        this.gist.id = res.data.id
-        this.router.push(`/goggle/${this.gist.id}`)
-      } catch (e) {
-        this.error = e
-        this.loading = false
-      }
-    },
-    async updateGoggle() {
-      try {
-        this.loading = true
-        this.error = null
-        await api.request(`PATCH /gists/${this.gist.id}`, {
-          gist_id: this.gist.id,
-          // description:,
-          files: {
-            'index.goggle': {
-              content: 'hello'
-            }
-          }
-        })
-        this.loading = false
-      } catch (e) {
-        this.error = e
-        this.loading = false
-      }
-    },
-    async deleteGoggle() {
-      try {
-        this.loading = true
-        this.error = null
-        await api.request(`DELETE /gists/${this.gist.id}`, {
-          gist_id: this.gist.id
-        })
-        this.router.push('/')
-      } catch (e) {
-        this.error = e
-        this.loading = false
-      }
-    },
     parseGoggle() {
+      const gistStore = useGistStore()
       this.goggle = {
         metaData: {
           name: '',
-          description: this.gist.description || '',
-          public: this.gist.public || false,
-          author: this.login || '',
+          description: gistStore.gist.description || '',
+          public: gistStore.gist.public || false,
+          author: gistStore.login || '',
           transferedTo: '',
-          homepage: this.gist.url || '',
-          issues: this.gist.url || '',
+          homepage: gistStore.gist.url || '',
+          issues: gistStore.gist.url || '',
           license: '',
           avatar: '',
         },
@@ -156,5 +44,11 @@ export const useGoggleStore = defineStore('goggle', {
         downrank: [],
       }
     },
+    addActionRule(action: 'discard' | 'boost' | 'downrank', rule: GoggleActionObject) {
+      this.goggle[action] = [rule, ...this.goggle[action]]
+    },
+    removeActionRule(action: 'discard' | 'boost' | 'downrank', index: number) {
+      this.goggle[action] = this.goggle[action].filter((_, i) => i !== index)
+    }
   }
 })

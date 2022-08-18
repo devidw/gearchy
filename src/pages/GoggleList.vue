@@ -5,23 +5,18 @@
     </div>
 
     <div text="gray center">
-      <q-btn
-        flat
-        round
-        icon="eva-plus-circle-outline"
-        @click="createGoggle()"
-      />
+      <q-btn flat round icon="eva-plus-circle-outline" @click="createGist()" />
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useGoggleStore } from '../stores/goggle'
+import { useGistStore } from '../stores/gist'
 import GoggleCard from 'components/GoggleCard.vue'
 
-const { gists } = storeToRefs(useGoggleStore())
-const { fetchGoggles, createGoggle } = useGoggleStore()
+const { gists } = storeToRefs(useGistStore())
+const { fetchGists, createGist } = useGistStore()
 
-fetchGoggles()
+fetchGists()
 </script>

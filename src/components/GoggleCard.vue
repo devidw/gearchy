@@ -1,34 +1,31 @@
 <template>
   <div
-    class="g-card mb-5 px-7 py-4 rounded-4 flex justify-between min-h-12"
+    class="g-card min-h-20 mb-5 px-7 py-4 rounded-4 flex justify-between min-h-12"
     bg="stone-800"
   >
-    <div class="g-card__meta w-2/3">
+    <div class="g-card__meta flex items-center w-2/3">
       <div
         class="tracking-wide mb-1 font-heading"
         text="xl stone-300"
         font="bold"
       >
-        {{ files[0].name }}
-      </div>
-      <div v-if="description" text="stone-400">
-        {{ description }}
+        {{ description || '…' }}
       </div>
     </div>
-    <div class="g-card__actions transition-all flex items-center space-x-1">
+    <div class="g-card__actions flex items-center transition-all space-x-1">
       <q-btn
         round
         flat
         icon="eva-edit-outline"
         class="color-gray"
-        :to="`/goggle/${name}`"
+        :to="`/goggle/${id}`"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['name', 'description', 'files'])
+const props = defineProps(['id', 'description'])
 </script>
 
 <style lang="sass">
