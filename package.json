@@ -1,9 +1,9 @@
 {
-  "name": "goggledy",
-  "version": "0.0.1",
+  "name": "goggledy-ui",
+  "version": "0.1.0",
   "description": "A Quasar Project",
-  "productName": "goggledy",
-  "author": "David Wolf <68775926+devidw@users.noreply.github.com>",
+  "productName": "goggledy-ui",
+  "author": "David Wolf <d@wolf.gdn>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
@@ -15,6 +15,7 @@
     "@octokit/openapi-types": "^13.2.0",
     "@octokit/types": "^7.1.0",
     "@quasar/extras": "^1.0.0",
+    "goggles": "link:/workspaces/goggles",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",

@@ -47,14 +47,26 @@
       text="gray opacity-25"
       hover="text-opacity-50"
     >
-      <q-btn flat round icon="eva-arrow-upward-outline" />
+      <q-btn
+        flat
+        round
+        icon="eva-arrow-upward-outline"
+        :class="{ invisible: props.index === 0 }"
+        @click="moveActionRule(props.action, props.index, 'up')"
+      />
       <q-btn
         flat
         round
         icon="eva-close-outline"
         @click="removeActionRule(props.action, props.index)"
       />
-      <q-btn flat round icon="eva-arrow-downward-outline" />
+      <q-btn
+        flat
+        round
+        icon="eva-arrow-downward-outline"
+        :class="{ invisible: props.index + 1 === goggle[props.action].length }"
+        @click="moveActionRule(props.action, props.index, 'down')"
+      />
     </div>
   </div>
 </template>
@@ -65,12 +77,12 @@ import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
 
 const props = defineProps<{
-  action: 'discard' | 'boost' | 'downrank'
+  action: GoggleInstructionActionKey
   index: number
 }>()
 
 const { goggle } = storeToRefs(useGoggleStore())
-const { removeActionRule } = useGoggleStore()
+const { removeActionRule, moveActionRule } = useGoggleStore()
 
 const options = ref([
   { label: 'in URL', value: 'inURL' },

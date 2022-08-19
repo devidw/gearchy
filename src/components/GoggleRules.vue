@@ -19,7 +19,7 @@ import { useGoggleStore } from 'stores/goggle'
 import GoggleRule from 'components/GoggleRule.vue'
 
 const props = defineProps<{
-  action: 'discard' | 'boost' | 'downrank'
+  action: GoggleInstructionActionKey
 }>()
 
 const { goggle } = storeToRefs(useGoggleStore())
