@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useGistStore } from './gist'
-import { Goggle } from 'goggles'
+import { Goggle, GoggleInstructionActionKey } from 'goggledy'
 
 type GoggleActionObject = {
   value?: number

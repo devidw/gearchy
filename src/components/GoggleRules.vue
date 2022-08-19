@@ -17,6 +17,7 @@
 import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
 import GoggleRule from 'components/GoggleRule.vue'
+import { GoggleInstructionActionKey } from 'goggledy'
 
 const props = defineProps<{
   action: GoggleInstructionActionKey
