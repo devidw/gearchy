@@ -8,46 +8,93 @@ type Gist = components['schemas']['base-gist']
 export const useGistStore = defineStore('gist', {
   state: () => ({
     login: '',
+    pagination: {
+      gistsPerPage: 100,
+      gogglesPerPage: 10,
+      pageInfo: {
+        endCursor: null,
+        hasNextPage: true,
+      },
+    },
     gists: [] as Gist[],
     gist: {} as Gist,
     loading: false,
     error: null as null | unknown | Error,
   }),
 
-  getters: {
-  },
+  getters: {},
 
   actions: {
-    async fetchGists() {
-      this.loading = true
+    resetGists() {
       this.gists = []
+      this.pagination.pageInfo.endCursor = null
+      this.pagination.pageInfo.hasNextPage = true
+    },
+    async fetchGists() {
+      if (!this.pagination.pageInfo.hasNextPage) {
+        return
+      }
+
+      this.loading = true
+
       try {
-        const { viewer: { gists: { edges }, login }
+        const {
+          viewer: {
+            gists: { pageInfo, edges },
+            login,
+          },
         } = await api.graphql(
-          `query GetGists {
+          `query GetGists ($perPage: Int!, $after: String) {
             viewer {
-              gists(first: 100, privacy: ALL) {
+              gists(
+                privacy: ALL,
+                orderBy: {field: UPDATED_AT, direction: DESC},
+                first: $perPage,
+                after: $after
+              ) {
+                pageInfo {
+                  endCursor
+                  hasNextPage
+                }
                 edges {
                   node {
                     id: name
                     url
                     description
+                    public: isPublic
                     files {
                       extension
                       name
+                      text
                     }
-                    public: isPublic
                   }
                 }
               }
               login
             }
-          }`
+          }`,
+          {
+            perPage: this.pagination.gistsPerPage,
+            after: this.pagination.pageInfo.endCursor,
+          }
         )
+        // console.log(pageInfo, edges)
         this.login = login
-        const filtered = edges.filter((edge: { node: { files: { extension: string }[] } }) => edge.node.files[0].extension === '.goggle')
-        this.gists = filtered.map((edge: { node: object }) => edge.node)
-        // console.log(this.gists)
+        this.pagination.pageInfo = pageInfo
+        const filtered = edges.filter(
+          (edge: { node: { files: { extension: string }[] } }) =>
+            edge.node.files[0].extension === '.goggle'
+        )
+        this.gists = this.gists.concat(
+          filtered.map((edge: { node: object }) => edge.node)
+        )
+        // Automatically go further
+        if (
+          this.gists.length < this.pagination.gogglesPerPage &&
+          pageInfo.hasNextPage
+        ) {
+          await this.fetchGists()
+        }
         this.loading = false
       } catch (e) {
         this.error = e
@@ -58,7 +105,9 @@ export const useGistStore = defineStore('gist', {
       this.loading = true
       this.gist = {} as Gist
       try {
-        const { viewer: { gist, login } } = await api.graphql(
+        const {
+          viewer: { gist, login },
+        } = await api.graphql(
           `query GetGist($name: String!) {
             viewer {
               gist(name: $name) {
@@ -66,6 +115,7 @@ export const useGistStore = defineStore('gist', {
                 id: name
                 description
                 files {
+                  filename: name
                   text
                 }
                 public: isPublic
@@ -73,7 +123,8 @@ export const useGistStore = defineStore('gist', {
               login
             }
           }`,
-          { name: id })
+          { name: id }
+        )
         this.login = login
         this.gist = gist
         const goggleStore = useGoggleStore()
@@ -84,17 +135,18 @@ export const useGistStore = defineStore('gist', {
         this.loading = false
       }
     },
-    async createGist() {
+    async createGist(isPublic: boolean) {
       this.loading = true
+      this.resetGists()
       this.gist = {} as Gist
       try {
         const res = await api.request('POST /gists', {
-          public: false,
+          public: isPublic,
           files: {
             'index.goggle': {
-              content: '!'
-            }
-          }
+              content: '!',
+            },
+          },
         })
         this.gist.public = false
         this.gist.url = res.data.html_url
@@ -107,15 +159,20 @@ export const useGistStore = defineStore('gist', {
     },
     async updateGist() {
       this.loading = true
+      this.resetGists()
+      const goggleStore = useGoggleStore()
       try {
         await api.request(`PATCH /gists/${this.gist.id}`, {
           gist_id: this.gist.id,
-          // description:,
+          description:
+            goggleStore.goggle.metaData.name ||
+            goggleStore.goggle.metaData.description ||
+            '',
           files: {
-            'index.goggle': {
-              content: 'hello'
-            }
-          }
+            [this.gist.files[0].filename || 'index.goggle']: {
+              content: goggleStore.stringifiedGoggle,
+            },
+          },
         })
         this.loading = false
       } catch (e) {
@@ -125,10 +182,10 @@ export const useGistStore = defineStore('gist', {
     },
     async deleteGist() {
       this.loading = true
-      this.gist = {} as Gist
+      this.resetGists()
       try {
         await api.request(`DELETE /gists/${this.gist.id}`, {
-          gist_id: this.gist.id
+          gist_id: this.gist.id,
         })
         this.router.push('/')
       } catch (e) {
@@ -136,5 +193,5 @@ export const useGistStore = defineStore('gist', {
         this.loading = false
       }
     },
-  }
+  },
 })

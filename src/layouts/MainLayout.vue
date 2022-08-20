@@ -64,8 +64,7 @@
 
     <q-page-container class="max-w-3xl mx-auto">
       <notice-banner v-if="error">{{ error.message }}</notice-banner>
-
-      <router-view />
+      <router-view class="pt-6" />
     </q-page-container>
   </q-layout>
 </template>
@@ -86,6 +85,12 @@ watch(loading, (loading) => {
     $q.loading.show()
   } else {
     $q.loading.hide()
+  }
+})
+
+watch(error, (error) => {
+  if (error) {
+    console.error(error)
   }
 })
 

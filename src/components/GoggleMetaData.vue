@@ -15,13 +15,23 @@
           emit-value
           map-options
           dropdown-icon="eva-arrow-down-outline"
-        />
+        >
+          <q-tooltip anchor="top middle" :offset="[0, 50]">
+            This only affects the visibility of the goggle, not the visibility
+            of the gist.
+            <br />
+            Private gists can be made public on GitHub.
+            <br />
+            To make a public gist private again, it has to be deleted and
+            recreated.
+          </q-tooltip>
+        </q-select>
       </div>
       <div class="w-2/3 pl-3">
         <q-input v-model="metaData!.author" type="text" label="Author" />
       </div>
     </div>
-    <div v-if="showAdvanced">
+    <div v-if="pref.editor.showAdvanced">
       <q-input v-model="metaData!.avatar">
         <template v-slot:append>
           <q-icon name="eva-color-picker-outline" class="cursor-pointer">
@@ -39,14 +49,19 @@
       <q-input v-model="metaData!.issues" type="text" label="Issues" />
       <q-input v-model="metaData!.license" type="text" label="License" />
       <q-input
-        v-model="metaData!.transferedTo"
+        v-model="metaData!.transferred_to"
         type="text"
-        label="Transfered to"
+        label="Transferred to"
       />
     </div>
     <div class="flex justify-between space-x-2 pt-4">
       <div class="flex items-center text-xs text-gray">
-        <q-checkbox size="30px" v-model="showAdvanced" label="Show advanced" />
+        <q-checkbox
+          class="g-advanced-toggle"
+          size="30px"
+          v-model="pref.editor.showAdvanced"
+          :label="pref.editor.showAdvanced ? 'Hide advanced' : 'Show advanced'"
+        />
       </div>
     </div>
   </div>
@@ -54,6 +69,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { usePrefStore } from 'stores/pref'
+
+const { pref } = usePrefStore()
 
 const props = defineProps({
   metaData: Object,
@@ -65,5 +84,9 @@ const typeOptions = [
   { value: true, label: 'Public' },
   { value: false, label: 'Private' },
 ]
-const showAdvanced = ref(true)
 </script>
+
+<style lang="sass">
+.g-advanced-toggle > .q-checkbox__inner
+  @apply hidden
+</style>

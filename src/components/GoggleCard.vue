@@ -9,23 +9,26 @@
         text="xl stone-300"
         font="bold"
       >
+        <q-icon
+          :name="public ? 'eva-eye-outline' : 'eva-eye-off-outline'"
+          class="mr-2"
+          text="gray"
+        />
         {{ description || '…' }}
       </div>
     </div>
-    <div class="g-card__actions flex items-center transition-all space-x-1">
-      <q-btn
-        round
-        flat
-        icon="eva-edit-outline"
-        class="color-gray"
-        :to="`/goggle/${id}`"
-      />
+    <div
+      class="g-card__actions flex items-center transition-all space-x-1"
+      text="gray"
+    >
+      <q-btn round flat icon="eva-edit-outline" :to="`/goggle/${id}`" />
+      <q-btn round flat icon="eva-copy-outline" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['id', 'description'])
+const props = defineProps(['id', 'description', 'public'])
 </script>
 
 <style lang="sass">

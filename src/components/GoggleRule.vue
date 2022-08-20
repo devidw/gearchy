@@ -1,36 +1,41 @@
 <template>
-  <div class="border-2 border-stone-800 rounded-4 p-5 flex justify-between">
-    <div class="w-1/10 flex flex-col justify-center">
+  <div
+    class="border-2 border-stone-800 rounded-4 p-5 pl-8 flex justify-between"
+  >
+    <div v-if="hasSlider()" class="w-1/10 flex flex-col justify-center">
       <q-slider
         :disable="!hasPatternOrSite()"
         dense
         vertical
         label
         label-always
-        v-model="goggle[props.action][props.index].value"
+        v-model="goggle[action][index].value"
         :min="1"
         :max="10"
         reverse
         class="h-30"
       />
     </div>
-    <div class="w-7/10 flex">
+    <div
+      class="flex"
+      :class="{ 'w-7/10': hasSlider(), 'w-9/10': !hasSlider() }"
+    >
       <div class="sm:w-1/2">
         <q-input
-          v-model="goggle[props.action][props.index].pattern"
+          v-model="goggle[action][index].pattern"
           type="text"
           label="Pattern"
         />
         <q-input
-          v-model="goggle[props.action][props.index].site"
+          v-model="goggle[action][index].site"
           type="text"
           label="Site"
         />
       </div>
-      <div class="sm:w-1/2 pl-3">
+      <div class="sm:w-1/2 sm:pl-3">
         <q-select
           :disable="!hasPattern()"
-          v-model="goggle[props.action][props.index].options"
+          v-model="goggle[action][index].options"
           :options="options"
           label="Match"
           class="h-full cursor-pointer"
@@ -39,6 +44,8 @@
           borderless
           use-chips
           stack-label
+          emit-value
+          map-options
         />
       </div>
     </div>
@@ -51,21 +58,21 @@
         flat
         round
         icon="eva-arrow-upward-outline"
-        :class="{ invisible: props.index === 0 }"
-        @click="moveActionRule(props.action, props.index, 'up')"
+        :class="{ invisible: index === 0 }"
+        @click="moveActionRule(action, index, 'up')"
       />
       <q-btn
         flat
         round
         icon="eva-close-outline"
-        @click="removeActionRule(props.action, props.index)"
+        @click="removeActionRule(action, index)"
       />
       <q-btn
         flat
         round
         icon="eva-arrow-downward-outline"
-        :class="{ invisible: props.index + 1 === goggle[props.action].length }"
-        @click="moveActionRule(props.action, props.index, 'down')"
+        :class="{ invisible: index + 1 === goggle[action].length }"
+        @click="moveActionRule(action, index, 'down')"
       />
     </div>
   </div>
@@ -86,12 +93,13 @@ const { goggle } = storeToRefs(useGoggleStore())
 const { removeActionRule, moveActionRule } = useGoggleStore()
 
 const options = ref([
-  { label: 'in URL', value: 'inURL' },
-  { label: 'in title', value: 'inTitle' },
-  { label: 'in description', value: 'inDescription' },
-  { label: 'in content', value: 'inContent' },
+  { label: 'in URL', value: 'inurl' },
+  { label: 'in title', value: 'intitle' },
+  { label: 'in description', value: 'indescription' },
+  { label: 'in content', value: 'incontent' },
 ])
 
+const hasSlider = () => props.action !== 'discard'
 const hasPattern = () => goggle.value[props.action][props.index].pattern !== ''
 const hasPatternOrSite = () =>
   goggle.value[props.action][props.index].pattern !== '' ||

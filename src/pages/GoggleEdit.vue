@@ -1,30 +1,43 @@
 <template>
   <q-page padding class="space-y-5">
-    <div v-if="!loading && goggle" class="space-y-10">
-      <q-tabs v-model="tab" align="justify" indicator-color="transparent">
-        <q-tab name="meta" icon="eva-edit-outline" />
-        <q-tab name="discard" icon="eva-slash-outline" />
-        <q-tab name="boost" icon="eva-arrowhead-up-outline" />
-        <q-tab name="downrank" icon="eva-arrowhead-down-outline" />
-      </q-tabs>
+    <template v-if="!loading && !error && goggle">
+      <div class="space-y-10">
+        <q-tabs
+          v-model="tab"
+          align="justify"
+          indicator-color="transparent"
+          content-class="g-tabs"
+        >
+          <q-tab name="meta" icon="eva-edit-outline" />
+          <q-tab name="discard" icon="eva-slash-outline" />
+          <q-tab name="boost" icon="eva-arrowhead-up-outline" />
+          <q-tab name="downrank" icon="eva-arrowhead-down-outline" />
+        </q-tabs>
 
-      <goggle-edit-action-bar :url="gist.url" />
+        <goggle-edit-action-bar :action="tab" :url="gist.url" />
 
-      <q-tab-panels v-model="tab">
-        <q-tab-panel name="meta">
-          <goggle-meta-data :meta-data="goggle.metaData" />
-        </q-tab-panel>
-        <q-tab-panel name="discard">
-          <goggle-rules action="discard" />
-        </q-tab-panel>
-        <q-tab-panel name="boost">
-          <goggle-rules action="boost" />
-        </q-tab-panel>
-        <q-tab-panel name="downrank">
-          <goggle-rules action="downrank" />
-        </q-tab-panel>
-      </q-tab-panels>
-    </div>
+        <q-tab-panels
+          v-model="tab"
+          class="g-tab-panels"
+          animated
+          transition-next="fade"
+          transition-prev="fade"
+        >
+          <q-tab-panel name="meta">
+            <goggle-meta-data :meta-data="goggle.metaData" />
+          </q-tab-panel>
+          <q-tab-panel name="discard">
+            <goggle-rules action="discard" />
+          </q-tab-panel>
+          <q-tab-panel name="boost">
+            <goggle-rules action="boost" />
+          </q-tab-panel>
+          <q-tab-panel name="downrank">
+            <goggle-rules action="downrank" />
+          </q-tab-panel>
+        </q-tab-panels>
+      </div>
+    </template>
   </q-page>
 </template>
 
@@ -40,7 +53,7 @@ import GoggleRules from 'components/GoggleRules.vue'
 
 const route = useRoute()
 const tab = ref('meta')
-const { loading, gist } = storeToRefs(useGistStore())
+const { loading, error, gist } = storeToRefs(useGistStore())
 const { goggle } = storeToRefs(useGoggleStore())
 const { fetchGist } = useGistStore()
 
@@ -48,7 +61,7 @@ fetchGist(route.params.id)
 </script>
 
 <style lang="sass">
-.q-page > div > .q-tabs .q-tab
+.g-tabs .q-tab
   @apply rounded-4 bg-stone-800 color-stone-400 py-4 tracking-widest
 
   & + .q-tab
@@ -62,6 +75,9 @@ fetchGist(route.params.id)
   &.q-tab--active
     @apply bg-stone-700 color-stone-300
 
-.q-page > div > .q-tab-panels
+.g-tab-panels
   @apply bg-transparent
+
+  .q-tab-panel
+    @apply overflow-y-hidden
 </style>

@@ -1,13 +1,9 @@
 <template>
-  <div class="text-center mb-10 text-gray">
-    <q-btn flat round @click="addRule" icon="eva-plus-circle-outline" />
-  </div>
-
   <div class="space-y-10">
     <goggle-rule
-      v-for="(rule, i) of goggle[props.action]"
+      v-for="(rule, i) of goggle[action]"
       :key="i"
-      :action="props.action"
+      :action="action"
       :index="i"
     />
   </div>
@@ -24,14 +20,9 @@ const props = defineProps<{
 }>()
 
 const { goggle } = storeToRefs(useGoggleStore())
-const { addActionRule } = useGoggleStore()
-
-function addRule() {
-  addActionRule(props.action, {
-    value: 2,
-    pattern: '',
-    site: '',
-    options: [],
-  })
-}
 </script>
+
+<style lang="sass">
+.q-tab-panel
+  @apply p-0
+</style>

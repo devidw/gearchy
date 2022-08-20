@@ -2027,7 +2027,7 @@ globby@^11.1.0:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-"goggledy@link:/workspaces/goggledy":
+"goggledy@link:../goggledy":
   version "0.0.0"
   uid ""
 
