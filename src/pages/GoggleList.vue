@@ -7,10 +7,28 @@
           by {{ login }}
         </span>
       </div>
-      <q-btn flat round icon="eva-plus-circle-outline" @click="createGoggle" />
+      <div space-x-1>
+        <q-btn
+          flat
+          round
+          icon="eva-refresh-outline"
+          @click="
+            () => {
+              resetGists()
+              fetchGists()
+            }
+          "
+        />
+        <q-btn
+          flat
+          round
+          icon="eva-plus-circle-outline"
+          @click="createGoggle"
+        />
+      </div>
     </div>
 
-    <div v-if="gists">
+    <div v-if="gists" class="card-list">
       <GoggleCard v-for="(gist, i) of gists" :key="i" v-bind="gist" />
     </div>
 
@@ -29,13 +47,13 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
-import { useGistStore } from '../stores/gist'
+import { useGistStore } from 'stores/gist'
 import GoggleCard from 'components/GoggleCard.vue'
 import CustomDialogVue from 'components/CustomDialog.vue'
 
 const $q = useQuasar()
 const { login, gists, pagination } = storeToRefs(useGistStore())
-const { fetchGists, createGist } = useGistStore()
+const { resetGists, fetchGists, createGist } = useGistStore()
 
 fetchGists()
 
@@ -67,3 +85,17 @@ function createGoggle() {
   }).onOk(({ isPublic }) => createGist(isPublic))
 }
 </script>
+
+<style scoped lang="sass">
+.card-list
+  // By default all cards same size
+  & > div
+    @apply scale-[1]
+
+  // When hoving over list all cards scale down
+  &:hover > div
+    @apply scale-[0.98] opacity-75
+
+  & > div:hover
+    @apply scale-[1] opacity-100
+</style>

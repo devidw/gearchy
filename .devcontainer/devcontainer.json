@@ -24,7 +24,8 @@
 		"wayou.vscode-todo-highlight",
 		"GitHub.copilot",
 		"syler.sass-indented",
-		"asciidoctor.asciidoctor-vscode"
+		"asciidoctor.asciidoctor-vscode",
+		"antfu.unocss"
 	],
       "settings": {
         "editor.bracketPairColorization.enabled": true,

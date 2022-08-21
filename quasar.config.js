@@ -31,6 +31,7 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
       'unocss',
+      'notify',
       'auth',
     ],
 
@@ -95,9 +96,6 @@ module.exports = configure(function (/* ctx */) {
     framework: {
       config: {
         dark: true,
-        notify: {
-          position: 'top-right',
-        }
       },
 
       // iconSet: 'material-icons', // Quasar icon set

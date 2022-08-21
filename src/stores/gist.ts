@@ -1,3 +1,4 @@
+import { Notify } from 'quasar'
 import { defineStore } from 'pinia'
 import { components } from '@octokit/openapi-types'
 import { api } from '../services/api'
@@ -137,7 +138,8 @@ export const useGistStore = defineStore('gist', {
     },
     async createGist(isPublic: boolean) {
       this.loading = true
-      this.resetGists()
+      // Reload gists list with new gist
+      this.pagination.pageInfo.hasNextPage = true
       this.gist = {} as Gist
       try {
         const res = await api.request('POST /gists', {
@@ -158,7 +160,6 @@ export const useGistStore = defineStore('gist', {
       }
     },
     async updateGist() {
-      this.loading = true
       this.resetGists()
       const goggleStore = useGoggleStore()
       try {
@@ -174,23 +175,27 @@ export const useGistStore = defineStore('gist', {
             },
           },
         })
-        this.loading = false
+        Notify.create({
+          type: 'positive',
+          message: 'Goggle updated successfully',
+        })
       } catch (e) {
         this.error = e
-        this.loading = false
       }
     },
     async deleteGist() {
-      this.loading = true
-      this.resetGists()
       try {
+        this.gists = this.gists.filter((gist: Gist) => gist.id !== this.gist.id)
+        this.router.push('/')
         await api.request(`DELETE /gists/${this.gist.id}`, {
           gist_id: this.gist.id,
         })
-        this.router.push('/')
+        Notify.create({
+          type: 'positive',
+          message: 'Goggle deleted successfully',
+        })
       } catch (e) {
         this.error = e
-        this.loading = false
       }
     },
   },

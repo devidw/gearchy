@@ -6,7 +6,7 @@
     transition-hide="flip-down"
     transition-duration="500"
   >
-    <q-card class="pa-2 pt-4 w-70">
+    <q-card class="pa-2 pt-4 w-70 !rounded-xl">
       <q-card-section text="center" class="mb-6">
         <div
           v-if="title"
@@ -30,6 +30,8 @@
           v-for="(action, i) of actions"
           :key="i"
           flat
+          no-caps
+          unelevated
           :label="
             action.label !== undefined
               ? action.label
@@ -42,6 +44,7 @@
               ? onDialogOK(action.payload || {})
               : onDialogCancel()
           "
+          class="w-full tracking-wide !rounded-2"
           :class="{
             'bg-amber-700 font-bold': action.type === 'ok' && action.class === undefined,
             'bg-stone-700 text-stone-400': action.type === 'cancel'  && action.class === undefined,
@@ -77,14 +80,3 @@ defineEmits([...useDialogPluginComponent.emits])
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
   useDialogPluginComponent()
 </script>
-
-<style scoped lang="sass">
-.q-btn
-  @apply w-full capitalize tracking-wide
-
-.q-btn--rectangle
-  @apply rounded-2
-
-.q-dialog__inner > div
-  @apply rounded-xl
-</style>

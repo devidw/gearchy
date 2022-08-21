@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-10">
     <goggle-rule
-      v-for="(rule, i) of goggle[action]"
+      v-for="(rule, i) of goggle.rules[action]"
       :key="i"
       :action="action"
       :index="i"

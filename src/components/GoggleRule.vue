@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="border-2 border-stone-800 rounded-4 p-5 pl-8 flex justify-between"
-  >
+  <div class="border-2 border-stone-8 rounded-4 p-5 pl-8 flex justify-between">
     <div v-if="hasSlider()" class="w-1/10 flex flex-col justify-center">
       <q-slider
         :disable="!hasPatternOrSite()"
@@ -9,7 +7,7 @@
         vertical
         label
         label-always
-        v-model="goggle[action][index].value"
+        v-model="goggle.rules[action][index].value"
         :min="1"
         :max="10"
         reverse
@@ -22,12 +20,12 @@
     >
       <div class="sm:w-1/2">
         <q-input
-          v-model="goggle[action][index].pattern"
+          v-model="goggle.rules[action][index].pattern"
           type="text"
           label="Pattern"
         />
         <q-input
-          v-model="goggle[action][index].site"
+          v-model="goggle.rules[action][index].site"
           type="text"
           label="Site"
         />
@@ -35,7 +33,7 @@
       <div class="sm:w-1/2 sm:pl-3">
         <q-select
           :disable="!hasPattern()"
-          v-model="goggle[action][index].options"
+          v-model="goggle.rules[action][index].options"
           :options="options"
           label="Match"
           class="h-full cursor-pointer"
@@ -71,7 +69,7 @@
         flat
         round
         icon="eva-arrow-downward-outline"
-        :class="{ invisible: index + 1 === goggle[action].length }"
+        :class="{ invisible: index + 1 === goggle.rules[action].length }"
         @click="moveActionRule(action, index, 'down')"
       />
     </div>
@@ -100,10 +98,11 @@ const options = ref([
 ])
 
 const hasSlider = () => props.action !== 'discard'
-const hasPattern = () => goggle.value[props.action][props.index].pattern !== ''
+const hasPattern = () =>
+  goggle.value.rules[props.action][props.index].pattern !== ''
 const hasPatternOrSite = () =>
-  goggle.value[props.action][props.index].pattern !== '' ||
-  goggle.value[props.action][props.index].site !== ''
+  goggle.value.rules[props.action][props.index].pattern !== '' ||
+  goggle.value.rules[props.action][props.index].site !== ''
 </script>
 
 <style scoped lang="sass">

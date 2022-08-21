@@ -1,20 +1,21 @@
 <template>
-  <q-page padding class="space-y-5">
-    <template v-if="!loading && !error && goggle">
+  <q-page padding>
+    <template v-if="!loading && goggle">
       <div class="space-y-10">
-        <q-tabs
-          v-model="tab"
-          align="justify"
-          indicator-color="transparent"
-          content-class="g-tabs"
-        >
-          <q-tab name="meta" icon="eva-edit-outline" />
-          <q-tab name="discard" icon="eva-slash-outline" />
-          <q-tab name="boost" icon="eva-arrowhead-up-outline" />
-          <q-tab name="downrank" icon="eva-arrowhead-down-outline" />
-        </q-tabs>
-
-        <goggle-edit-action-bar :action="tab" :url="gist.url" />
+        <goggle-action-bar context="edit" :action="tab" :gist="gist">
+          <q-tabs
+            v-model="tab"
+            align="justify"
+            indicator-color="transparent"
+            content-class="g-tabs"
+            class="mb-10"
+          >
+            <q-tab name="meta" icon="eva-edit-outline" />
+            <q-tab name="discard" icon="eva-slash-outline" />
+            <q-tab name="boost" icon="eva-arrowhead-up-outline" />
+            <q-tab name="downrank" icon="eva-arrowhead-down-outline" />
+          </q-tabs>
+        </goggle-action-bar>
 
         <q-tab-panels
           v-model="tab"
@@ -47,13 +48,13 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
-import GoggleEditActionBar from 'components/GoggleEditActionBar.vue'
+import GoggleActionBar from 'components/GoggleActionBar.vue'
 import GoggleMetaData from 'components/GoggleMetaData.vue'
 import GoggleRules from 'components/GoggleRules.vue'
 
 const route = useRoute()
 const tab = ref('meta')
-const { loading, error, gist } = storeToRefs(useGistStore())
+const { loading, gist } = storeToRefs(useGistStore())
 const { goggle } = storeToRefs(useGoggleStore())
 const { fetchGist } = useGistStore()
 
@@ -62,18 +63,16 @@ fetchGist(route.params.id)
 
 <style lang="sass">
 .g-tabs .q-tab
-  @apply rounded-4 bg-stone-800 color-stone-400 py-4 tracking-widest
+  @apply rounded-4 bg-stone-700 color-stone-400 py-4 tracking-widest
 
   & + .q-tab
-    @apply ml-5
+    @apply ml-4
+
+  &.q-tab--active
+    @apply bg-stone-600 color-stone-300
 
   .q-tab__label
     @apply font-extrabold
-    font-family: heading
-
-
-  &.q-tab--active
-    @apply bg-stone-700 color-stone-300
 
 .g-tab-panels
   @apply bg-transparent

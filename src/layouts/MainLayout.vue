@@ -63,34 +63,40 @@
     </q-drawer>
 
     <q-page-container class="max-w-3xl mx-auto">
-      <notice-banner v-if="error">{{ error.message }}</notice-banner>
       <router-view class="pt-6" />
     </q-page-container>
   </q-layout>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useGistStore } from 'stores/gist'
-import NoticeBanner from 'components/NoticeBanner.vue'
+import { QSpinnerOrbit } from 'quasar'
 
 const $q = useQuasar()
 const rightDrawerOpen = ref(false)
-const { loading, error } = storeToRefs(useGistStore())
+const gistStore = useGistStore()
+const { loading, error } = storeToRefs(gistStore)
 
 watch(loading, (loading) => {
   if (loading) {
-    $q.loading.show()
+    $q.loading.show({
+      spinner: QSpinnerOrbit,
+    })
   } else {
     $q.loading.hide()
   }
 })
 
 watch(error, (error) => {
-  if (error) {
+  if (error instanceof Error) {
     console.error(error)
+    $q.notify({
+      type: 'negative',
+      message: error.message,
+    })
   }
 })
 

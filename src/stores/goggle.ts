@@ -15,9 +15,11 @@ export const useGoggleStore = defineStore('goggle', {
   state: () => ({
     goggle: {} as {
       metaData: GoggleMetaData
-      discard: GoggleActionObject[]
-      boost: GoggleActionObject[]
-      downrank: GoggleActionObject[]
+      rules: {
+        discard: GoggleActionObject[]
+        boost: GoggleActionObject[]
+        downrank: GoggleActionObject[]
+      }
     },
   }),
 
@@ -27,15 +29,15 @@ export const useGoggleStore = defineStore('goggle', {
       goggle.metaData = state.goggle.metaData
 
       // Convert action rules to instructions
-      ;['discard', 'boost', 'downrank'].forEach((action) => {
-        const rules = state.goggle[action as GoggleInstructionActionKey]
+      Object.keys(state.goggle.rules).forEach((action) => {
+        const rules = state.goggle.rules[action as GoggleInstructionActionKey]
 
         if (!rules || rules.length === 0) {
           return
         }
 
         goggle.lines.push(new GoggleEmpty())
-        goggle.lines.push(new GoggleComment(` ${action} rules`))
+        goggle.lines.push(new GoggleComment(` ${action}s`))
 
         rules.forEach((inObj) => {
           const options = {
@@ -67,11 +69,9 @@ export const useGoggleStore = defineStore('goggle', {
       // console.log(gistStore.gist)
       const goggle = new Goggle()
       goggle.parse((gistStore.gist.files[0] as { text: string }).text)
-      // console.log(goggle)
+      // console.log(goggle.metaData)
 
       const metaData = goggle.metaData
-
-      // console.log(metaData)
 
       if (typeof metaData.public !== 'boolean') {
         metaData.public = gistStore.gist.public
@@ -124,27 +124,31 @@ export const useGoggleStore = defineStore('goggle', {
 
       this.goggle = {
         metaData: metaData,
-        discard: convertActions(goggle, 'discard'),
-        boost: convertActions(goggle, 'boost'),
-        downrank: convertActions(goggle, 'downrank'),
+        rules: {
+          discard: convertActions(goggle, 'discard'),
+          boost: convertActions(goggle, 'boost'),
+          downrank: convertActions(goggle, 'downrank'),
+        },
       }
     },
     addActionRule(
       action: GoggleInstructionActionKey,
       rule: GoggleActionObject
     ) {
-      this.goggle[action] = [rule, ...this.goggle[action]]
+      this.goggle.rules[action] = [rule, ...this.goggle.rules[action]]
     },
     removeActionRule(action: GoggleInstructionActionKey, index: number) {
-      this.goggle[action] = this.goggle[action].filter((_, i) => i !== index)
+      this.goggle.rules[action] = this.goggle.rules[action].filter(
+        (_, i) => i !== index
+      )
     },
     moveActionRule(
       action: GoggleInstructionActionKey,
       index: number,
       direction: 'up' | 'down'
     ) {
-      const [removed] = this.goggle[action].splice(index, 1)
-      this.goggle[action].splice(
+      const [removed] = this.goggle.rules[action].splice(index, 1)
+      this.goggle.rules[action].splice(
         direction === 'up' ? index - 1 : index + 1,
         0,
         removed
