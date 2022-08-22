@@ -25,7 +25,7 @@
           transition-prev="fade"
         >
           <q-tab-panel name="meta">
-            <goggle-meta-data :meta-data="goggle.metaData" />
+            <goggle-meta-data />
           </q-tab-panel>
           <q-tab-panel name="discard">
             <goggle-rules action="discard" />

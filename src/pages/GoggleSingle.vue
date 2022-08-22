@@ -36,24 +36,22 @@
               expand-icon="eva-plus-circle-outline"
               expanded-icon="eva-minus-circle-outline"
             >
-              <q-list class="px-6 py-4">
-                <q-item
-                  v-for="(rule, i) in goggle.rules[action.key]"
-                  :key="i"
-                  class="p-0"
-                >
-                  <q-item-section avatar class="w-10 !text-end">{{
-                    rule.value
-                  }}</q-item-section>
-                  <q-item-section>
-                    <q-item-label v-if="rule.pattern">{{
-                      rule.pattern
-                    }}</q-item-label>
-                    <q-item-label v-if="rule.site" caption>{{
-                      rule.site
-                    }}</q-item-label>
-                  </q-item-section>
-                </q-item>
+              <q-list class="px-6 py-4 space-y-2">
+                <template v-for="(rule, i) in goggle.rules[action.key]">
+                  <q-item v-if="rule.pattern || rule.site" :key="i" class="p-0">
+                    <q-item-section avatar class="w-10 !text-end">{{
+                      rule.value
+                    }}</q-item-section>
+                    <q-item-section>
+                      <q-item-label v-if="rule.pattern">{{
+                        rule.pattern
+                      }}</q-item-label>
+                      <q-item-label v-if="rule.site" caption>{{
+                        rule.site
+                      }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
               </q-list>
             </q-expansion-item>
           </div>
@@ -100,4 +98,14 @@ const actions = ref([
 
 .q-item__section--main + .q-item__section--side i
     @apply text-size-5 opacity-50
+
+.q-expansion-item__content
+  .q-item__section--main, .q-item__label--caption
+    @apply font-medium text-sm
+
+  .q-item__label--caption
+    @apply text-xs tracking-wide
+
+  .q-item__section--avatar
+    @apply items-end w-5
 </style>

@@ -12,13 +12,21 @@
           icon="eva-save-outline"
           @click="updateGist()"
         />
-        <q-btn
-          v-else
-          round
-          flat
-          icon="eva-edit-outline"
-          @click="$router.push(`/goggle/${gist.id}/edit`)"
-        />
+        <template v-else>
+          <q-btn
+            round
+            flat
+            icon="eva-edit-outline"
+            @click="$router.push(`/goggle/${gist.id}/edit`)"
+          />
+          <!-- <q-btn round flat icon="eva-copy-outline" /> -->
+          <q-btn
+            round
+            flat
+            icon="eva-trash-2-outline"
+            @click="deleteGoggle()"
+          />
+        </template>
       </div>
       <div class="w-1/3 flex justify-center">
         <q-btn
@@ -61,13 +69,6 @@
         >
           <q-tooltip> View Goggle's about page on Brave </q-tooltip>
         </q-btn>
-        <q-btn
-          round
-          flat
-          icon="eva-trash-2-outline"
-          class="opacity-70"
-          @click="deleteGoggle()"
-        />
       </div>
     </div>
   </div>

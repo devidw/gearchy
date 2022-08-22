@@ -1,89 +1,114 @@
 <template>
-  <div class="space-y-2">
-    <q-input v-model="metaData!.name" type="text" label="Name" />
-    <q-input
-      v-model="metaData!.description"
-      type="text"
-      label="Description"
-      autogrow
-    />
+  <div
+    class="rounded-4 p-5"
+    border="2 stone-8"
+    :style="
+      goggle.metaData.avatar && goggle.metaData.avatar !== ''
+        ? `border-color: ${goggle.metaData.avatar}`
+        : ''
+    "
+  >
     <div class="flex">
-      <div class="w-1/3 pr-3">
-        <q-select
-          v-model="metaData!.public"
-          :options="typeOptions"
-          emit-value
-          map-options
-          dropdown-icon="eva-arrow-down-outline"
-        >
-          <q-tooltip anchor="top middle" :offset="[0, 50]">
-            This only affects the visibility of the goggle, not the visibility
-            of the gist.
-            <br />
-            Private gists can be made public on GitHub.
-            <br />
-            To make a public gist private again, it has to be deleted and
-            recreated.
-          </q-tooltip>
-        </q-select>
-      </div>
-      <div class="w-2/3 pl-3">
-        <q-input v-model="metaData!.author" type="text" label="Author" />
-      </div>
-    </div>
-    <div v-if="pref.editor.showAdvanced">
-      <q-input v-model="metaData!.avatar">
-        <template v-slot:append>
-          <q-icon name="eva-color-picker-outline" class="cursor-pointer">
-            <q-popup-proxy
-              cover
-              transition-show="scale"
-              transition-hide="scale"
-            >
-              <q-color flat v-model="metaData!.avatar" />
-            </q-popup-proxy>
+      <q-input
+        font="extrabold [heading]"
+        text="3xl !stone-3"
+        class="tracking-wider w-full"
+        input-class="!leading-snug !pt-0"
+        v-model="goggle.metaData.name"
+        type="text"
+        placeholder="Name"
+        borderless
+        autogrow
+      >
+        <template v-slot:prepend>
+          <q-icon
+            class="cursor-pointer !mb-3"
+            :name="
+              goggle.metaData.public ? 'eva-eye-outline' : 'eva-eye-off-outline'
+            "
+            @click="() => (goggle.metaData.public = !goggle.metaData.public)"
+          >
+            <q-tooltip anchor="center left" self="center end">
+              Click to make {{ goggle.metaData.public ? 'private' : 'public' }}
+            </q-tooltip>
           </q-icon>
         </template>
       </q-input>
-      <q-input v-model="metaData!.homepage" type="text" label="Homepage" />
-      <q-input v-model="metaData!.issues" type="text" label="Issues" />
-      <q-input v-model="metaData!.license" type="text" label="License" />
-      <q-input
-        v-model="metaData!.transferred_to"
-        type="text"
-        label="Transferred to"
-      />
     </div>
-    <div class="flex justify-between space-x-2 pt-4">
-      <div class="flex items-center text-xs text-gray">
-        <q-checkbox
-          class="g-advanced-toggle"
-          size="30px"
-          v-model="pref.editor.showAdvanced"
-          :label="pref.editor.showAdvanced ? 'Hide advanced' : 'Show advanced'"
+    <div class="-mt-2 ml-9">
+      <q-input
+        v-model="goggle.metaData.description"
+        type="text"
+        placeholder="Description"
+        autogrow
+        borderless
+        text="!stone-4"
+        input-class="leading-snug !pt-0"
+      />
+      <q-input
+        v-model="goggle.metaData.author"
+        type="text"
+        placeholder="author"
+        borderless
+        class="sm:-mt-10"
+        input-class="!text-stone-4"
+        prefix="by"
+      />
+
+      <div v-if="pref.editor.showAdvanced" class="space-y-2 mt-6">
+        <q-input v-model="goggle.metaData.avatar">
+          <template v-slot:append>
+            <q-icon name="eva-color-picker-outline" class="cursor-pointer">
+              <q-popup-proxy
+                cover
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-color flat v-model="goggle.metaData.avatar" />
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+        <q-input
+          v-model="goggle.metaData.homepage"
+          type="text"
+          label="Homepage"
         />
+        <q-input v-model="goggle.metaData.issues" type="text" label="Issues" />
+        <q-input
+          v-model="goggle.metaData.license"
+          type="text"
+          label="License"
+        />
+        <q-input
+          v-model="goggle.metaData.transferred_to"
+          type="text"
+          label="Transferred to"
+        />
+      </div>
+      <div class="flex justify-between space-x-2 pt-4">
+        <div class="flex items-center text-xs text-gray">
+          <q-checkbox
+            class="g-advanced-toggle"
+            size="30px"
+            v-model="pref.editor.showAdvanced"
+            :label="
+              pref.editor.showAdvanced ? 'Hide advanced' : 'Show advanced'
+            "
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useGoggleStore } from 'stores/goggle'
 import { usePrefStore } from 'stores/pref'
 
 const { pref } = usePrefStore()
-
-const props = defineProps({
-  metaData: Object,
-})
-
-const metaData = ref(props.metaData)
-
-const typeOptions = [
-  { value: true, label: 'Public' },
-  { value: false, label: 'Private' },
-]
+const { goggle } = storeToRefs(useGoggleStore())
 </script>
 
 <style lang="sass">
