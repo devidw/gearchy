@@ -63,13 +63,13 @@ fetchGist(route.params.id)
 
 <style lang="sass">
 .g-tabs .q-tab
-  @apply rounded-4 bg-stone-700 color-stone-400 py-4 tracking-widest
+  @apply rounded-4 bg-stone-7 color-stone-4 py-4 tracking-widest
 
   & + .q-tab
     @apply ml-4
 
   &.q-tab--active
-    @apply bg-stone-600 color-stone-300
+    @apply bg-stone-6 color-stone-3
 
   .q-tab__label
     @apply font-extrabold

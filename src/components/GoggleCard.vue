@@ -1,8 +1,8 @@
 <template>
-  <div p="y2" class="transition" text="stone-300">
+  <div p="y2" class="transition" text="stone-3">
     <div
       class="min-h-20 px-7 py-4 rounded-4 flex items-center cursor-pointer tracking-wide font-heading"
-      bg="stone-800"
+      bg="stone-8"
       text="xl"
       font="bold"
       @click="$router.push(`/goggle/${id}`)"

@@ -3,10 +3,18 @@
     <q-header class="bg-transparent md:px-5 md:py-3">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>
-          Title
+          <!-- <q-avatar size="50px" square class="mr-1">
+            <img src="../assets/goggledy.png" />
+          </q-avatar> -->
+          <q-btn
+            flat
+            :disable="$route.path === '/'"
+            rounded
+            to="/"
+            class="font-[heading] font-extrabold tracking-widest text-lg uppercase text-gray text-opacity-50"
+          >
+            goggledy
+          </q-btn>
         </q-toolbar-title>
 
         <q-btn

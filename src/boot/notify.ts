@@ -13,10 +13,10 @@ Notify.setDefaults({
 
 Notify.registerType('positive', {
   icon: 'eva-checkmark-outline',
-  classes: defaultClasses + ' bg-lime-900 !text-lime-200',
+  classes: defaultClasses + ' bg-lime-9 !text-lime-2',
 })
 
 Notify.registerType('negative', {
   icon: 'eva-alert-triangle-outline',
-  classes: defaultClasses + ' bg-amber-900 !text-amber-200',
+  classes: defaultClasses + ' bg-amber-9 !text-amber-2',
 })

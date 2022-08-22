@@ -1,5 +1,5 @@
 <template>
-  <div text="gray" class="rounded-4 px-4 py-4 bg-stone-800">
+  <div text="gray" class="rounded-4 px-4 py-4 bg-stone-8">
     <div>
       <slot></slot>
     </div>

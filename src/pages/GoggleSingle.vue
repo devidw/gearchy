@@ -30,7 +30,7 @@
                 goggle.rules[action.key].length > 1 ? 's' : ''
               }`"
               :icon="action.icon"
-              header-class="px-6 py-4 text-stone-300 font-bold text-lg
+              header-class="px-6 py-4 text-stone-3 font-bold text-lg
             tracking-wide font-[heading] capitalize"
               class="overflow-hidden border-2 border-stone-8 rounded-xl"
               expand-icon="eva-plus-circle-outline"

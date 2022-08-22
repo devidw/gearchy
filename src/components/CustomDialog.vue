@@ -11,7 +11,7 @@
         <div
           v-if="title"
           class="mb-3 tracking-wide"
-          text="lg stone-100"
+          text="lg stone-1"
           font="extrabold"
         >
           {{ title }}
@@ -19,7 +19,7 @@
         <div
           v-if="message"
           class="tracking-wider leading-normal"
-          text="sm stone-300"
+          text="sm stone-3"
         >
           {{ message }}
         </div>
@@ -46,8 +46,8 @@
           "
           class="w-full tracking-wide !rounded-2"
           :class="{
-            'bg-amber-700 font-bold': action.type === 'ok' && action.class === undefined,
-            'bg-stone-700 text-stone-400': action.type === 'cancel'  && action.class === undefined,
+            'bg-amber-7 font-bold': action.type === 'ok' && action.class === undefined,
+            'bg-stone-7 text-stone-4': action.type === 'cancel'  && action.class === undefined,
             [action.class as string]: action.class !== undefined,
           }"
         />
