@@ -5,7 +5,7 @@ import { Notify } from 'quasar'
 const defaultClasses = 'rounded-lg tracking-wide font-medium'
 
 Notify.setDefaults({
-  position: 'top-right',
+  position: 'top',
   progress: true,
   timeout: 1000,
   classes: defaultClasses,
@@ -13,10 +13,10 @@ Notify.setDefaults({
 
 Notify.registerType('positive', {
   icon: 'eva-checkmark-outline',
-  classes: defaultClasses + ' bg-lime-9 !text-lime-2',
+  classes: defaultClasses + ' bg-lime-900 !text-lime-200',
 })
 
 Notify.registerType('negative', {
   icon: 'eva-alert-triangle-outline',
-  classes: defaultClasses + ' bg-amber-9 !text-amber-2',
+  classes: defaultClasses + ' bg-amber-900 !text-amber-200',
 })

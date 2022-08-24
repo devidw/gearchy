@@ -10,6 +10,7 @@ import {
   GoggleComment,
 } from 'goggledy'
 import { GoggleActionObject } from 'src/types'
+import { v4 as uuidv4 } from 'uuid'
 
 export const useGoggleStore = defineStore('goggle', {
   state: () => ({
@@ -27,6 +28,10 @@ export const useGoggleStore = defineStore('goggle', {
     stringifiedGoggle(state) {
       const goggle = new Goggle()
       goggle.metaData = state.goggle.metaData
+
+      if (!state.goggle.rules) {
+        return
+      }
 
       // Convert action rules to instructions
       Object.keys(state.goggle.rules).forEach((action) => {
@@ -99,6 +104,7 @@ export const useGoggleStore = defineStore('goggle', {
       ) {
         return goggle[action].map((inObj): GoggleActionObject => {
           const outObj: GoggleActionObject = {
+            id: uuidv4(),
             pattern: inObj.pattern,
             site: inObj.options.site,
             options: [],
@@ -142,17 +148,12 @@ export const useGoggleStore = defineStore('goggle', {
         (_, i) => i !== index
       )
     },
-    moveActionRule(
-      action: GoggleInstructionActionKey,
-      index: number,
-      direction: 'up' | 'down'
-    ) {
-      const [removed] = this.goggle.rules[action].splice(index, 1)
-      this.goggle.rules[action].splice(
-        direction === 'up' ? index - 1 : index + 1,
-        0,
-        removed
-      )
+    duplicateActionRule(action: GoggleInstructionActionKey, index: number) {
+      this.goggle.rules[action] = [
+        ...this.goggle.rules[action].slice(0, index),
+        { ...this.goggle.rules[action][index] },
+        ...this.goggle.rules[action].slice(index),
+      ]
     },
   },
 })

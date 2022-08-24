@@ -1,13 +1,5 @@
 <template>
-  <div
-    class="rounded-4 p-5"
-    border="2 stone-8"
-    :style="
-      goggle.metaData.avatar && goggle.metaData.avatar !== ''
-        ? `border-color: ${goggle.metaData.avatar}`
-        : ''
-    "
-  >
+  <div class="bg-stone-8 rounded-4 p-5">
     <div class="flex">
       <q-input
         font="extrabold [heading]"

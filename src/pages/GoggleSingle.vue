@@ -22,7 +22,7 @@
       </goggle-action-bar>
 
       <div class="space-y-6 md:space-y-0 md:space-x-6 md:flex">
-        <template v-for="(action, i) in actions" :key="i">
+        <template v-for="(action, i) in filteredActions" :key="i">
           <div class="md:w-1/3">
             <q-expansion-item
               v-if="goggle.rules[action.key].length"
@@ -36,23 +36,7 @@
               expand-icon="eva-plus-circle-outline"
               expanded-icon="eva-minus-circle-outline"
             >
-              <q-list class="px-6 py-4 space-y-2">
-                <template v-for="(rule, i) in goggle.rules[action.key]">
-                  <q-item v-if="rule.pattern || rule.site" :key="i" class="p-0">
-                    <q-item-section avatar class="w-10 !text-end">{{
-                      rule.value
-                    }}</q-item-section>
-                    <q-item-section>
-                      <q-item-label v-if="rule.pattern">{{
-                        rule.pattern
-                      }}</q-item-label>
-                      <q-item-label v-if="rule.site" caption>{{
-                        rule.site
-                      }}</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </template>
-              </q-list>
+              <goggle-single-rules-list :rules="goggle.rules[action.key]" />
             </q-expansion-item>
           </div>
         </template>
@@ -68,6 +52,8 @@ import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
+import GoggleSingleRulesList from 'components/GoggleSingleRulesList.vue'
+import { computed } from 'vue'
 
 const route = useRoute()
 const { loading, gist } = storeToRefs(useGistStore())
@@ -90,6 +76,10 @@ const actions = ref([
     icon: 'eva-arrowhead-down-outline',
   },
 ])
+
+const filteredActions = computed(() => {
+  return actions.value.filter((action) => goggle.value.rules[action.key].length)
+})
 </script>
 
 <style lang="sass">
@@ -104,7 +94,7 @@ const actions = ref([
     @apply font-medium text-sm
 
   .q-item__label--caption
-    @apply text-xs tracking-wide
+    @apply text-xs
 
   .q-item__section--avatar
     @apply items-end w-5

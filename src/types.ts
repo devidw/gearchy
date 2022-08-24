@@ -1,4 +1,5 @@
 export type GoggleActionObject = {
+  id: string
   value?: number
   pattern?: string
   site?: string

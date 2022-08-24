@@ -80,6 +80,7 @@ import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import { GoggleActionObject } from 'src/types'
 import CustomDialogVue from './CustomDialog.vue'
+import { v4 as uuidv4 } from 'uuid'
 
 const $q = useQuasar()
 const { updateGist, deleteGist } = useGistStore()
@@ -89,6 +90,7 @@ const props = defineProps(['context', 'action', 'gist'])
 
 function addRule() {
   const actionObj: GoggleActionObject = {
+    id: uuidv4(),
     pattern: '',
     site: '',
     options: [],
