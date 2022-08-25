@@ -25,6 +25,22 @@ export const useGoggleStore = defineStore('goggle', {
   }),
 
   getters: {
+    actions(): { name: GoggleInstructionActionKey; icon: string }[] {
+      return [
+        {
+          name: 'discard',
+          icon: 'eva-slash-outline',
+        },
+        {
+          name: 'boost',
+          icon: 'eva-arrowhead-up-outline',
+        },
+        {
+          name: 'downrank',
+          icon: 'eva-arrowhead-down-outline',
+        },
+      ]
+    },
     stringifiedGoggle(state) {
       const goggle = new Goggle()
       goggle.metaData = state.goggle.metaData
@@ -47,7 +63,7 @@ export const useGoggleStore = defineStore('goggle', {
         rules.forEach((inObj) => {
           const options = {
             [action as GoggleInstructionActionKey]:
-              typeof inObj.value === 'number' ? inObj.value : true,
+              action === 'discard' ? true : inObj.value,
             site: inObj.site,
             inurl: inObj.options?.includes('inurl'),
             intitle: inObj.options?.includes('intitle'),
@@ -149,11 +165,22 @@ export const useGoggleStore = defineStore('goggle', {
       )
     },
     duplicateActionRule(action: GoggleInstructionActionKey, index: number) {
+      const clone = { ...this.goggle.rules[action][index] }
+      clone.id = uuidv4()
       this.goggle.rules[action] = [
         ...this.goggle.rules[action].slice(0, index),
-        { ...this.goggle.rules[action][index] },
+        { ...clone },
         ...this.goggle.rules[action].slice(index),
       ]
+    },
+    changeActionOnRule(
+      index: number,
+      sourceAction: GoggleInstructionActionKey,
+      targetAction: GoggleInstructionActionKey
+    ) {
+      const rule = this.goggle.rules[sourceAction][index]
+      this.removeActionRule(sourceAction, index)
+      this.addActionRule(targetAction, rule)
     },
   },
 })

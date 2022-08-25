@@ -1,8 +1,20 @@
 <template>
   <div class="space-y-10">
-    <draggable v-model="rules" item-key="id" class="space-y-5">
+    <draggable
+      v-model="rules"
+      item-key="id"
+      class="space-y-5"
+      :group="action"
+      @start="$emit('ruleDragStart')"
+      @end="$emit('ruleDragEnd')"
+    >
       <template #item="{ index }">
-        <goggle-rule :action="action" :index="index" class="cursor-move" />
+        <goggle-rule
+          :action="action"
+          :index="index"
+          class="cursor-move"
+          @dragstart="startDrag($event, index)"
+        />
       </template>
     </draggable>
   </div>
@@ -21,6 +33,8 @@ const props = defineProps<{
   action: GoggleInstructionActionKey
 }>()
 
+defineEmits(['ruleDragStart', 'ruleDragEnd'])
+
 const { goggle } = storeToRefs(useGoggleStore())
 
 const rules = computed({
@@ -29,6 +43,11 @@ const rules = computed({
     goggle.value.rules[props.action] = value
   },
 })
+
+function startDrag(evt: CustomEvent, index: number) {
+  evt.dataTransfer.setData('action', props.action)
+  evt.dataTransfer.setData('index', index)
+}
 </script>
 
 <style lang="sass">

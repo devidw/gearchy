@@ -11,9 +11,18 @@
             class="mb-10"
           >
             <q-tab name="meta" icon="eva-edit-outline" />
-            <q-tab name="discard" icon="eva-slash-outline" />
-            <q-tab name="boost" icon="eva-arrowhead-up-outline" />
-            <q-tab name="downrank" icon="eva-arrowhead-down-outline" />
+            <q-tab
+              v-for="(action, index) in actions"
+              :key="index"
+              :name="action.name"
+              :icon="action.icon"
+              @drop="onDrop($event, action.name)"
+              @dragover.prevent
+              @dragenter.prevent
+              :class="{
+                'animate-pulse bg-stone-6': isDragging && tab !== action.name,
+              }"
+            />
           </q-tabs>
         </goggle-action-bar>
 
@@ -27,14 +36,16 @@
           <q-tab-panel name="meta">
             <goggle-meta-data />
           </q-tab-panel>
-          <q-tab-panel name="discard">
-            <goggle-rules action="discard" />
-          </q-tab-panel>
-          <q-tab-panel name="boost">
-            <goggle-rules action="boost" />
-          </q-tab-panel>
-          <q-tab-panel name="downrank">
-            <goggle-rules action="downrank" />
+          <q-tab-panel
+            v-for="(action, i) in actions"
+            :key="i"
+            :name="action.name"
+          >
+            <goggle-rules
+              :action="action.name"
+              @rule-drag-start="onRuleDragStart"
+              @rule-drag-end="onRuleDragEnd"
+            />
           </q-tab-panel>
         </q-tab-panels>
       </div>
@@ -42,7 +53,7 @@
   </q-page>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
@@ -51,14 +62,52 @@ import { useGoggleStore } from 'stores/goggle'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
 import GoggleMetaData from 'components/GoggleMetaData.vue'
 import GoggleRules from 'components/GoggleRules.vue'
+import { GoggleInstructionActionKey } from 'goggledy'
 
 const route = useRoute()
 const tab = ref('meta')
+const shouldSwitchTabTo = ref('')
+const isDragging = ref(false)
 const { loading, gist } = storeToRefs(useGistStore())
-const { goggle } = storeToRefs(useGoggleStore())
+const { goggle, actions } = storeToRefs(useGoggleStore())
+const { changeActionOnRule } = useGoggleStore()
 const { fetchGist } = useGistStore()
 
-fetchGist(route.params.id)
+fetchGist(route.params.id as string)
+
+function onRuleDragStart() {
+  isDragging.value = true
+}
+
+function onRuleDragEnd() {
+  // console.log('onRuleDragEnd')
+  isDragging.value = false
+  if (shouldSwitchTabTo.value) {
+    tab.value = shouldSwitchTabTo.value
+    shouldSwitchTabTo.value = ''
+  }
+}
+
+function onDrop(evt: DragEvent, action: GoggleInstructionActionKey) {
+  // console.log('onDrop')
+  const sourceAction = evt.dataTransfer.getData(
+    'action'
+  ) as GoggleInstructionActionKey
+
+  if (sourceAction === action) {
+    return
+  }
+
+  const sourceIndex = parseInt(evt.dataTransfer.getData('index'))
+
+  changeActionOnRule(sourceIndex, sourceAction, action)
+
+  // We can not immediately switch to the new tab, because the drag operation is
+  // still being processed by sortablejs. If we would switch to the new tab now,
+  // sortablejs would not find the element anymore.
+  // Therefore we remember the action to switch to and do it after the drag has ended.
+  shouldSwitchTabTo.value = action
+}
 </script>
 
 <style lang="sass">
