@@ -1,13 +1,13 @@
 <template>
   <q-page padding>
-    <div text="gray" class="flex justify-between mb-8">
-      <div class="font-heading tracking-wide" text="3xl" font="bold">
+    <custom-page-header>
+      <template v-slot:title>
         Goggles
         <span v-if="login" class="text-size-4 opacity-50">
           by {{ login }}
         </span>
-      </div>
-      <div space-x-1>
+      </template>
+      <template v-slot:actions>
         <q-btn
           flat
           round
@@ -25,10 +25,10 @@
           icon="eva-plus-circle-outline"
           @click="createGoggle"
         />
-      </div>
-    </div>
+      </template>
+    </custom-page-header>
 
-    <div v-if="gists" class="card-list">
+    <div v-if="gists" class="card-list space-y-4">
       <GoggleCard v-for="(gist, i) of gists" :key="i" v-bind="gist" />
     </div>
 
@@ -49,6 +49,7 @@ import { useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import GoggleCard from 'components/GoggleCard.vue'
+import CustomPageHeader from 'components/CustomPageHeader.vue'
 import CustomDialogVue from 'components/CustomDialog.vue'
 
 const $q = useQuasar()

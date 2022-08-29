@@ -21,7 +21,7 @@
         </div>
       </goggle-action-bar>
 
-      <div class="space-y-6 md:space-y-0 md:space-x-6 md:flex">
+      <div class="space-y-6 md:space-y-0 md:space-x-5 md:flex">
         <template v-for="(action, i) in filteredActions" :key="i">
           <div class="md:w-1/3">
             <q-expansion-item
@@ -32,7 +32,7 @@
               :icon="action.icon"
               header-class="px-6 py-4 text-stone-3 font-bold text-lg
             tracking-wide font-[heading] capitalize"
-              class="overflow-hidden border-2 border-stone-8 rounded-xl"
+              class="overflow-hidden bg-stone-8 rounded-xl"
               expand-icon="eva-plus-circle-outline"
               expanded-icon="eva-minus-circle-outline"
             >
@@ -97,5 +97,5 @@ const filteredActions = computed(() => {
     @apply text-xs
 
   .q-item__section--avatar
-    @apply items-end w-5
+    @apply items-end w-7 pr-3
 </style>

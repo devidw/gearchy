@@ -1,5 +1,5 @@
 <template>
-  <div p="y2" class="transition" text="stone-3">
+  <div class="transition" text="stone-3">
     <div
       class="min-h-20 px-7 py-4 rounded-4 flex items-center cursor-pointer tracking-wide font-heading"
       bg="stone-8"

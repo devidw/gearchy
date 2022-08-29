@@ -1,1 +1,1 @@
-= Goggledy UI
+= Goggledy GUI

@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/javascript-node
 {
-  "name": "Goggledy UI",
+  "name": "Goggledy GUI",
   "build": {
     "dockerfile": "Dockerfile",
     // Update 'VARIANT' to pick a Node version: 18, 16, 14.
@@ -17,16 +17,17 @@
     "vscode": {
       // Add the IDs of extensions you want installed when the container is created.
       "extensions": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "editorconfig.editorconfig",
-        "vue.volar",
-        "wayou.vscode-todo-highlight",
-        "GitHub.copilot",
-        "syler.sass-indented",
-        "asciidoctor.asciidoctor-vscode",
-        "antfu.unocss"
-      ],
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"editorconfig.editorconfig",
+		"vue.volar",
+		"wayou.vscode-todo-highlight",
+		"GitHub.copilot",
+		"syler.sass-indented",
+		"asciidoctor.asciidoctor-vscode",
+		"antfu.unocss",
+		"MichaelCurrin.auto-commit-msg"
+	],
       "settings": {
         "editor.bracketPairColorization.enabled": true,
         "editor.guides.bracketPairs": true,

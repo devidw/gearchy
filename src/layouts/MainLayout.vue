@@ -4,17 +4,17 @@
       <q-toolbar>
         <q-toolbar-title>
           <!-- <q-avatar size="50px" square class="mr-1">
-            <img src="../assets/goggledy.png" />
+            <div class="i-g:logo"></div>
+            <img src="../assets/logo.svg" alt="logo" />
           </q-avatar> -->
-          <q-btn
+          <!-- <q-btn
             flat
             :disable="$route.path === '/'"
             rounded
             to="/"
             class="font-[heading] font-extrabold tracking-widest text-lg uppercase text-gray text-opacity-50"
-          >
-            goggledy
-          </q-btn>
+            label="goggledy"
+          /> -->
         </q-toolbar-title>
 
         <q-btn
@@ -114,7 +114,7 @@ function toggleRightDrawer() {
 
 const links = [
   { to: '/', label: 'Goggles' },
-  { to: '/auth', label: 'Settings' },
+  { to: '/settings', label: 'Settings' },
 ]
 </script>
 

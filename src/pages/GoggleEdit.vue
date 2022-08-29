@@ -91,7 +91,7 @@ function onRuleDragEnd() {
 function onDrop(evt: DragEvent, action: GoggleInstructionActionKey) {
   // console.log('onDrop')
   const sourceAction = evt.dataTransfer.getData(
-    'action'
+    'action',
   ) as GoggleInstructionActionKey
 
   if (sourceAction === action) {

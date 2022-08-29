@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
         path: 'goggle/:id/edit',
         component: () => import('pages/GoggleEdit.vue'),
       },
-      { path: 'auth', component: () => import('pages/AuthPage.vue') },
+      { path: 'settings', component: () => import('pages/SettingsPage.vue') },
     ],
   },
 
