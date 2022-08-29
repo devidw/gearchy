@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-4 px-4 py-2 font-mono bg-stone-8 flex justify-between">
+  <div class="bg-stone-8 rounded-4 px-4 py-2 font-mono flex justify-between">
     <div
       class="w-1/12 flex justify-center items-center"
       :class="{
@@ -15,11 +15,7 @@
           dense
           @click="shiftRuleValue"
           class="g-btn"
-          :icon="
-            action === 'boost'
-              ? 'eva-arrowhead-up-outline'
-              : 'eva-arrowhead-down-outline'
-          "
+          :icon="action === 'boost' ? actions[1].icon : actions[2].icon"
         />
         <span class="text-xs text-gray">
           {{ ruleValue }}
@@ -28,7 +24,7 @@
       <q-icon
         v-else
         class="text-gray text-opacity-25"
-        name="eva-slash-outline"
+        :name="actions[0].icon"
         size="24px"
       />
     </div>
@@ -133,7 +129,7 @@ const props = defineProps<{
 }>()
 const moreMenu = ref<QMenu>()
 
-const { goggle } = storeToRefs(useGoggleStore())
+const { goggle, actions } = storeToRefs(useGoggleStore())
 const { removeActionRule, duplicateActionRule } = useGoggleStore()
 
 const options = ref([

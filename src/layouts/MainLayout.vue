@@ -1,20 +1,24 @@
 <template>
   <q-layout view="hHr lpR fFr">
-    <q-header class="bg-transparent md:px-5 md:py-3">
+    <q-header class="bg-transparent backdrop-blur md:px-5 md:py-3">
       <q-toolbar>
         <q-toolbar-title>
-          <!-- <q-avatar size="50px" square class="mr-1">
-            <div class="i-g:logo"></div>
-            <img src="../assets/logo.svg" alt="logo" />
-          </q-avatar> -->
-          <!-- <q-btn
+          <q-btn
             flat
-            :disable="$route.path === '/'"
             rounded
+            :disable="$route.path === '/'"
             to="/"
-            class="font-[heading] font-extrabold tracking-widest text-lg uppercase text-gray text-opacity-50"
-            label="goggledy"
-          /> -->
+            class="text-dark lt-md:!p-0"
+          >
+            <div class="flex no-wrap items-center space-x-2">
+              <img src="../assets/logo.svg" alt="logo" width="35" />
+              <div
+                class="mt-1 font-[heading] font-extrabold tracking-widest uppercase text-(sm gray opacity-50)"
+              >
+                Goggledy
+              </div>
+            </div>
+          </q-btn>
         </q-toolbar-title>
 
         <q-btn
@@ -71,7 +75,7 @@
     </q-drawer>
 
     <q-page-container class="max-w-3xl mx-auto">
-      <router-view class="pt-6" />
+      <router-view class="pt-6 md:pt-20" />
     </q-page-container>
   </q-layout>
 </template>

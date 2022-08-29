@@ -48,8 +48,13 @@
       />
 
       <div v-if="pref.editor.showAdvanced" class="space-y-2 mt-6">
-        <q-input v-model="goggle.metaData.avatar">
-          <template v-slot:append>
+        <q-input
+          v-model="goggle.metaData.avatar"
+          label="Avatar"
+          class="-ml-8.5"
+          borderless
+        >
+          <template v-slot:prepend>
             <q-icon name="eva-color-picker-outline" class="cursor-pointer">
               <q-popup-proxy
                 cover
@@ -65,17 +70,25 @@
           v-model="goggle.metaData.homepage"
           type="text"
           label="Homepage"
+          borderless
         />
-        <q-input v-model="goggle.metaData.issues" type="text" label="Issues" />
+        <q-input
+          v-model="goggle.metaData.issues"
+          type="text"
+          label="Issues"
+          borderless
+        />
         <q-input
           v-model="goggle.metaData.license"
           type="text"
           label="License"
+          borderless
         />
         <q-input
           v-model="goggle.metaData.transferred_to"
           type="text"
           label="Transferred to"
+          borderless
         />
       </div>
       <div class="flex justify-between space-x-2 pt-4">

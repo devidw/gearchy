@@ -1,7 +1,7 @@
 <template>
   <div class="transition" text="stone-3">
     <div
-      class="min-h-20 px-7 py-4 rounded-4 flex items-center cursor-pointer tracking-wide font-heading"
+      class="min-h-20 px-7 py-4 rounded-4 flex items-center cursor-pointer tracking-wide font-[heading]"
       bg="stone-8"
       text="xl"
       font="bold"
@@ -11,7 +11,7 @@
         :name="public ? 'eva-eye-outline' : 'eva-eye-off-outline'"
         class="mr-3 opacity-50"
       />
-      {{ description || '…' }}
+      {{ description || 'Untitled' }}
     </div>
   </div>
 </template>

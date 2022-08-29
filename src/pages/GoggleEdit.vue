@@ -14,13 +14,13 @@
             <q-tab
               v-for="(action, index) in actions"
               :key="index"
-              :name="action.name"
+              :name="action.key"
               :icon="action.icon"
-              @drop="onDrop($event, action.name)"
+              @drop="onDrop($event, action.key)"
               @dragover.prevent
               @dragenter.prevent
               :class="{
-                'animate-pulse bg-stone-6': isDragging && tab !== action.name,
+                'animate-pulse bg-stone-6': isDragging && tab !== action.key,
               }"
             />
           </q-tabs>
@@ -39,10 +39,10 @@
           <q-tab-panel
             v-for="(action, i) in actions"
             :key="i"
-            :name="action.name"
+            :name="action.key"
           >
             <goggle-rules
-              :action="action.name"
+              :action="action.key"
               @rule-drag-start="onRuleDragStart"
               @rule-drag-end="onRuleDragEnd"
             />

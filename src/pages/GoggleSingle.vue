@@ -4,19 +4,14 @@
       <goggle-action-bar :gist="gist" class="mb-12">
         <div class="mb-10 px-2">
           <div
-            v-if="goggle.metaData.name"
             font="extrabold [heading]"
             text="3xl stone-3"
             class="mb-2 tracking-wider"
           >
-            {{ goggle.metaData.name }}
+            {{ goggle.metaData.name || 'Untitled' }}
           </div>
-          <div
-            v-if="goggle.metaData.description"
-            text="stone-4"
-            class="leading-snug w-1/2"
-          >
-            {{ goggle.metaData.description }}
+          <div text="stone-4" class="leading-snug w-1/2">
+            {{ goggle.metaData.description || 'No description' }}
           </div>
         </div>
       </goggle-action-bar>
@@ -30,9 +25,9 @@
                 goggle.rules[action.key].length > 1 ? 's' : ''
               }`"
               :icon="action.icon"
-              header-class="px-6 py-4 text-stone-3 font-bold text-lg
-            tracking-wide font-[heading] capitalize"
-              class="overflow-hidden bg-stone-8 rounded-xl"
+              header-class="px-6 py-4 font-([heading] bold) text-(lg stone-3)
+            tracking-wide capitalize"
+              class="bg-stone-8 rounded-4 overflow-hidden"
               expand-icon="eva-plus-circle-outline"
               expanded-icon="eva-minus-circle-outline"
             >
@@ -46,7 +41,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
@@ -57,28 +51,16 @@ import { computed } from 'vue'
 
 const route = useRoute()
 const { loading, gist } = storeToRefs(useGistStore())
-const { goggle } = storeToRefs(useGoggleStore())
+const { goggle, actions } = storeToRefs(useGoggleStore())
 const { fetchGist } = useGistStore()
 
 fetchGist(route.params.id)
 
-const actions = ref([
-  {
-    key: 'discard',
-    icon: 'eva-slash-outline',
-  },
-  {
-    key: 'boost',
-    icon: 'eva-arrowhead-up-outline',
-  },
-  {
-    key: 'downrank',
-    icon: 'eva-arrowhead-down-outline',
-  },
-])
-
 const filteredActions = computed(() => {
-  return actions.value.filter((action) => goggle.value.rules[action.key].length)
+  return actions.value.filter(
+    (action) =>
+      goggle.value.rules[action.key] && goggle.value.rules[action.key].length,
+  )
 })
 </script>
 

@@ -1,8 +1,8 @@
 {
   "name": "goggledy-gui",
   "version": "0.1.0",
-  "description": "A Quasar Project",
-  "productName": "Goggledy GUI",
+  "description": "Graphical user interface to interact with search goggles.",
+  "productName": "Goggledy",
   "author": "David Wolf <d@wolf.gdn>",
   "private": true,
   "scripts": {

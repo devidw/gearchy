@@ -1,1 +1,10 @@
-= Goggledy GUI
++++
+<h1 align=center>
+<img src=./src/assets/logo.png width=60>
+<br>
+Goggledy
+</h1>
++++
+
+Graphical user interface to create, edit and manage your search goggles with ease. All your goggles
+are stores as gists directly in your GitHub account.

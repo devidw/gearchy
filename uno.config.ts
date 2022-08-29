@@ -4,19 +4,9 @@ import transformerVariantGroup from '@unocss/transformer-variant-group'
 import presetUno from '@unocss/preset-uno'
 import presetAttributify from '@unocss/preset-attributify'
 import presetIcons from '@unocss/preset-icons'
-import { promises as fs } from 'fs'
 
 export default defineConfig({
-  presets: [
-    presetUno(),
-    presetAttributify(),
-    presetIcons({
-      collections: {
-        g: {
-          logo: () => fs.readFile('./src/assets/logo.svg', 'utf-8'),
-        },
-      },
-    }),
-  ],
+  presets: [presetUno(), presetAttributify(), presetIcons()],
   transformers: [transformerDirective(), transformerVariantGroup()],
+  shortcuts: {},
 })

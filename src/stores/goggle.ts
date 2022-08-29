@@ -25,18 +25,18 @@ export const useGoggleStore = defineStore('goggle', {
   }),
 
   getters: {
-    actions(): { name: GoggleInstructionActionKey; icon: string }[] {
+    actions(): { key: GoggleInstructionActionKey; icon: string }[] {
       return [
         {
-          name: 'discard',
+          key: 'discard',
           icon: 'eva-slash-outline',
         },
         {
-          name: 'boost',
+          key: 'boost',
           icon: 'eva-arrowhead-up-outline',
         },
         {
-          name: 'downrank',
+          key: 'downrank',
           icon: 'eva-arrowhead-down-outline',
         },
       ]
@@ -111,12 +111,12 @@ export const useGoggleStore = defineStore('goggle', {
       }
 
       if (!metaData.issues) {
-        metaData.issues = gistStore.gist.url
+        metaData.issues = gistStore.gist.url + '#comments'
       }
 
       function convertActions(
         goggle: Goggle,
-        action: GoggleInstructionActionKey
+        action: GoggleInstructionActionKey,
       ) {
         return goggle[action].map((inObj): GoggleActionObject => {
           const outObj: GoggleActionObject = {
@@ -133,7 +133,7 @@ export const useGoggleStore = defineStore('goggle', {
           for (const option in inObj.options) {
             if (
               ['inurl', 'intitle', 'indescription', 'incontent'].includes(
-                option
+                option,
               )
             ) {
               outObj.options?.push(option)
@@ -155,13 +155,13 @@ export const useGoggleStore = defineStore('goggle', {
     },
     addActionRule(
       action: GoggleInstructionActionKey,
-      rule: GoggleActionObject
+      rule: GoggleActionObject,
     ) {
       this.goggle.rules[action] = [rule, ...this.goggle.rules[action]]
     },
     removeActionRule(action: GoggleInstructionActionKey, index: number) {
       this.goggle.rules[action] = this.goggle.rules[action].filter(
-        (_, i) => i !== index
+        (_, i) => i !== index,
       )
     },
     duplicateActionRule(action: GoggleInstructionActionKey, index: number) {
@@ -176,7 +176,7 @@ export const useGoggleStore = defineStore('goggle', {
     changeActionOnRule(
       index: number,
       sourceAction: GoggleInstructionActionKey,
-      targetAction: GoggleInstructionActionKey
+      targetAction: GoggleInstructionActionKey,
     ) {
       const rule = this.goggle.rules[sourceAction][index]
       this.removeActionRule(sourceAction, index)

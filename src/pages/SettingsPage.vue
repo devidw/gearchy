@@ -16,6 +16,7 @@
         bottom-slots
         input-class="!text-stone-3"
         autofocus
+        borderless
       >
         <template v-slot:hint>
           <q-icon name="eva-question-mark-circle-outline" />
