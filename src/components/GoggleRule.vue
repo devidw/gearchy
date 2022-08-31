@@ -140,7 +140,7 @@ const options = ref([
 ])
 
 const ruleValue = computed({
-  get: () => goggle.value.rules[props.action][props.index].value || 1,
+  get: () => goggle.value.rules[props.action][props.index].value || 2,
   set: (value: number) => {
     goggle.value.rules[props.action][props.index].value = value
   },

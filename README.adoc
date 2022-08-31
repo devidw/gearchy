@@ -1,3 +1,10 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 :hide-uri-scheme:
 +++
 <h1 align=center>
@@ -7,14 +14,19 @@ Goggledy
 </h1>
 +++
 
-GUI to create, edit and manage all your https://github.com/brave/goggles-quickstart[brave search goggles] with ease. Your goggles are stored as gists directly in your GitHub account.
+Goggledy is a web app that lets you manage all your
+https://github.com/brave/goggles-quickstart[brave search goggles] with ease.
 
-NOTE: A GitHub account and a https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token[personal access token] are required to use Goggledy.
+Your goggles are stored as gists directly in your GitHub account.
 
-Goggledy provides a nice graphical user interface to manage all your existing
-goggle gists: view, edit and delete them. You can create new private or public
-goggles directly from the GUI as well.
-Goggledy comes with an advanced interactive goggle editor, which takes the editing experience to a whole new level.
+NOTE: A GitHub account as well as a
+https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token[GitHub
+personal access token] are required to use this app.
+
+Goggledy provides a graphical user interface to manage all your existing
+goggle gists.
+
+You can create and edit yout goggles with Goggledy's advanced interactive goggle editor, which takes the editing experience to a whole new level.
 
 The goal is to make it as easy as possible for a wide range of internet users to create
 new goggles without having to be a developer.
