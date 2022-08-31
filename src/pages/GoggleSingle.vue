@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <template v-if="!loading && goggle">
+    <template v-if="!isLoading && goggle">
       <goggle-action-bar :gist="gist" class="mb-12">
         <div class="mb-10 px-2">
           <div
@@ -50,7 +50,7 @@ import GoggleSingleRulesList from 'components/GoggleSingleRulesList.vue'
 import { computed } from 'vue'
 
 const route = useRoute()
-const { loading, gist } = storeToRefs(useGistStore())
+const { isLoading, gist } = storeToRefs(useGistStore())
 const { goggle, actions } = storeToRefs(useGoggleStore())
 const { fetchGist } = useGistStore()
 

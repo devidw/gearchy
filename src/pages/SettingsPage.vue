@@ -3,13 +3,19 @@
     <custom-page-header>
       <template v-slot:title> Settings </template>
       <template v-slot:actions>
-        <q-btn @click="saveAuthToken" icon="eva-save-outline" round flat />
+        <q-btn
+          @click="saveSettings"
+          icon="eva-save-outline"
+          round
+          flat
+          :disable="localAccessToken === ''"
+        />
       </template>
     </custom-page-header>
 
     <div class="bg-stone-8 text-stone-3 rounded-4 px-7 py-4">
       <q-input
-        v-model="authToken"
+        v-model="localAccessToken"
         label="Personal access token"
         placeholder="ghp_*"
         hide-hint
@@ -35,24 +41,33 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { LocalStorage, Notify } from 'quasar'
+import { storeToRefs } from 'pinia'
+import { useGitHubStore } from 'stores/github'
 import CustomPageHeader from 'components/CustomPageHeader.vue'
+import { Notify } from 'quasar'
 
-const authToken = ref(String(LocalStorage.getItem('authToken') || ''))
+const { isValidAccessToken, saveAccessToken } = useGitHubStore()
+const { accessToken } = storeToRefs(useGitHubStore())
+const localAccessToken = ref(accessToken.value)
 
-function saveAuthToken() {
-  try {
-    LocalStorage.set('authToken', authToken.value)
+async function saveSettings() {
+  const isValid = await isValidAccessToken(localAccessToken.value)
+
+  if (!isValid) {
     Notify.create({
-      message: 'Settings saved',
-      type: 'positive',
-    })
-  } catch (e) {
-    console.error(e)
-    Notify.create({
-      message: 'Error saving personal access token',
+      message: 'Invalid access token',
+      caption: 'Make sure the token is valid and has the "gist" scope',
       type: 'negative',
+      timeout: 2000,
     })
+    saveAccessToken('')
+    return
   }
+
+  saveAccessToken(localAccessToken.value)
+  Notify.create({
+    message: 'Settings saved',
+    type: 'positive',
+  })
 }
 </script>

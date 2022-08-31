@@ -1,3 +1,4 @@
+:hide-uri-scheme:
 +++
 <h1 align=center>
 <img src=./src/assets/logo.png width=60>
@@ -6,5 +7,15 @@ Goggledy
 </h1>
 +++
 
-Graphical user interface to create, edit and manage your search goggles with ease. All your goggles
-are stores as gists directly in your GitHub account.
+GUI to create, edit and manage all your https://github.com/brave/goggles-quickstart[brave search goggles] with ease. Your goggles are stored as gists directly in your GitHub account.
+
+NOTE: A GitHub account and a https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token[personal access token] are required to use Goggledy.
+
+Goggledy provides a nice graphical user interface to manage all your existing
+goggle gists: view, edit and delete them. You can create new private or public
+goggles directly from the GUI as well.
+Goggledy comes with an advanced interactive goggle editor, which takes the editing experience to a whole new level.
+
+The goal is to make it as easy as possible for a wide range of internet users to create
+new goggles without having to be a developer.
+

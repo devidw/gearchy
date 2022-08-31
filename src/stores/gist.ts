@@ -1,10 +1,12 @@
-import { Notify } from 'quasar'
 import { defineStore } from 'pinia'
 import { components } from '@octokit/openapi-types'
-import { api } from '../services/api'
+import { useGitHubStore } from './github'
 import { useGoggleStore } from './goggle'
+import { Notify } from 'quasar'
 
 type Gist = components['schemas']['base-gist']
+
+const api = useGitHubStore().api
 
 export const useGistStore = defineStore('gist', {
   state: () => ({
@@ -19,7 +21,7 @@ export const useGistStore = defineStore('gist', {
     },
     gists: [] as Gist[],
     gist: {} as Gist,
-    loading: false,
+    isLoading: false,
     error: null as null | unknown | Error,
   }),
 
@@ -36,7 +38,7 @@ export const useGistStore = defineStore('gist', {
         return
       }
 
-      this.loading = true
+      this.isLoading = true
 
       try {
         const {
@@ -77,17 +79,17 @@ export const useGistStore = defineStore('gist', {
           {
             perPage: this.pagination.gistsPerPage,
             after: this.pagination.pageInfo.endCursor,
-          }
+          },
         )
         // console.log(pageInfo, edges)
         this.login = login
         this.pagination.pageInfo = pageInfo
         const filtered = edges.filter(
           (edge: { node: { files: { extension: string }[] } }) =>
-            edge.node.files[0].extension === '.goggle'
+            edge.node.files[0].extension === '.goggle',
         )
         this.gists = this.gists.concat(
-          filtered.map((edge: { node: object }) => edge.node)
+          filtered.map((edge: { node: object }) => edge.node),
         )
         // Automatically go further
         if (
@@ -96,14 +98,14 @@ export const useGistStore = defineStore('gist', {
         ) {
           await this.fetchGists()
         }
-        this.loading = false
+        this.isLoading = false
       } catch (e) {
         this.error = e
-        this.loading = false
+        this.isLoading = false
       }
     },
     async fetchGist(id: string) {
-      this.loading = true
+      this.isLoading = true
       this.gist = {} as Gist
       try {
         const {
@@ -124,20 +126,20 @@ export const useGistStore = defineStore('gist', {
               login
             }
           }`,
-          { name: id }
+          { name: id },
         )
         this.login = login
         this.gist = gist
         const goggleStore = useGoggleStore()
         goggleStore.parseGoggle()
-        this.loading = false
+        this.isLoading = false
       } catch (e) {
         this.error = e
-        this.loading = false
+        this.isLoading = false
       }
     },
     async createGist(isPublic: boolean) {
-      this.loading = true
+      this.isLoading = true
       // Reload gists list with new gist
       this.pagination.pageInfo.hasNextPage = true
       this.gist = {} as Gist
@@ -156,7 +158,7 @@ export const useGistStore = defineStore('gist', {
         this.router.push(`/goggle/${this.gist.id}`)
       } catch (e) {
         this.error = e
-        this.loading = false
+        this.isLoading = false
       }
     },
     async updateGist() {

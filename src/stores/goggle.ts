@@ -41,13 +41,17 @@ export const useGoggleStore = defineStore('goggle', {
         },
       ]
     },
-    stringifiedGoggle(state) {
+    stringifiedGoggle(state): string {
+      if (!state.goggle.rules) {
+        return ''
+      }
+
       const goggle = new Goggle()
       goggle.metaData = state.goggle.metaData
 
-      if (!state.goggle.rules) {
-        return
-      }
+      goggle.lines.push(
+        new GoggleComment(` generator: Goggledy ${process.env.VERSION}`),
+      )
 
       // Convert action rules to instructions
       Object.keys(state.goggle.rules).forEach((action) => {
@@ -75,11 +79,6 @@ export const useGoggleStore = defineStore('goggle', {
         })
       })
 
-      goggle.lines = [
-        ...goggle.lines,
-        new GoggleEmpty(),
-        new GoggleComment(' Powered by Goggledy'),
-      ]
       return goggle.stringify()
     },
   },

@@ -1,0 +1,16 @@
+= FAQ
+
+== Why do I need a GitHub account?
+
+Brave Search currently supports goggles only when hosted on GitHub (public files and
+gists) and GitLab (public files and snippets)
+
+Goggledy integrates with GitHub Gists to access and permanently store your goggles
+
+
+== Why do I need a personal access token?
+
+Goggledy is a client side only application and therefore can't implement the
+OAuth's authentication flow securely since client ID and secret can't be stored
+in a protected environment. Because of that, Goggledy uses the authentication
+token authentication provided by the GitHub API.

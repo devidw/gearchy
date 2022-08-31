@@ -61,7 +61,11 @@
             :to="link.to"
             :active="false"
           >
-            <q-item-section>{{ link.label }}</q-item-section>
+            <q-item-section
+              class="color-gray tracking-wide font-medium md:pr-5 text-center md:text-end"
+            >
+              {{ link.label }}
+            </q-item-section>
           </q-item>
         </q-list>
 
@@ -85,17 +89,23 @@ import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useGistStore } from 'stores/gist'
-import { QSpinnerOrbit } from 'quasar'
 
 const $q = useQuasar()
 const rightDrawerOpen = ref(false)
 const gistStore = useGistStore()
-const { loading, error } = storeToRefs(gistStore)
+const { isLoading, error } = storeToRefs(gistStore)
 
-watch(loading, (loading) => {
-  if (loading) {
+watch(isLoading, (newVal) => {
+  if (newVal) {
     $q.loading.show({
-      spinner: QSpinnerOrbit,
+      spinnerSize: 0,
+      html: true,
+      message: /* html */ `
+      <div class="-left-[100px] -top-[100px] relative animate-pulse animate-count-infinit">
+        <img class="absolute animate-spin" src="/circle.svg" width="200" />
+        <img class="absolute" src="/face.svg" width="200" />
+      </div>
+      `,
     })
   } else {
     $q.loading.hide()
@@ -122,7 +132,7 @@ const links = [
 ]
 </script>
 
-<style scoped lang="sass">
-.q-item > .q-item__section
-  @apply color-gray tracking-wide font-medium md:pr-5 text-center md:text-end
+<style lang="sass">
+.q-loading__message
+  margin: 0 !important
 </style>

@@ -42,13 +42,10 @@
           round
           flat
           icon="eva-search-outline"
-          @click="
-            openURL(
-              `https://search.brave.com/goggles?goggles_id=${encodeURIComponent(
-                gist.url
-              )}`
-            )
-          "
+          :href="`https://search.brave.com/goggles?goggles_id=${encodeURIComponent(
+            gist.url,
+          )}`"
+          target="_blank"
         >
           <q-tooltip> Search with this Goggle </q-tooltip>
         </q-btn>
@@ -59,13 +56,10 @@
           round
           flat
           icon="eva-external-link-outline"
-          @click="
-            openURL(
-              `https://search.brave.com/goggles/discover?goggles_id=${encodeURIComponent(
-                gist.url
-              )}`
-            )
-          "
+          :href="`https://search.brave.com/goggles/discover?goggles_id=${encodeURIComponent(
+            gist.url,
+          )}`"
+          target="_blank"
         >
           <q-tooltip> View Goggle's about page on Brave </q-tooltip>
         </q-btn>
