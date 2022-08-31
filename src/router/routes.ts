@@ -22,14 +22,14 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/SetupLayout.vue'),
     children: [
       { path: 'quickstart', component: () => import('pages/QuickStart.vue') },
-    ],
-  },
 
-  // Always leave this as last one,
-  // but you can also remove it
-  {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue'),
+      // Always leave this as last one,
+      // but you can also remove it
+      {
+        path: '/:catchAll(.*)*',
+        component: () => import('pages/ErrorNotFound.vue'),
+      },
+    ],
   },
 ]
 

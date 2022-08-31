@@ -8,5 +8,7 @@ import presetIcons from '@unocss/preset-icons'
 export default defineConfig({
   presets: [presetUno(), presetAttributify(), presetIcons()],
   transformers: [transformerDirective(), transformerVariantGroup()],
-  shortcuts: {},
+  shortcuts: {
+    'g-heading': 'font-(bold [heading]) text-(3xl gray) tracking-wide',
+  },
 })

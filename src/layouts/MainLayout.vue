@@ -54,7 +54,7 @@
           </q-item>
           <q-separator class="my-4" bg="transparent" />
           <q-item
-            v-for="(link, i) of links"
+            v-for="(link, i) of menuLinks"
             :key="i"
             clickable
             v-ripple
@@ -62,18 +62,33 @@
             :active="false"
           >
             <q-item-section
-              class="color-gray tracking-wide font-medium md:pr-5 text-center md:text-end"
+              class="color-gray tracking-wide font-medium md:pr-5 text-center sm:text-end"
             >
               {{ link.label }}
             </q-item-section>
           </q-item>
         </q-list>
 
-        <div
-          class="w-full bg-transparent pb-3 pr-3 tracking-wide"
-          text="end xs gray opacity-50"
-        >
-          &copy; {{ new Date().getFullYear() }}
+        <div class="w-full space-y-20 text-(gray)">
+          <div class="flex justify-center sm:-space-x-1 opacity-50">
+            <q-btn
+              v-for="({ icon, href }, index) in footerLinks"
+              :key="index"
+              :icon="icon"
+              :href="href"
+              target="_blank"
+              flat
+              round
+            />
+          </div>
+
+          <div
+            class="px-3 pb-3 flex justify-between opacity-35 font-(mono)"
+            text="end [10px]"
+          >
+            <div>Goggledy {{ version }}</div>
+            <div>&copy; {{ new Date().getFullYear() }}</div>
+          </div>
         </div>
       </div>
     </q-drawer>
@@ -91,7 +106,9 @@ import { useQuasar } from 'quasar'
 import { useGistStore } from 'stores/gist'
 
 const $q = useQuasar()
-const rightDrawerOpen = ref(false)
+// const rightDrawerOpen = ref(false)
+const rightDrawerOpen = ref(true)
+const version = ref(process.env.VERSION)
 const gistStore = useGistStore()
 const { isLoading, error } = storeToRefs(gistStore)
 
@@ -126,9 +143,20 @@ function toggleRightDrawer() {
   rightDrawerOpen.value = !rightDrawerOpen.value
 }
 
-const links = [
+const menuLinks = [
   { to: '/', label: 'Goggles' },
   { to: '/settings', label: 'Settings' },
+]
+
+const footerLinks = [
+  {
+    href: 'https://goggledy.wolf.gdn',
+    icon: 'eva-globe-2-outline',
+  },
+  {
+    href: 'https://github.com/devidw/goggledy-gui',
+    icon: 'eva-github-outline',
+  },
 ]
 </script>
 

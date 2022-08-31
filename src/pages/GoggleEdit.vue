@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <template v-if="!isLoading && goggle">
+    <template v-if="!isLoading && !error && gist && goggle">
       <div class="space-y-10">
         <goggle-action-bar context="edit" :action="tab" :gist="gist">
           <q-tabs
@@ -68,7 +68,7 @@ const route = useRoute()
 const tab = ref('meta')
 const shouldSwitchTabTo = ref('')
 const isDragging = ref(false)
-const { isLoading, gist } = storeToRefs(useGistStore())
+const { error, isLoading, gist } = storeToRefs(useGistStore())
 const { goggle, actions } = storeToRefs(useGoggleStore())
 const { changeActionOnRule } = useGoggleStore()
 const { fetchGist } = useGistStore()

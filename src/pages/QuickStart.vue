@@ -3,9 +3,7 @@
     <div class="bg-stone-8 rounded-4 px-6 pt-12 pb-16 w-lg space-y-10">
       <div class="text-(center) space-y-3">
         <img src="../assets/logo.svg" width="80" />
-        <div class="font-(bold [heading]) text-(3xl stone-3) tracking-wide">
-          Quickstart
-        </div>
+        <div class="g-heading">Quickstart</div>
       </div>
       <q-list class="w-5/6 mx-auto space-y-3 font-(mono)">
         <q-item

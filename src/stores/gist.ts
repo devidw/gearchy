@@ -20,7 +20,7 @@ export const useGistStore = defineStore('gist', {
       },
     },
     gists: [] as Gist[],
-    gist: {} as Gist,
+    gist: null as null | Gist,
     isLoading: false,
     error: null as null | unknown | Error,
   }),
@@ -39,6 +39,7 @@ export const useGistStore = defineStore('gist', {
       }
 
       this.isLoading = true
+      this.error = null
 
       try {
         const {
@@ -67,8 +68,6 @@ export const useGistStore = defineStore('gist', {
                     public: isPublic
                     files {
                       extension
-                      name
-                      text
                     }
                   }
                 }
@@ -98,14 +97,15 @@ export const useGistStore = defineStore('gist', {
         ) {
           await this.fetchGists()
         }
-        this.isLoading = false
       } catch (e) {
         this.error = e
+      } finally {
         this.isLoading = false
       }
     },
     async fetchGist(id: string) {
       this.isLoading = true
+      this.error = null
       this.gist = {} as Gist
       try {
         const {
@@ -128,18 +128,24 @@ export const useGistStore = defineStore('gist', {
           }`,
           { name: id },
         )
+
+        if (gist === null) {
+          throw new Error("Gist doesn't exist")
+        }
+
         this.login = login
         this.gist = gist
-        const goggleStore = useGoggleStore()
-        goggleStore.parseGoggle()
-        this.isLoading = false
+        useGoggleStore().parseGoggle()
       } catch (e) {
         this.error = e
+        this.router.push('/')
+      } finally {
         this.isLoading = false
       }
     },
     async createGist(isPublic: boolean) {
       this.isLoading = true
+      this.error = null
       // Reload gists list with new gist
       this.pagination.pageInfo.hasNextPage = true
       this.gist = {} as Gist
@@ -158,6 +164,7 @@ export const useGistStore = defineStore('gist', {
         this.router.push(`/goggle/${this.gist.id}`)
       } catch (e) {
         this.error = e
+      } finally {
         this.isLoading = false
       }
     },
@@ -186,6 +193,7 @@ export const useGistStore = defineStore('gist', {
       }
     },
     async deleteGist() {
+      this.error = null
       try {
         this.gists = this.gists.filter((gist: Gist) => gist.id !== this.gist.id)
         this.router.push('/')

@@ -1,6 +1,6 @@
 <template>
   <div text="gray" class="flex justify-between mb-8">
-    <div class="font-(bold [heading]) text-(3xl) tracking-wide">
+    <div class="g-heading">
       <slot name="title" />
     </div>
     <div class="space-x-1">

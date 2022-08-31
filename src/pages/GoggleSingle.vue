@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <template v-if="!isLoading && goggle">
+    <template v-if="!isLoading && !error && gist && goggle">
       <goggle-action-bar :gist="gist" class="mb-12">
         <div class="mb-10 px-2">
           <div
@@ -8,10 +8,10 @@
             text="3xl stone-3"
             class="mb-2 tracking-wider"
           >
-            {{ goggle.metaData.name || 'Untitled' }}
+            {{ goggle.metaData?.name || 'Untitled' }}
           </div>
           <div text="stone-4" class="leading-snug w-1/2">
-            {{ goggle.metaData.description || 'No description' }}
+            {{ goggle.metaData?.description || 'No description' }}
           </div>
         </div>
       </goggle-action-bar>
@@ -50,7 +50,7 @@ import GoggleSingleRulesList from 'components/GoggleSingleRulesList.vue'
 import { computed } from 'vue'
 
 const route = useRoute()
-const { isLoading, gist } = storeToRefs(useGistStore())
+const { error, isLoading, gist } = storeToRefs(useGistStore())
 const { goggle, actions } = storeToRefs(useGoggleStore())
 const { fetchGist } = useGistStore()
 
@@ -59,7 +59,9 @@ fetchGist(route.params.id)
 const filteredActions = computed(() => {
   return actions.value.filter(
     (action) =>
-      goggle.value.rules[action.key] && goggle.value.rules[action.key].length,
+      goggle.value.rules &&
+      goggle.value.rules[action.key] &&
+      goggle.value.rules[action.key].length,
   )
 })
 </script>
