@@ -134,9 +134,9 @@ const { removeActionRule, duplicateActionRule } = useGoggleStore()
 
 const options = ref([
   { label: 'URL', value: 'inurl' },
-  { label: 'Title', value: 'intitle' },
-  { label: 'Description', value: 'indescription' },
-  { label: 'Content', value: 'incontent' },
+  { label: 'Title', value: 'intitle', disable: true },
+  { label: 'Description', value: 'indescription', disable: true },
+  { label: 'Content', value: 'incontent', disable: true },
 ])
 
 const ruleValue = computed({

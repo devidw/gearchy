@@ -27,7 +27,8 @@
 		"asciidoctor.asciidoctor-vscode",
 		"antfu.unocss",
 		"MichaelCurrin.auto-commit-msg",
-		"Tobermory.es6-string-html"
+		"Tobermory.es6-string-html",
+		"wix.vscode-import-cost"
 	],
       "settings": {
         "editor.bracketPairColorization.enabled": true,

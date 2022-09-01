@@ -72,13 +72,14 @@
         <div class="w-full space-y-20 text-(gray)">
           <div class="flex justify-center sm:-space-x-1 opacity-50">
             <q-btn
-              v-for="({ icon, href }, index) in footerLinks"
+              v-for="({ icon, href, classes }, index) in footerLinks"
               :key="index"
               :icon="icon"
               :href="href"
               target="_blank"
               flat
               round
+              :class="classes ? classes : ''"
             />
           </div>
 
@@ -155,6 +156,11 @@ const footerLinks = [
   {
     href: 'https://github.com/devidw/goggledy-gui',
     icon: 'eva-github-outline',
+  },
+  {
+    href: 'https://github.com/sponsors/devidw',
+    icon: 'eva-heart-outline',
+    classes: 'hover:text-red-3 transition transition-300',
   },
 ]
 </script>

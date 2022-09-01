@@ -66,7 +66,7 @@ type Action = {
   class?: string
 }
 
-const props = defineProps({
+defineProps({
   title: String,
   message: String,
   actions: {

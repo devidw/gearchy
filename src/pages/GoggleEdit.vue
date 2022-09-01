@@ -80,7 +80,6 @@ function onRuleDragStart() {
 }
 
 function onRuleDragEnd() {
-  // console.log('onRuleDragEnd')
   isDragging.value = false
   if (shouldSwitchTabTo.value) {
     tab.value = shouldSwitchTabTo.value
