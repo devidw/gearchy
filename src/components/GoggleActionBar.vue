@@ -38,6 +38,9 @@
         />
       </div>
       <div class="w-1/3 flex justify-end">
+        <q-btn round flat icon="eva-cloud-upload-outline" @click="submitGoggle">
+          <q-tooltip> Submit Goggle on Brave </q-tooltip>
+        </q-btn>
         <q-btn
           round
           flat
@@ -49,10 +52,8 @@
         >
           <q-tooltip> Search with this Goggle </q-tooltip>
         </q-btn>
-        <q-btn round flat icon="eva-github-outline" @click="openURL(gist.url)">
-          <q-tooltip> Open gist on GitHub </q-tooltip>
-        </q-btn>
         <q-btn
+          v-if="goggle.metaData.public"
           round
           flat
           icon="eva-external-link-outline"
@@ -63,13 +64,17 @@
         >
           <q-tooltip> View Goggle's about page on Brave </q-tooltip>
         </q-btn>
+        <q-btn round flat icon="eva-github-outline" @click="openURL(gist.url)">
+          <q-tooltip> Open gist on GitHub </q-tooltip>
+        </q-btn>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { openURL, useQuasar } from 'quasar'
+import { openURL, copyToClipboard, useQuasar } from 'quasar'
+import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import { GoggleActionObject } from 'src/types'
@@ -78,9 +83,11 @@ import { v4 as uuidv4 } from 'uuid'
 
 const $q = useQuasar()
 const { updateGist, deleteGist } = useGistStore()
+const { gist } = storeToRefs(useGistStore())
 const { addActionRule } = useGoggleStore()
+const { goggle } = storeToRefs(useGoggleStore())
 
-const props = defineProps(['context', 'action', 'gist'])
+const props = defineProps(['context', 'action'])
 
 function addRule() {
   const actionObj: GoggleActionObject = {
@@ -105,5 +112,19 @@ function deleteGoggle() {
       message: 'This will also permanently delete the associated Gist.',
     },
   }).onOk(deleteGist)
+}
+
+function submitGoggle() {
+  $q.dialog({
+    component: CustomDialogVue,
+    componentProps: {
+      title: 'Submit Goggle',
+      message:
+        'Due to CORS restrictions, this can only be done manually. The goggle URL will be copied to your clipboard. And you will be redirected to the Goggle submission page on Brave.',
+    },
+  }).onOk(async () => {
+    await copyToClipboard(gist.value.url)
+    openURL('https://search.brave.com/goggles/create')
+  })
 }
 </script>

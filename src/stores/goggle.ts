@@ -3,7 +3,7 @@ import { useGistStore } from './gist'
 import {
   Goggle,
   GoggleInstruction,
-  GoggleInstructionActionKey,
+  GoggleInstructionActionOptionKey,
   GoggleInstructionOptions,
   GoggleMetaData,
   GoggleEmpty,
@@ -25,7 +25,7 @@ export const useGoggleStore = defineStore('goggle', {
   }),
 
   getters: {
-    actions(): { key: GoggleInstructionActionKey; icon: string }[] {
+    actions(): { key: GoggleInstructionActionOptionKey; icon: string }[] {
       return [
         {
           key: 'discard',
@@ -42,10 +42,6 @@ export const useGoggleStore = defineStore('goggle', {
       ]
     },
     stringifiedGoggle(state): string {
-      if (!state.goggle.rules) {
-        return ''
-      }
-
       const goggle = new Goggle()
       goggle.metaData = state.goggle.metaData
 
@@ -55,7 +51,8 @@ export const useGoggleStore = defineStore('goggle', {
 
       // Convert action rules to instructions
       Object.keys(state.goggle.rules).forEach((action) => {
-        const rules = state.goggle.rules[action as GoggleInstructionActionKey]
+        const rules =
+          state.goggle.rules[action as GoggleInstructionActionOptionKey]
 
         if (!rules || rules.length === 0) {
           return
@@ -66,7 +63,7 @@ export const useGoggleStore = defineStore('goggle', {
 
         rules.forEach((inObj) => {
           const options = {
-            [action as GoggleInstructionActionKey]:
+            [action as GoggleInstructionActionOptionKey]:
               action === 'discard' ? true : inObj.value,
             site: inObj.site,
             inurl: inObj.options?.includes('inurl'),
@@ -85,37 +82,43 @@ export const useGoggleStore = defineStore('goggle', {
 
   actions: {
     parseGoggle() {
-      const gistStore = useGistStore()
-      // console.log(gistStore.gist)
+      const { gist, login } = useGistStore()
+
+      if (!gist) {
+        return
+      }
+
       const goggle = new Goggle()
-      goggle.parse((gistStore.gist.files[0] as { text: string }).text)
-      // console.log(goggle.metaData)
+
+      goggle.parse((gist.files[0] as { text: string }).text)
+
+      // console.log(goggle)
 
       const metaData = goggle.metaData
 
       if (typeof metaData.public !== 'boolean') {
-        metaData.public = gistStore.gist.public
+        metaData.public = gist.public
       }
 
-      if (!metaData.description && gistStore.gist.description) {
-        metaData.description = gistStore.gist.description
+      if (!metaData.description && gist.description) {
+        metaData.description = gist.description
       }
 
       if (!metaData.author) {
-        metaData.author = gistStore.login
+        metaData.author = login
       }
 
       if (!metaData.homepage) {
-        metaData.homepage = gistStore.gist.url
+        metaData.homepage = gist.url
       }
 
       if (!metaData.issues) {
-        metaData.issues = gistStore.gist.url + '#comments'
+        metaData.issues = gist.url + '#comments'
       }
 
       function convertActions(
         goggle: Goggle,
-        action: GoggleInstructionActionKey,
+        action: GoggleInstructionActionOptionKey,
       ) {
         return goggle[action].map((inObj): GoggleActionObject => {
           const outObj: GoggleActionObject = {
@@ -153,17 +156,20 @@ export const useGoggleStore = defineStore('goggle', {
       }
     },
     addActionRule(
-      action: GoggleInstructionActionKey,
+      action: GoggleInstructionActionOptionKey,
       rule: GoggleActionObject,
     ) {
       this.goggle.rules[action] = [rule, ...this.goggle.rules[action]]
     },
-    removeActionRule(action: GoggleInstructionActionKey, index: number) {
+    removeActionRule(action: GoggleInstructionActionOptionKey, index: number) {
       this.goggle.rules[action] = this.goggle.rules[action].filter(
         (_, i) => i !== index,
       )
     },
-    duplicateActionRule(action: GoggleInstructionActionKey, index: number) {
+    duplicateActionRule(
+      action: GoggleInstructionActionOptionKey,
+      index: number,
+    ) {
       const clone = { ...this.goggle.rules[action][index] }
       clone.id = uuidv4()
       this.goggle.rules[action] = [
@@ -174,8 +180,8 @@ export const useGoggleStore = defineStore('goggle', {
     },
     changeActionOnRule(
       index: number,
-      sourceAction: GoggleInstructionActionKey,
-      targetAction: GoggleInstructionActionKey,
+      sourceAction: GoggleInstructionActionOptionKey,
+      targetAction: GoggleInstructionActionOptionKey,
     ) {
       const rule = this.goggle.rules[sourceAction][index]
       this.removeActionRule(sourceAction, index)

@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <template v-if="!isLoading && !error && gist && goggle">
-      <goggle-action-bar :gist="gist" class="mb-12">
+      <goggle-action-bar class="mb-12">
         <div class="mb-10 px-2">
           <div
             font="extrabold [heading]"
@@ -41,13 +41,13 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
 import GoggleSingleRulesList from 'components/GoggleSingleRulesList.vue'
-import { computed } from 'vue'
 
 const route = useRoute()
 const { error, isLoading, gist } = storeToRefs(useGistStore())

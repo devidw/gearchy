@@ -2,7 +2,7 @@
   <q-page padding>
     <template v-if="!isLoading && !error && gist && goggle">
       <div class="space-y-10">
-        <goggle-action-bar context="edit" :action="tab" :gist="gist">
+        <goggle-action-bar context="edit" :action="tab">
           <q-tabs
             v-model="tab"
             align="justify"
@@ -62,7 +62,7 @@ import { useGoggleStore } from 'stores/goggle'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
 import GoggleMetaData from 'components/GoggleMetaData.vue'
 import GoggleRules from 'components/GoggleRules.vue'
-import { GoggleInstructionActionKey } from 'goggledy'
+import { GoggleInstructionActionOptionKey } from 'goggledy'
 
 const route = useRoute()
 const tab = ref('meta')
@@ -88,11 +88,11 @@ function onRuleDragEnd() {
   }
 }
 
-function onDrop(evt: DragEvent, action: GoggleInstructionActionKey) {
+function onDrop(evt: DragEvent, action: GoggleInstructionActionOptionKey) {
   // console.log('onDrop')
   const sourceAction = evt.dataTransfer.getData(
     'action',
-  ) as GoggleInstructionActionKey
+  ) as GoggleInstructionActionOptionKey
 
   if (sourceAction === action) {
     return

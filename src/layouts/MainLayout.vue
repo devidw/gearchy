@@ -106,8 +106,7 @@ import { useQuasar } from 'quasar'
 import { useGistStore } from 'stores/gist'
 
 const $q = useQuasar()
-// const rightDrawerOpen = ref(false)
-const rightDrawerOpen = ref(true)
+const rightDrawerOpen = ref(false)
 const version = ref(process.env.VERSION)
 const gistStore = useGistStore()
 const { isLoading, error } = storeToRefs(gistStore)

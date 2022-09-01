@@ -25,12 +25,12 @@ import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
 import GoggleRule from 'components/GoggleRule.vue'
-import { GoggleInstructionActionKey } from 'goggledy'
+import { GoggleInstructionActionOptionKey } from 'goggledy'
 import { GoggleActionObject } from 'src/types'
 import draggable from 'vuedraggable'
 
 const props = defineProps<{
-  action: GoggleInstructionActionKey
+  action: GoggleInstructionActionOptionKey
 }>()
 
 defineEmits(['ruleDragStart', 'ruleDragEnd'])

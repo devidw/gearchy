@@ -120,11 +120,11 @@
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
-import { GoggleInstructionActionKey } from 'goggledy'
+import { GoggleInstructionActionOptionKey } from 'goggledy'
 import { QMenu } from 'quasar'
 
 const props = defineProps<{
-  action: GoggleInstructionActionKey
+  action: GoggleInstructionActionOptionKey
   index: number
 }>()
 const moreMenu = ref<QMenu>()

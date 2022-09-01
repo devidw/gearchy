@@ -1,8 +1,8 @@
+import { Notify } from 'quasar'
 import { defineStore } from 'pinia'
 import { components } from '@octokit/openapi-types'
 import { useGitHubStore } from './github'
 import { useGoggleStore } from './goggle'
-import { Notify } from 'quasar'
 
 type Gist = components['schemas']['base-gist']
 
@@ -20,7 +20,7 @@ export const useGistStore = defineStore('gist', {
       },
     },
     gists: [] as Gist[],
-    gist: null as null | Gist,
+    gist: {} as Gist,
     isLoading: false,
     error: null as null | unknown | Error,
   }),
@@ -186,7 +186,8 @@ export const useGistStore = defineStore('gist', {
         })
         Notify.create({
           type: 'positive',
-          message: 'Goggle updated successfully',
+          message: 'Updated and submitted successfully',
+          caption: 'GitHub gist updated and Brave goggle submitted',
         })
       } catch (e) {
         this.error = e
