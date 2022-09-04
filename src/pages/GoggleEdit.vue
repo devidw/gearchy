@@ -8,7 +8,6 @@
             align="justify"
             indicator-color="transparent"
             content-class="g-tabs"
-            class="mb-10"
           >
             <q-tab name="meta" icon="eva-edit-outline" />
             <q-tab
@@ -88,16 +87,19 @@ function onRuleDragEnd() {
 }
 
 function onDrop(evt: DragEvent, action: GoggleInstructionActionOptionKey) {
-  // console.log('onDrop')
-  const sourceAction = evt.dataTransfer.getData(
-    'action',
-  ) as GoggleInstructionActionOptionKey
+  const evtAction = evt.dataTransfer?.getData('action')
+  const evtIndex = evt.dataTransfer?.getData('index')
 
-  if (sourceAction === action) {
+  if (
+    !evtAction ||
+    !evtIndex ||
+    evtAction === action // Reject drop from into same tab
+  ) {
     return
   }
 
-  const sourceIndex = parseInt(evt.dataTransfer.getData('index'))
+  const sourceAction = evtAction as GoggleInstructionActionOptionKey
+  const sourceIndex = parseInt(evtIndex)
 
   changeActionOnRule(sourceIndex, sourceAction, action)
 

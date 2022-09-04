@@ -1,5 +1,5 @@
 <template>
-  <div text="gray" class="rounded-4 px-4 py-4 bg-stone-8">
+  <div text="gray" class="rounded-4 px-4 py-4 bg-stone-8 space-y-10">
     <div>
       <slot></slot>
     </div>
@@ -12,6 +12,7 @@
           icon="eva-save-outline"
           @click="updateGist()"
         />
+
         <template v-else>
           <q-btn
             round
@@ -38,6 +39,14 @@
         />
       </div>
       <div class="w-1/3 flex justify-end">
+        <q-btn
+          round
+          flat
+          icon="eva-code-download-outline"
+          @click="() => (showCode = !showCode)"
+          :class="{ 'rotate-180 ': showCode }"
+          class="transition-(transform duration-300)"
+        />
         <q-btn round flat icon="eva-cloud-upload-outline" @click="submitGoggle">
           <q-tooltip> Submit Goggle on Brave </q-tooltip>
         </q-btn>
@@ -69,16 +78,31 @@
         </q-btn>
       </div>
     </div>
+    <Transition
+      enter-active-class="transition-(all duration-300)"
+      leave-active-class="transition-(all duration-300)"
+      enter-from-class="opacity-0 -translate-y-3"
+      leave-to-class="opacity-0 -translate-y-3"
+    >
+      <div
+        v-if="showCode"
+        class="bg-stone-7 rounded-4 px-6 py-2 max-h-xl overflow-y-scroll"
+      >
+        <goggle-code />
+      </div>
+    </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { openURL, copyToClipboard, useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import { GoggleActionObject } from 'src/types'
 import CustomDialogVue from './CustomDialog.vue'
+import GoggleCode from 'components/GoggleCode.vue'
 import { v4 as uuidv4 } from 'uuid'
 
 const $q = useQuasar()
@@ -86,6 +110,7 @@ const { updateGist, deleteGist } = useGistStore()
 const { gist } = storeToRefs(useGistStore())
 const { addActionRule } = useGoggleStore()
 const { goggle } = storeToRefs(useGoggleStore())
+const showCode = ref(true)
 
 const props = defineProps(['context', 'action'])
 

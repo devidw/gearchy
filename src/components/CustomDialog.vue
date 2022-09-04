@@ -62,7 +62,7 @@ import { useDialogPluginComponent } from 'quasar'
 type Action = {
   type: 'ok' | 'cancel'
   label?: string
-  payload?: any
+  payload?: object
   class?: string
 }
 

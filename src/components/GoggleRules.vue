@@ -44,9 +44,9 @@ const rules = computed({
   },
 })
 
-function startDrag(evt: CustomEvent, index: number) {
-  evt.dataTransfer.setData('action', props.action)
-  evt.dataTransfer.setData('index', index)
+function startDrag(evt: DragEvent, index: number) {
+  evt.dataTransfer?.setData('action', props.action)
+  evt.dataTransfer?.setData('index', String(index))
 }
 </script>
 

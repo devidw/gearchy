@@ -15,7 +15,7 @@
               <div
                 class="mt-1 font-[heading] font-extrabold tracking-widest uppercase text-(sm gray opacity-50)"
               >
-                Goggledy
+                Gearchy
               </div>
             </div>
           </q-btn>
@@ -150,11 +150,11 @@ const menuLinks = [
 
 const footerLinks = [
   {
-    href: 'https://goggledy.wolf.gdn',
+    href: 'https://gearchy.wolf.gdn',
     icon: 'eva-globe-2-outline',
   },
   {
-    href: 'https://github.com/devidw/goggledy-gui',
+    href: 'https://github.com/devidw/gearchy',
     icon: 'eva-github-outline',
   },
   {

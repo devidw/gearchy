@@ -186,8 +186,8 @@ export const useGistStore = defineStore('gist', {
         })
         Notify.create({
           type: 'positive',
-          message: 'Updated and submitted successfully',
-          caption: 'GitHub gist updated and Brave goggle submitted',
+          message: 'Updated successfully',
+          caption: 'Changes committed to GitHub gist',
         })
       } catch (e) {
         this.error = e

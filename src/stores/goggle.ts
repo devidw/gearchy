@@ -4,6 +4,7 @@ import {
   Goggle,
   GoggleInstruction,
   GoggleInstructionActionOptionKey,
+  GoggleInstructionContextOptionKey,
   GoggleInstructionOptions,
   GoggleMetaData,
   GoggleEmpty,
@@ -28,25 +29,23 @@ export const useGoggleStore = defineStore('goggle', {
     actions(): { key: GoggleInstructionActionOptionKey; icon: string }[] {
       return [
         {
-          key: 'discard',
+          key: GoggleInstructionActionOptionKey.DISCARD,
           icon: 'eva-slash-outline',
         },
         {
-          key: 'boost',
+          key: GoggleInstructionActionOptionKey.BOOST,
           icon: 'eva-arrowhead-up-outline',
         },
         {
-          key: 'downrank',
+          key: GoggleInstructionActionOptionKey.DOWNRANK,
           icon: 'eva-arrowhead-down-outline',
         },
       ]
     },
     stringifiedGoggle(state): string {
-      const goggle = new Goggle()
-      goggle.metaData = state.goggle.metaData
-
-      goggle.lines.push(
-        new GoggleComment(` generator: Goggledy ${process.env.VERSION}`),
+      const goggle = new Goggle(
+        [new GoggleComment(` generator: Gearchy ${process.env.VERSION}`)],
+        state.goggle.metaData,
       )
 
       // Convert action rules to instructions
@@ -65,18 +64,21 @@ export const useGoggleStore = defineStore('goggle', {
           const options = {
             [action as GoggleInstructionActionOptionKey]:
               action === 'discard' ? true : inObj.value,
-            site: inObj.site,
-            inurl: inObj.options?.includes('inurl'),
-            intitle: inObj.options?.includes('intitle'),
-            indescription: inObj.options?.includes('indescription'),
-            incontent: inObj.options?.includes('incontent'),
+            inurl: inObj.options?.includes('inurl') || false,
+            intitle: inObj.options?.includes('intitle') || false,
+            indescription: inObj.options?.includes('indescription') || false,
+            incontent: inObj.options?.includes('incontent') || false,
           } as GoggleInstructionOptions
+
+          if (inObj.site) {
+            options.site = inObj.site
+          }
 
           goggle.lines.push(new GoggleInstruction(inObj.pattern, options))
         })
       })
 
-      return goggle.stringify()
+      return goggle.toString()
     },
   },
 
@@ -88,11 +90,7 @@ export const useGoggleStore = defineStore('goggle', {
         return
       }
 
-      const goggle = new Goggle()
-
-      goggle.parse((gist.files[0] as { text: string }).text)
-
-      // console.log(goggle)
+      const goggle = Goggle.parse((gist.files[0] as { text: string }).text)
 
       const metaData = goggle.metaData
 
@@ -120,7 +118,13 @@ export const useGoggleStore = defineStore('goggle', {
         goggle: Goggle,
         action: GoggleInstructionActionOptionKey,
       ) {
-        return goggle[action].map((inObj): GoggleActionObject => {
+        const key =
+          action === 'discard'
+            ? 'discards'
+            : action === 'boost'
+            ? 'boosts'
+            : 'downranks'
+        return goggle[key].map((inObj): GoggleActionObject => {
           const outObj: GoggleActionObject = {
             id: uuidv4(),
             pattern: inObj.pattern,
@@ -132,15 +136,15 @@ export const useGoggleStore = defineStore('goggle', {
             outObj.value = inObj.options[action] as number
           }
 
-          for (const option in inObj.options) {
+          Object.keys(inObj.options).forEach((optionKey) => {
             if (
-              ['inurl', 'intitle', 'indescription', 'incontent'].includes(
-                option,
+              Object.values(GoggleInstructionContextOptionKey).includes(
+                optionKey as GoggleInstructionContextOptionKey,
               )
             ) {
-              outObj.options?.push(option)
+              outObj.options?.push(optionKey)
             }
-          }
+          })
 
           return outObj
         })
@@ -149,9 +153,15 @@ export const useGoggleStore = defineStore('goggle', {
       this.goggle = {
         metaData: metaData,
         rules: {
-          discard: convertActions(goggle, 'discard'),
-          boost: convertActions(goggle, 'boost'),
-          downrank: convertActions(goggle, 'downrank'),
+          discard: convertActions(
+            goggle,
+            GoggleInstructionActionOptionKey.DISCARD,
+          ),
+          boost: convertActions(goggle, GoggleInstructionActionOptionKey.BOOST),
+          downrank: convertActions(
+            goggle,
+            GoggleInstructionActionOptionKey.DOWNRANK,
+          ),
         },
       }
     },

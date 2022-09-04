@@ -1,8 +1,8 @@
 {
-  "name": "goggledy-gui",
+  "name": "gearchy",
   "version": "0.1.0",
   "description": "Graphical user interface to interact with search goggles.",
-  "productName": "Goggledy",
+  "productName": "Gearchy",
   "author": "David Wolf <d@wolf.gdn>",
   "private": true,
   "scripts": {

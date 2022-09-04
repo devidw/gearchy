@@ -186,7 +186,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'goggledy',
+        appId: 'gearchy',
       },
     },
 

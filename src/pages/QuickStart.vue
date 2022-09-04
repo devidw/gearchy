@@ -73,14 +73,14 @@ const checkQs = ref([
     label: 'I have got a GitHub account',
     help: 'You can sign up for one at <a href="https://github.com/signup" target="_blank">github.com/signup</a>.',
     whyUrl:
-      'https://github.com/devidw/goggledy-gui/blob/master/faq.adoc#why-do-i-need-a-github-account',
+      'https://github.com/devidw/gearchy/blob/master/faq.adoc#why-do-i-need-a-github-account',
   },
   {
     val: 'token',
     label: 'I have got a GitHub personal access token with gist scope',
     help: 'Have a look into the <a href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token" target="_blank">GitHub docs</a> to check out how to create one.',
     whyUrl:
-      'https://github.com/devidw/goggledy-gui/blob/master/faq.adoc#why-do-i-need-a-personal-access-token',
+      'https://github.com/devidw/gearchy/blob/master/faq.adoc#why-do-i-need-a-personal-access-token',
   },
 ])
 
