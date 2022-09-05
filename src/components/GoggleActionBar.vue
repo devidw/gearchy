@@ -4,7 +4,7 @@
       <slot></slot>
     </div>
     <div flex>
-      <div class="w-1/3">
+      <div class="w-2/5">
         <q-btn
           v-if="context === 'edit'"
           round
@@ -29,7 +29,7 @@
           />
         </template>
       </div>
-      <div class="w-1/3 flex justify-center">
+      <div class="w-1/5 flex justify-center">
         <q-btn
           v-if="action && action !== 'meta'"
           round
@@ -38,7 +38,14 @@
           @click="addRule()"
         />
       </div>
-      <div class="w-1/3 flex justify-end">
+      <div class="w-2/5 flex justify-end">
+        <q-btn
+          v-if="showCode"
+          round
+          flat
+          icon="eva-copy-outline"
+          @click="copyCode()"
+        />
         <q-btn
           round
           flat
@@ -109,8 +116,8 @@ const $q = useQuasar()
 const { updateGist, deleteGist } = useGistStore()
 const { gist } = storeToRefs(useGistStore())
 const { addActionRule } = useGoggleStore()
-const { goggle } = storeToRefs(useGoggleStore())
-const showCode = ref(true)
+const { goggle, stringifiedGoggle } = storeToRefs(useGoggleStore())
+const showCode = ref(false)
 
 const props = defineProps(['context', 'action'])
 
@@ -137,6 +144,16 @@ function deleteGoggle() {
       message: 'This will also permanently delete the associated Gist.',
     },
   }).onOk(deleteGist)
+}
+
+function copyCode() {
+  copyToClipboard(stringifiedGoggle.value)
+  $q.notify({
+    message: 'Goggle code copied to clipboard',
+    type: 'positive',
+    position: 'top',
+    timeout: 1000,
+  })
 }
 
 function submitGoggle() {

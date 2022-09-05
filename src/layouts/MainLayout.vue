@@ -87,7 +87,7 @@
             class="px-3 pb-3 flex justify-between opacity-35 font-(mono)"
             text="end [10px]"
           >
-            <div>Goggledy {{ version }}</div>
+            <div>Gearchy {{ version }}</div>
             <div>&copy; {{ new Date().getFullYear() }}</div>
           </div>
         </div>

@@ -12,6 +12,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@highlightjs/vue-plugin": "^2.1.2",
     "@octokit/core": "^4.0.4",
     "@octokit/openapi-types": "^13.2.0",
     "@octokit/types": "^7.1.0",
@@ -19,6 +20,8 @@
     "@types/uuid": "^8.3.4",
     "@unocss/preset-icons": "^0.45.13",
     "goggledy": "link:../goggledy",
+    "highlightjs-goggles": "link:../highlightjs-goggles",
+    "highlight.js": "^11.6.0",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
     "uuid": "^8.3.2",
