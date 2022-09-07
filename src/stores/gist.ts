@@ -25,7 +25,11 @@ export const useGistStore = defineStore('gist', {
     error: null as null | unknown | Error,
   }),
 
-  getters: {},
+  getters: {
+    gistUrlWithLogin(state) {
+      return `https://gist.github.com/${state.login}/${state.gist.id}`
+    },
+  },
 
   actions: {
     resetGists() {

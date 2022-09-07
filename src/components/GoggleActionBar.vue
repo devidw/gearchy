@@ -10,7 +10,7 @@
           round
           flat
           icon="eva-save-outline"
-          @click="updateGist()"
+          @click="updateAndMybSubmitGoggle()"
         />
 
         <template v-else>
@@ -54,7 +54,13 @@
           :class="{ 'rotate-180 ': showCode }"
           class="transition-(transform duration-300)"
         />
-        <q-btn round flat icon="eva-cloud-upload-outline" @click="submitGoggle">
+        <q-btn
+          v-if="!hasApiUrl"
+          round
+          flat
+          icon="eva-cloud-upload-outline"
+          @click="manuallySubmitGoggle"
+        >
           <q-tooltip> Submit Goggle on Brave </q-tooltip>
         </q-btn>
         <q-btn
@@ -62,7 +68,7 @@
           flat
           icon="eva-search-outline"
           :href="`https://search.brave.com/goggles?goggles_id=${encodeURIComponent(
-            gist.url,
+            gistUrlWithLogin,
           )}`"
           target="_blank"
         >
@@ -74,13 +80,18 @@
           flat
           icon="eva-external-link-outline"
           :href="`https://search.brave.com/goggles/discover?goggles_id=${encodeURIComponent(
-            gist.url,
+            gistUrlWithLogin,
           )}`"
           target="_blank"
         >
           <q-tooltip> View Goggle's about page on Brave </q-tooltip>
         </q-btn>
-        <q-btn round flat icon="eva-github-outline" @click="openURL(gist.url)">
+        <q-btn
+          round
+          flat
+          icon="eva-github-outline"
+          @click="openURL(gistUrlWithLogin)"
+        >
           <q-tooltip> Open gist on GitHub </q-tooltip>
         </q-btn>
       </div>
@@ -103,10 +114,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { openURL, copyToClipboard, useQuasar } from 'quasar'
+import { openURL, copyToClipboard, useQuasar, Notify } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
+import { useBraveSubmissionProxyStore } from 'stores/brave-api-proxy'
 import { GoggleActionObject } from 'src/types'
 import CustomDialogVue from './CustomDialog.vue'
 import GoggleCode from 'components/GoggleCode.vue'
@@ -114,9 +126,11 @@ import { v4 as uuidv4 } from 'uuid'
 
 const $q = useQuasar()
 const { updateGist, deleteGist } = useGistStore()
-const { gist } = storeToRefs(useGistStore())
+const { gist, gistUrlWithLogin } = storeToRefs(useGistStore())
 const { addActionRule } = useGoggleStore()
 const { goggle, stringifiedGoggle } = storeToRefs(useGoggleStore())
+const { hasApiUrl } = storeToRefs(useBraveSubmissionProxyStore())
+const { submitGoggle } = useBraveSubmissionProxyStore()
 const showCode = ref(false)
 
 const props = defineProps(['context', 'action'])
@@ -136,16 +150,6 @@ function addRule() {
   addActionRule(props.action, actionObj)
 }
 
-function deleteGoggle() {
-  $q.dialog({
-    component: CustomDialogVue,
-    componentProps: {
-      title: 'Delete this Goggle?',
-      message: 'This will also permanently delete the associated Gist.',
-    },
-  }).onOk(deleteGist)
-}
-
 function copyCode() {
   copyToClipboard(stringifiedGoggle.value)
   $q.notify({
@@ -156,13 +160,31 @@ function copyCode() {
   })
 }
 
-function submitGoggle() {
+function deleteGoggle() {
   $q.dialog({
     component: CustomDialogVue,
     componentProps: {
-      title: 'Submit Goggle',
+      title: 'Delete this Goggle?',
+      message: 'This will also permanently delete the associated Gist.',
+    },
+  }).onOk(deleteGist)
+}
+
+async function updateAndMybSubmitGoggle() {
+  await updateGist()
+
+  if (hasApiUrl.value) {
+    submitGoggle(gistUrlWithLogin.value)
+  }
+}
+
+function manuallySubmitGoggle() {
+  $q.dialog({
+    component: CustomDialogVue,
+    componentProps: {
+      title: 'Manually Submit Goggle',
       message:
-        'Due to CORS restrictions, this can only be done manually. The goggle URL will be copied to your clipboard. And you will be redirected to the Goggle submission page on Brave.',
+        'The goggle URL will be copied to your clipboard. And you will be redirected to the Goggle submission page on Brave. For automated submissions, please refer to the FAQ.',
     },
   }).onOk(async () => {
     await copyToClipboard(gist.value.url)
