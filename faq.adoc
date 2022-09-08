@@ -1,19 +1,27 @@
 = FAQ
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
 :hide-uri-scheme:
+:product: Gearchy
 
 == Why do I need a GitHub account?
 
 Brave Search currently supports goggles only when hosted on GitHub (public files and
-gists) and GitLab (public files and snippets)
+gists) and GitLab (public files and snippets).
 
-Gearchy integrates with GitHub Gists to access and permanently store your goggles
+{product} integrates with GitHub Gists to access and permanently store your goggles.
 
 
 == Why do I need a personal access token?
 
-Gearchy is a client side only application and therefore can't implement the
+{product} is a client side only application and therefore can't implement the
 OAuth's authentication flow securely since client ID and secret can't be stored
-in a protected environment. Because of that, Gearchy uses the authentication
+in a protected environment. Because of that, {product} uses the authentication
 token authentication provided by the GitHub API.
 
 
@@ -22,41 +30,41 @@ token authentication provided by the GitHub API.
 Once you have updated a goggle inside Geachy, you need to manually submit its URL to Brave Search on
 https://search.brave.com/goggles/create to update it there as well.
 
-However, this does not make much fun and therefore Gearchy can do it for you, if
+However, this does not make much fun and therefore {product} can do it for you, if
 you configure it to do so.
 
 To automate the process, an API call needs to be made to the Brave Search API.
 Unfortunately, this API comes with CORS restrictions and therefore can't be
-accessed from a browser environment, in which a web application like Gearchy is
+accessed from a browser environment, in which a web application like {product} is
 running.
 
-A custom backend that acts as a proxy between Gearchy and the Brave Search API
+A custom backend that acts as a proxy between {product} and the Brave Search API
 is required for this. CORS restrictions don't apply here since the backend is
 not running in a browser environment.
 
-Gearchy comes with no API proxy configured by default.
+{product} comes with no API proxy configured by default.
 
-But you can easily add the following proxy, which is provided by the Gearchy author:
+But you can easily add the following proxy, which is provided by the {product} author:
 
 [source]
 ----
 https://submit.gearchy.wolf.gdn/submit?url=%s
 ----
 
-Note that the API proxy is not required for Gearchy to work. It's only purpose
-is to automate the process of submitting goggles to Brave Search. If you don't
-want an external service to handle your goggle URLs (including private ones), you
-can either submit them manually or set up your own API proxy.
-
 The source of the proxy is available at
 https://github.com/devidw/brave-goggles-api-proxy, feel free to fork it and
 adjust it to your needs.
 
-Even running it locally entirely on your machine is possible:
+Even running it locally on your machine is possible:
 
 [source]
 ----
 http://127.0.0.1:8000/submit?url=%s
 ----
+
+NOTE: The API proxy is not required for {product} to work. It's only purpose
+is to automate the process of submitting goggles to Brave Search. If you don't
+want an external service to handle your goggle URLs (including private ones), you
+can either submit them manually or set up your own API proxy.
 
 //
