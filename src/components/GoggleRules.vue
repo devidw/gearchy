@@ -33,7 +33,10 @@ const props = defineProps<{
   action: GoggleInstructionActionOptionKey
 }>()
 
-defineEmits(['ruleDragStart', 'ruleDragEnd'])
+defineEmits<{
+  (e: 'ruleDragStart'): void
+  (e: 'ruleDragEnd'): void
+}>()
 
 const { goggle } = storeToRefs(useGoggleStore())
 

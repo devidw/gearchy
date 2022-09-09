@@ -1,21 +1,22 @@
 <template>
-  <div class="transition" text="stone-3">
+  <div class="transition text-(stone-3)">
     <div
-      class="min-h-20 px-7 py-4 rounded-4 flex items-center cursor-pointer tracking-wide font-[heading]"
-      bg="stone-8"
-      text="xl"
-      font="bold"
-      @click="$router.push(`/goggle/${id}`)"
+      class="g-box px-7 py-4 min-h-20 flex items-center cursor-pointer tracking-wide font-[heading] text-xl font-bold"
+      @click="$router.push(`/goggle/${gist.id}`)"
     >
       <q-icon
-        :name="public ? 'eva-eye-outline' : 'eva-eye-off-outline'"
+        :name="gist.public ? 'eva-eye-outline' : 'eva-eye-off-outline'"
         class="mr-3 opacity-50"
       />
-      {{ description || 'Untitled' }}
+      {{ gist.description || 'Untitled' }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps(['id', 'description', 'public'])
+import { Gist } from 'stores/gist'
+
+defineProps<{
+  gist: Gist
+}>()
 </script>

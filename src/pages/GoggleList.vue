@@ -28,19 +28,25 @@
       </template>
     </custom-page-header>
 
-    <div v-if="gists" class="card-list space-y-4">
-      <GoggleCard v-for="(gist, i) of gists" :key="i" v-bind="gist" />
-    </div>
+    <template v-if="gists.length">
+      <div class="card-list space-y-4">
+        <GoggleCard v-for="(gist, i) of gists" :key="i" :gist="gist" />
+      </div>
 
-    <div
-      v-if="gists.length && pagination.pageInfo.hasNextPage"
-      text="gray center opacity-50"
-      class="pt-6"
-    >
-      <q-btn flat round icon="eva-more-horizontal-outline" @click="fetchGists">
-        <q-tooltip> Load more goggles </q-tooltip>
-      </q-btn>
-    </div>
+      <div
+        v-if="pagination.pageInfo.hasNextPage"
+        class="pt-6 text-(gray center opacity-50)"
+      >
+        <q-btn
+          flat
+          round
+          icon="eva-more-horizontal-outline"
+          @click="fetchGists"
+        >
+          <q-tooltip> Load more goggles </q-tooltip>
+        </q-btn>
+      </div>
+    </template>
   </q-page>
 </template>
 
@@ -55,8 +61,6 @@ import CustomDialogVue from 'components/CustomDialog.vue'
 const $q = useQuasar()
 const { login, gists, pagination } = storeToRefs(useGistStore())
 const { resetGists, fetchGists, createGist } = useGistStore()
-
-fetchGists()
 
 function createGoggle() {
   $q.dialog({
@@ -85,6 +89,8 @@ function createGoggle() {
     },
   }).onOk(({ isPublic }) => createGist(isPublic))
 }
+
+fetchGists()
 </script>
 
 <style scoped lang="sass">

@@ -25,7 +25,7 @@
           dense
           round
           flat
-          text="gray opacity-50"
+          class="text-(gray opacity-50)"
           icon="eva-menu-arrow-outline"
           @click="toggleRightDrawer"
         />
@@ -47,12 +47,11 @@
               round
               dense
               icon="eva-menu-arrow-outline"
-              text="gray opacity-50"
-              style="transform: rotate(180deg)"
+              class="text-(gray opacity-50) rotate-180"
               @click="() => (rightDrawerOpen = false)"
             />
           </q-item>
-          <q-separator class="my-4" bg="transparent" />
+          <q-separator class="my-4 bg-transparent" />
           <q-item
             v-for="(link, i) of menuLinks"
             :key="i"
@@ -84,8 +83,7 @@
           </div>
 
           <div
-            class="px-3 pb-3 flex justify-between opacity-35 font-(mono)"
-            text="end [10px]"
+            class="px-3 pb-3 flex justify-between opacity-35 font-(mono) text-(end [10px])"
           >
             <div>Gearchy {{ version }}</div>
             <div>&copy; {{ new Date().getFullYear() }}</div>

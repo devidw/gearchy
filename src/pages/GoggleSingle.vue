@@ -5,19 +5,17 @@
         <goggle-action-bar>
           <div class="px-2">
             <div
-              font="extrabold [heading]"
-              text="3xl stone-3"
-              class="mb-2 tracking-wider"
+              class="mb-2 tracking-wider font-(extrabold [heading]) text-(3xl stone-3)"
             >
               {{ goggle.metaData?.name || 'Untitled' }}
             </div>
-            <div text="stone-4" class="leading-snug w-1/2">
+            <div class="leading-snug w-1/2 text-(stone-4)">
               {{ goggle.metaData?.description || 'No description' }}
             </div>
           </div>
         </goggle-action-bar>
 
-        <div class="space-y-6 md:space-y-0 md:space-x-5 md:flex">
+        <div class="lt-md:space-y-6 md:(space-x-5 flex)">
           <template v-for="(action, i) in filteredActions" :key="i">
             <div class="md:w-1/3">
               <q-expansion-item
@@ -26,11 +24,11 @@
                   goggle.rules[action.key].length > 1 ? 's' : ''
                 }`"
                 :icon="action.icon"
-                header-class="px-6 py-4 font-([heading] bold) text-(lg stone-3)
-            tracking-wide capitalize"
-                class="bg-stone-8 rounded-4 overflow-hidden"
                 expand-icon="eva-plus-circle-outline"
                 expanded-icon="eva-minus-circle-outline"
+                class="g-box overflow-hidden"
+                header-class="px-6 py-4 font-([heading] bold) text-(lg stone-3)
+                tracking-wide capitalize"
               >
                 <goggle-single-rules-list :rules="goggle.rules[action.key]" />
               </q-expansion-item>

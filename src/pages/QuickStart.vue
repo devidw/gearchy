@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="flex justify-center items-center">
-    <div class="bg-stone-8 rounded-4 px-6 pt-12 pb-16 w-lg space-y-10">
+    <div class="g-box px-6 pt-12 pb-16 w-lg space-y-10">
       <div class="text-(center) space-y-3">
         <img src="../assets/logo.svg" width="80" />
         <div class="g-heading">Quickstart</div>

@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import { LocalStorage, Notify } from 'quasar'
+import { useStorage } from '@vueuse/core'
+import { Notify } from 'quasar'
 
 export const useBraveSubmissionProxyStore = defineStore(
   'braveSubmissionProxy',
   {
     state: () => ({
-      apiUrl: LocalStorage.getItem('braveSubmissionProxyApiUrl'),
+      apiUrl: useStorage('braveSubmissionProxyApiUrl', ''),
     }),
     getters: {
       hasApiUrl(state) {
@@ -13,10 +14,6 @@ export const useBraveSubmissionProxyStore = defineStore(
       },
     },
     actions: {
-      saveApiUrl(apiUrl: string) {
-        LocalStorage.set('braveSubmissionProxyApiUrl', apiUrl)
-        this.apiUrl = apiUrl
-      },
       async submitGoggle(url: string) {
         if (!this.hasApiUrl) {
           return

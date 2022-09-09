@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
-import { LocalStorage } from 'quasar'
+import { useStorage } from '@vueuse/core'
 import { Octokit } from 'https://cdn.skypack.dev/octokit'
 
 export const useGitHubStore = defineStore('github', {
   state: () => ({
-    accessToken: LocalStorage.getItem('accessToken'),
+    accessToken: useStorage('accessToken', ''),
   }),
 
   getters: {
@@ -14,10 +14,6 @@ export const useGitHubStore = defineStore('github', {
   },
 
   actions: {
-    saveAccessToken(accessToken: string) {
-      LocalStorage.set('accessToken', accessToken)
-      this.accessToken = accessToken
-    },
     /**
      * make request and see if success also check the scope x-header to see if it contains the required gist scope
      */

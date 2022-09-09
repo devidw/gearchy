@@ -1,5 +1,5 @@
 <template>
-  <div text="gray" class="flex justify-between mb-8">
+  <div class="flex justify-between mb-8 text-(gray)">
     <div class="g-heading">
       <slot name="title" />
     </div>

@@ -1,16 +1,14 @@
 <template>
-  <div class="bg-stone-8 rounded-4 p-5">
+  <div class="g-box p-5">
     <div class="flex">
       <q-input
-        font="extrabold [heading]"
-        text="3xl !stone-3"
-        class="tracking-wider w-full"
-        input-class="!leading-snug !pt-0"
         v-model="goggle.metaData.name"
         type="text"
         placeholder="Name"
         borderless
         autogrow
+        class="tracking-wider w-full font-(extrabold [heading]) text-3xl"
+        input-class="!leading-snug !pt-0 !text-stone-3"
       >
         <template v-slot:prepend>
           <q-icon
@@ -34,7 +32,7 @@
         placeholder="Description"
         autogrow
         borderless
-        text="!stone-4"
+        class="!text-stone-4"
         input-class="leading-snug !pt-0"
       />
       <q-input
@@ -42,17 +40,17 @@
         type="text"
         placeholder="author"
         borderless
+        prefix="by"
         class="sm:-mt-10"
         input-class="!text-stone-4"
-        prefix="by"
       />
 
       <div v-if="pref.editor.showAdvanced" class="space-y-2 mt-6">
         <q-input
           v-model="goggle.metaData.avatar"
           label="Avatar"
-          class="-ml-8.5"
           borderless
+          class="-ml-8.5"
         >
           <template v-slot:prepend>
             <q-icon name="eva-color-picker-outline" class="cursor-pointer">

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-stone-8 rounded-4 px-4 py-2 font-mono flex justify-between">
+  <div class="g-box px-4 py-2 font-mono flex justify-between">
     <div
       class="w-1/12 flex justify-center items-center"
       :class="{
@@ -8,7 +8,7 @@
         '-mt-1 -mb-1': action === 'discard',
       }"
     >
-      <template v-if="hasSlider()">
+      <template v-if="action !== 'discard'">
         <q-btn
           flat
           round
@@ -18,7 +18,7 @@
           :icon="action === 'boost' ? actions[1].icon : actions[2].icon"
         />
         <span class="text-xs text-gray">
-          {{ ruleValue }}
+          {{ rule.value }}
         </span>
       </template>
       <q-icon
@@ -32,7 +32,7 @@
     <div class="w-5/12 flex items-center">
       <div class="w-full -space-y-5">
         <q-input
-          v-model="goggle.rules[action][index].site"
+          v-model="rule.site"
           type="text"
           autogrow
           placeholder="Site"
@@ -42,7 +42,7 @@
           class="w-full"
         />
         <q-input
-          v-model="goggle.rules[action][index].pattern"
+          v-model="rule.pattern"
           type="text"
           autogrow
           placeholder="Pattern"
@@ -56,10 +56,9 @@
 
     <div class="w-5/12 flex items-end">
       <q-select
-        v-if="hasPattern()"
-        v-model="goggle.rules[action][index].options"
+        v-if="rule.pattern"
+        v-model="rule.options"
         :options="options"
-        class="g-select w-full h-full flex items-end"
         hide-dropdown-icon
         multiple
         borderless
@@ -68,6 +67,7 @@
         emit-value
         map-options
         dense
+        class="g-select w-full h-full flex items-end"
       >
         <template v-slot:selected-item="scope">
           <q-chip
@@ -79,6 +79,10 @@
             class="!text-gray font-medium text-xs bg-stone-7"
           />
         </template>
+        <q-tooltip anchor="center middle" self="center middle" class="w-50">
+          Rule runs aginst the URL by default. May be changed to other context
+          options once available in search engines.
+        </q-tooltip>
       </q-select>
     </div>
 
@@ -117,7 +121,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
@@ -127,36 +131,44 @@ const props = defineProps<{
   action: GoggleInstructionActionOptionKey
   index: number
 }>()
+
 const moreMenu = ref<QMenu>()
-
-const { goggle, actions } = storeToRefs(useGoggleStore())
-const { removeActionRule, duplicateActionRule } = useGoggleStore()
-
 const options = ref([
-  { label: 'URL', value: 'inurl' },
+  { label: 'URL', value: 'inurl', disable: true },
   { label: 'Title', value: 'intitle', disable: true },
   { label: 'Description', value: 'indescription', disable: true },
   { label: 'Content', value: 'incontent', disable: true },
 ])
 
-const ruleValue = computed({
-  get: () => goggle.value.rules[props.action][props.index].value || 2,
-  set: (value: number) => {
-    goggle.value.rules[props.action][props.index].value = value
-  },
+const { goggle, actions } = storeToRefs(useGoggleStore())
+const { removeActionRule, duplicateActionRule } = useGoggleStore()
+
+const rule = computed(() => goggle.value.rules[props.action][props.index])
+
+watchEffect(() => {
+  // Default to 'inurl' option, if a pattern is provided
+  if (
+    rule.value.pattern &&
+    (!rule.value.options || !rule.value.options.length)
+  ) {
+    rule.value.options = ['inurl']
+  }
+
+  // Empty options, if no pattern is provided
+  if (!rule.value.pattern && rule.value.options?.length) {
+    rule.value.options = []
+  }
 })
 
 function shiftRuleValue() {
-  if (ruleValue.value === 10) {
-    ruleValue.value = 1
+  if (!rule.value.value) {
+    return
+  } else if (rule.value.value === 10) {
+    rule.value.value = 1
   } else {
-    ruleValue.value++
+    rule.value.value++
   }
 }
-
-const hasSlider = () => props.action !== 'discard'
-const hasPattern = () =>
-  goggle.value.rules[props.action][props.index].pattern !== ''
 </script>
 
 <style lang="sass">

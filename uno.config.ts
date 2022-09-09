@@ -1,14 +1,15 @@
-import { defineConfig } from 'unocss'
-import transformerDirective from '@unocss/transformer-directives'
-import transformerVariantGroup from '@unocss/transformer-variant-group'
-import presetUno from '@unocss/preset-uno'
-import presetAttributify from '@unocss/preset-attributify'
-import presetIcons from '@unocss/preset-icons'
+import {
+  defineConfig,
+  presetUno,
+  transformerDirectives,
+  transformerVariantGroup,
+} from 'unocss'
 
 export default defineConfig({
-  presets: [presetUno(), presetAttributify(), presetIcons()],
-  transformers: [transformerDirective(), transformerVariantGroup()],
+  presets: [presetUno()],
+  transformers: [transformerDirectives(), transformerVariantGroup()],
   shortcuts: {
     'g-heading': 'font-(bold [heading]) text-(3xl gray) tracking-wide',
+    'g-box': 'bg-stone-8 rounded-4',
   },
 })

@@ -7,19 +7,16 @@
     transition-duration="500"
   >
     <q-card class="pa-2 pt-4 w-70 !rounded-xl">
-      <q-card-section text="center" class="mb-6">
+      <q-card-section class="mb-6 text-(center)">
         <div
           v-if="title"
-          class="mb-3 tracking-wide"
-          text="lg stone-1"
-          font="extrabold"
+          class="mb-3 tracking-wide text-(lg stone-1) font-(extrabold)"
         >
           {{ title }}
         </div>
         <div
           v-if="message"
-          class="tracking-wider leading-normal"
-          text="sm stone-3"
+          class="tracking-wider leading-normal text-(sm stone-3)"
         >
           {{ message }}
         </div>
@@ -59,20 +56,21 @@
 <script lang="ts" setup>
 import { useDialogPluginComponent } from 'quasar'
 
-type Action = {
+export type Action = {
   type: 'ok' | 'cancel'
   label?: string
   payload?: object
   class?: string
 }
 
-defineProps({
-  title: String,
-  message: String,
-  actions: {
-    type: Array as () => Action[],
-    default: () => [{ type: 'ok' }, { type: 'cancel' }],
-  },
+export interface Props {
+  title?: string
+  message?: string
+  actions: Action[]
+}
+
+withDefaults(defineProps<Props>(), {
+  actions: () => [{ type: 'ok' }, { type: 'cancel' }],
 })
 
 defineEmits([...useDialogPluginComponent.emits])

@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
@@ -61,18 +61,17 @@ import { useGoggleStore } from 'stores/goggle'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
 import GoggleMetaData from 'components/GoggleMetaData.vue'
 import GoggleRules from 'components/GoggleRules.vue'
+import { GoggleEditTab } from 'src/types'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
 
 const route = useRoute()
-const tab = ref('meta')
-const shouldSwitchTabTo = ref('')
+const tab: Ref<GoggleEditTab> = ref('meta')
+const shouldSwitchTabTo: Ref<GoggleEditTab | undefined> = ref(undefined)
 const isDragging = ref(false)
 const { error, isLoading, gist } = storeToRefs(useGistStore())
 const { goggle, actions } = storeToRefs(useGoggleStore())
 const { changeActionOnRule } = useGoggleStore()
 const { fetchGist } = useGistStore()
-
-fetchGist(route.params.id as string)
 
 function onRuleDragStart() {
   isDragging.value = true
@@ -82,7 +81,7 @@ function onRuleDragEnd() {
   isDragging.value = false
   if (shouldSwitchTabTo.value) {
     tab.value = shouldSwitchTabTo.value
-    shouldSwitchTabTo.value = ''
+    shouldSwitchTabTo.value = undefined
   }
 }
 
@@ -109,6 +108,8 @@ function onDrop(evt: DragEvent, action: GoggleInstructionActionOptionKey) {
   // Therefore we remember the action to switch to and do it after the drag has ended.
   shouldSwitchTabTo.value = action
 }
+
+fetchGist(route.params.id as string)
 </script>
 
 <style lang="sass">

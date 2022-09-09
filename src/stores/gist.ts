@@ -4,37 +4,33 @@ import { components } from '@octokit/openapi-types'
 import { useGitHubStore } from './github'
 import { useGoggleStore } from './goggle'
 
-type Gist = components['schemas']['base-gist']
+export type Gist = components['schemas']['base-gist']
 
 const api = useGitHubStore().api
 
 export const useGistStore = defineStore('gist', {
   state: () => ({
-    login: '',
+    login: undefined as string | undefined,
     pagination: {
       gistsPerPage: 100,
       gogglesPerPage: 10,
       pageInfo: {
-        endCursor: null,
+        endCursor: undefined,
         hasNextPage: true,
       },
     },
     gists: [] as Gist[],
     gist: {} as Gist,
     isLoading: false,
-    error: null as null | unknown | Error,
+    error: undefined as Error | unknown | undefined,
   }),
 
-  getters: {
-    gistUrlWithLogin(state) {
-      return `https://gist.github.com/${state.login}/${state.gist.id}`
-    },
-  },
+  getters: {},
 
   actions: {
     resetGists() {
       this.gists = []
-      this.pagination.pageInfo.endCursor = null
+      this.pagination.pageInfo.endCursor = undefined
       this.pagination.pageInfo.hasNextPage = true
     },
     async fetchGists() {
@@ -43,7 +39,7 @@ export const useGistStore = defineStore('gist', {
       }
 
       this.isLoading = true
-      this.error = null
+      this.error = undefined
 
       try {
         const {
@@ -109,7 +105,7 @@ export const useGistStore = defineStore('gist', {
     },
     async fetchGist(id: string) {
       this.isLoading = true
-      this.error = null
+      this.error = undefined
       this.gist = {} as Gist
       try {
         const {
@@ -133,9 +129,14 @@ export const useGistStore = defineStore('gist', {
           { name: id },
         )
 
-        if (gist === null) {
+        if (gist === undefined) {
           throw new Error("Gist doesn't exist")
         }
+
+        // GitHub API returns a URL of the form https://gist.github.com/id but
+        // brave search works with https://gist.github.com/login/id, so we need
+        // to mutate it here
+        gist.url = `https://gist.github.com/${login}/${id}`
 
         this.login = login
         this.gist = gist
@@ -149,7 +150,7 @@ export const useGistStore = defineStore('gist', {
     },
     async createGist(isPublic: boolean) {
       this.isLoading = true
-      this.error = null
+      this.error = undefined
       // Reload gists list with new gist
       this.pagination.pageInfo.hasNextPage = true
       this.gist = {} as Gist
@@ -198,7 +199,7 @@ export const useGistStore = defineStore('gist', {
       }
     },
     async deleteGist() {
-      this.error = null
+      this.error = undefined
       try {
         this.gists = this.gists.filter((gist: Gist) => gist.id !== this.gist.id)
         this.router.push('/')
