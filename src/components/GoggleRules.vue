@@ -1,23 +1,11 @@
 <template>
-  <div class="space-y-10">
-    <draggable
-      v-model="rules"
-      item-key="id"
-      class="space-y-5"
-      :group="action"
-      @start="$emit('ruleDragStart')"
-      @end="$emit('ruleDragEnd')"
-    >
-      <template #item="{ index }">
-        <goggle-rule
-          :action="action"
-          :index="index"
-          class="cursor-move"
-          @dragstart="startDrag($event, index)"
-        />
-      </template>
-    </draggable>
-  </div>
+  <RecycleScroller :items="rules" :item-size="100" v-slot="{ index }">
+    <goggle-rule
+      :action="action"
+      :index="index"
+      @rule-action-change="$emit('ruleActionChange', $event)"
+    />
+  </RecycleScroller>
 </template>
 
 <script setup lang="ts">
@@ -27,15 +15,15 @@ import { useGoggleStore } from 'stores/goggle'
 import GoggleRule from 'components/GoggleRule.vue'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
 import { GoggleActionObject } from 'src/types'
-import draggable from 'vuedraggable'
+import { RecycleScroller } from 'vue-virtual-scroller'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey
 }>()
 
 defineEmits<{
-  (e: 'ruleDragStart'): void
-  (e: 'ruleDragEnd'): void
+  (e: 'ruleActionChange', action: GoggleInstructionActionOptionKey): void
 }>()
 
 const { goggle } = storeToRefs(useGoggleStore())
@@ -46,11 +34,6 @@ const rules = computed({
     goggle.value.rules[props.action] = value
   },
 })
-
-function startDrag(evt: DragEvent, index: number) {
-  evt.dataTransfer?.setData('action', props.action)
-  evt.dataTransfer?.setData('index', String(index))
-}
 </script>
 
 <style lang="sass">

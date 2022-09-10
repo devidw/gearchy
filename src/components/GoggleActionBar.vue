@@ -129,21 +129,6 @@ const props = defineProps<{
   action: GoggleEditTab
 }>()
 
-function addRule() {
-  const actionObj: GoggleActionObject = {
-    id: uuidv4(),
-    pattern: '',
-    site: '',
-    options: [],
-  }
-
-  if (props.action !== 'discard') {
-    actionObj.value = 2
-  }
-
-  addActionRule(props.action as GoggleInstructionActionOptionKey, actionObj)
-}
-
 function copyCode() {
   copyToClipboard(stringifiedGoggle.value)
   $q.notify({
@@ -152,6 +137,17 @@ function copyCode() {
     position: 'top',
     timeout: 1000,
   })
+}
+
+function addRule() {
+  const actionObj: GoggleActionObject = {
+    id: uuidv4(),
+    pattern: '',
+    site: '',
+    options: [],
+  }
+
+  addActionRule(props.action as GoggleInstructionActionOptionKey, actionObj)
 }
 
 function deleteGoggle() {
