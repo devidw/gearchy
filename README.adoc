@@ -86,8 +86,7 @@ everyone to create their own goggles.
 
 Furthermore, it provides an entire management solution for all your goggles:
 
-* Editing happens inside a visual editor, click and drag your goggle rules
-Instead of writing code.
+* Editing happens inside a visual editor instead of writing code.
 * When saving in the editor, your goggles are automatically pushed to GitHub.
 * When you want to submit your goggles to brave search, you can also let
 _{product}_ handle this for you automatically.

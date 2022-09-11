@@ -98,7 +98,7 @@ async function validateAccessToken() {
   } else {
     Notify.create({
       message: 'Invalid access token',
-      caption: 'Make sure the token is valid and has the "gist" scope',
+      caption: 'Make sure the token is not expired and has the "gist" scope',
       type: 'negative',
     })
   }

@@ -34,6 +34,25 @@ export const useGistStore = defineStore('gist', {
       this.pagination.pageInfo.hasNextPage = true
     },
     async fetchGists() {
+      // setTimeout(() => {
+      //   this.gists = [
+      //     ...this.gists,
+      //     ...Array(1)
+      //       .fill({
+      //         description: 'loading',
+      //         public: true,
+      //       } as Gist)
+      //       .map(
+      //         (gist, index) =>
+      //           ({
+      //             ...gist,
+      //             id: index.toString(),
+      //           } as Gist),
+      //       ),
+      //   ]
+      // }, 100)
+      // return
+
       if (!this.pagination.pageInfo.hasNextPage) {
         return
       }
@@ -48,7 +67,8 @@ export const useGistStore = defineStore('gist', {
             login,
           },
         } = await api.graphql(
-          `query GetGists ($perPage: Int!, $after: String) {
+          `#graphql
+          query GetGists ($perPage: Int!, $after: String) {
             viewer {
               gists(
                 privacy: ALL,
@@ -90,6 +110,7 @@ export const useGistStore = defineStore('gist', {
         this.gists = this.gists.concat(
           filtered.map((edge: { node: object }) => edge.node),
         )
+
         // Automatically go further
         if (
           this.gists.length < this.pagination.gogglesPerPage &&

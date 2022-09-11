@@ -1,5 +1,5 @@
 <template>
-  <div class="g-box px-4 py-2 font-mono flex justify-between">
+  <div v-if="rule" class="g-box px-4 py-2 font-mono flex justify-between">
     <div
       class="w-1/12 flex justify-center items-center"
       :class="{
@@ -100,12 +100,13 @@
               flat
               round
               icon="eva-copy-outline"
-              @click="
-                () => {
-                  duplicateActionRule(action, index)
-                  moreMenu?.hide()
-                }
-              "
+              @click="duplicateActionRuleHandler"
+            />
+            <q-btn
+              flat
+              round
+              icon="eva-swap-outline"
+              @click="changeActionOnRuleHandler"
             />
             <q-btn
               flat
@@ -123,15 +124,22 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useQuasar } from 'quasar'
 import { useGoggleStore } from 'stores/goggle'
-import { GoggleInstructionActionOptionKey } from 'goggledy'
 import { QMenu } from 'quasar'
+import CustomDialogVue from './CustomDialog.vue'
+import { GoggleInstructionActionOptionKey } from 'goggledy'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey
   index: number
 }>()
 
+const emit = defineEmits<{
+  (e: 'ruleActionChange', action: GoggleInstructionActionOptionKey): void
+}>()
+
+const $q = useQuasar()
 const moreMenu = ref<QMenu>()
 const options = ref([
   { label: 'URL', value: 'inurl', disable: true },
@@ -142,23 +150,45 @@ const options = ref([
 
 const { goggle, actions } = storeToRefs(useGoggleStore())
 const { removeActionRule, duplicateActionRule } = useGoggleStore()
+const { changeActionOnRule } = useGoggleStore()
 
 const rule = computed(() => goggle.value.rules[props.action][props.index])
 
-watchEffect(() => {
-  // Default to 'inurl' option, if a pattern is provided
-  if (
-    rule.value.pattern &&
-    (!rule.value.options || !rule.value.options.length)
-  ) {
-    rule.value.options = ['inurl']
-  }
+function duplicateActionRuleHandler() {
+  moreMenu.value?.hide()
+  duplicateActionRule(props.action, props.index)
+}
 
-  // Empty options, if no pattern is provided
-  if (!rule.value.pattern && rule.value.options?.length) {
-    rule.value.options = []
-  }
-})
+function changeActionOnRuleHandler() {
+  moreMenu.value?.hide()
+
+  // create an array of action where the current action is not included
+  const swapOptions = Object.keys(goggle.value.rules).filter(
+    (action) => action !== props.action,
+  )
+
+  $q.dialog({
+    component: CustomDialogVue,
+    componentProps: {
+      title: 'Change rule action',
+      message: '…',
+      actions: [
+        ...swapOptions.map((action) => ({
+          type: 'ok',
+          label: action,
+          payload: {
+            action: action,
+            index: props.index,
+          },
+        })),
+        { type: 'cancel' },
+      ],
+    },
+  }).onOk((payload) => {
+    changeActionOnRule(props.action, payload.action, payload.index)
+    emit('ruleActionChange', payload.action)
+  })
+}
 
 function shiftRuleValue() {
   if (!rule.value.value) {
@@ -169,6 +199,28 @@ function shiftRuleValue() {
     rule.value.value++
   }
 }
+
+watchEffect(() => {
+  if (!rule.value) {
+    return
+  }
+
+  if (props.action === 'discard' && !rule.value.value) {
+    rule.value.value = 2
+  }
+
+  if (rule.value.pattern) {
+    // Default to 'inurl' option, if a pattern is provided
+    if (!rule.value.options || !rule.value.options.length) {
+      rule.value.options = ['inurl']
+    }
+  } else {
+    // Empty options, if no pattern is provided
+    if (rule.value.options?.length) {
+      rule.value.options = []
+    }
+  }
+})
 </script>
 
 <style lang="sass">

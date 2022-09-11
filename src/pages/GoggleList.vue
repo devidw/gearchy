@@ -29,23 +29,9 @@
     </custom-page-header>
 
     <template v-if="gists.length">
-      <div class="card-list space-y-4">
-        <GoggleCard v-for="(gist, i) of gists" :key="i" :gist="gist" />
-      </div>
-
-      <div
-        v-if="pagination.pageInfo.hasNextPage"
-        class="pt-6 text-(gray center opacity-50)"
-      >
-        <q-btn
-          flat
-          round
-          icon="eva-more-horizontal-outline"
-          @click="fetchGists"
-        >
-          <q-tooltip> Load more goggles </q-tooltip>
-        </q-btn>
-      </div>
+      <q-infinite-scroll @load="onLoad" :offset="1" class="space-y-4">
+        <goggle-list-item v-for="(gist, i) in gists" :key="i" :gist="gist" />
+      </q-infinite-scroll>
     </template>
   </q-page>
 </template>
@@ -54,12 +40,12 @@
 import { useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
-import GoggleCard from 'components/GoggleCard.vue'
+import GoggleListItem from 'components/GoggleListItem.vue'
 import CustomPageHeader from 'components/CustomPageHeader.vue'
 import CustomDialogVue from 'components/CustomDialog.vue'
 
 const $q = useQuasar()
-const { login, gists, pagination } = storeToRefs(useGistStore())
+const { login, gists } = storeToRefs(useGistStore())
 const { resetGists, fetchGists, createGist } = useGistStore()
 
 function createGoggle() {
@@ -90,19 +76,22 @@ function createGoggle() {
   }).onOk(({ isPublic }) => createGist(isPublic))
 }
 
+async function onLoad(index: number, done: () => void) {
+  await fetchGists()
+  done()
+}
+
 fetchGists()
 </script>
 
 <style scoped lang="sass">
-.card-list
+.q-infinite-scroll
   // By default all cards same size
   & > div
     @apply scale-[1]
-
   // When hoving over list all cards scale down
   &:hover > div
     @apply scale-[0.98] opacity-75
-
   & > div:hover
     @apply scale-[1] opacity-100
 </style>

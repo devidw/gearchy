@@ -189,9 +189,9 @@ export const useGoggleStore = defineStore('goggle', {
       ]
     },
     changeActionOnRule(
-      index: number,
       sourceAction: GoggleInstructionActionOptionKey,
       targetAction: GoggleInstructionActionOptionKey,
+      index: number,
     ) {
       const rule = this.goggle.rules[sourceAction][index]
       this.removeActionRule(sourceAction, index)

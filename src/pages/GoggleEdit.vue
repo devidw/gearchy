@@ -15,22 +15,16 @@
               :key="index"
               :name="action.key"
               :icon="action.icon"
-              @drop="onDrop($event, action.key)"
-              @dragover.prevent
-              @dragenter.prevent
-              :class="{
-                'animate-pulse bg-stone-6': isDragging && tab !== action.key,
-              }"
             />
           </q-tabs>
         </goggle-action-bar>
 
         <q-tab-panels
           v-model="tab"
-          class="g-tab-panels"
           animated
           transition-next="fade"
           transition-prev="fade"
+          class="g-tab-panels"
         >
           <q-tab-panel name="meta">
             <goggle-meta-data />
@@ -42,8 +36,7 @@
           >
             <goggle-rules
               :action="action.key"
-              @rule-drag-start="onRuleDragStart"
-              @rule-drag-end="onRuleDragEnd"
+              @rule-action-change="(newTab) => (tab = newTab)"
             />
           </q-tab-panel>
         </q-tab-panels>
@@ -60,54 +53,14 @@ import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
 import GoggleMetaData from 'components/GoggleMetaData.vue'
-import GoggleRules from 'components/GoggleRules.vue'
 import { GoggleEditTab } from 'src/types'
-import { GoggleInstructionActionOptionKey } from 'goggledy'
+import GoggleRules from 'components/GoggleRules.vue'
 
 const route = useRoute()
 const tab: Ref<GoggleEditTab> = ref('meta')
-const shouldSwitchTabTo: Ref<GoggleEditTab | undefined> = ref(undefined)
-const isDragging = ref(false)
 const { error, isLoading, gist } = storeToRefs(useGistStore())
 const { goggle, actions } = storeToRefs(useGoggleStore())
-const { changeActionOnRule } = useGoggleStore()
 const { fetchGist } = useGistStore()
-
-function onRuleDragStart() {
-  isDragging.value = true
-}
-
-function onRuleDragEnd() {
-  isDragging.value = false
-  if (shouldSwitchTabTo.value) {
-    tab.value = shouldSwitchTabTo.value
-    shouldSwitchTabTo.value = undefined
-  }
-}
-
-function onDrop(evt: DragEvent, action: GoggleInstructionActionOptionKey) {
-  const evtAction = evt.dataTransfer?.getData('action')
-  const evtIndex = evt.dataTransfer?.getData('index')
-
-  if (
-    !evtAction ||
-    !evtIndex ||
-    evtAction === action // Reject drop from into same tab
-  ) {
-    return
-  }
-
-  const sourceAction = evtAction as GoggleInstructionActionOptionKey
-  const sourceIndex = parseInt(evtIndex)
-
-  changeActionOnRule(sourceIndex, sourceAction, action)
-
-  // We can not immediately switch to the new tab, because the drag operation is
-  // still being processed by sortablejs. If we would switch to the new tab now,
-  // sortablejs would not find the element anymore.
-  // Therefore we remember the action to switch to and do it after the drag has ended.
-  shouldSwitchTabTo.value = action
-}
 
 fetchGist(route.params.id as string)
 </script>

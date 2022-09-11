@@ -6,11 +6,11 @@
   "author": "David Wolf <d@wolf.gdn>",
   "private": true,
   "scripts": {
-    "dev": "quasar dev",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "generate:icons": "icongenie generate -m spa,pwa -i ./src/assets/logo.png"
   },
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.2",
@@ -27,9 +27,7 @@
     "quasar": "^2.6.0",
     "uuid": "^8.3.2",
     "vue": "^3.0.0",
-    "vue-draggable": "^2.0.6",
-    "vue-router": "^4.0.0",
-    "vuedraggable": "^4.1.0"
+    "vue-router": "^4.0.0"
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.0.0",
@@ -43,7 +41,13 @@
     "prettier": "^2.5.1",
     "typescript": "^4.5.4",
     "unocss": "^0.45.6",
-    "vue-virtual-scroller": "^1.0.10"
+    "workbox-build": "^6.5.0",
+    "workbox-cacheable-response": "^6.5.0",
+    "workbox-core": "^6.5.0",
+    "workbox-expiration": "^6.5.0",
+    "workbox-precaching": "^6.5.0",
+    "workbox-routing": "^6.5.0",
+    "workbox-strategies": "^6.5.0"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19",

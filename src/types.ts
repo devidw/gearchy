@@ -12,3 +12,8 @@ export type GoggleActionObject = {
   site?: GoggleInstructionGenericOptionValue
   options?: string[]
 }
+
+export type GoggleRuleActionAndIndex = {
+  action: GoggleInstructionActionOptionKey
+  index: number
+}

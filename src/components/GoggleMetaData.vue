@@ -7,8 +7,8 @@
         placeholder="Name"
         borderless
         autogrow
-        class="tracking-wider w-full font-(extrabold [heading]) text-3xl"
-        input-class="!leading-snug !pt-0 !text-stone-3"
+        class="w-full"
+        input-class="!pt-0 !leading-snug tracking-wider !text-(3xl stone-3) font-(extrabold [heading])"
       >
         <template v-slot:prepend>
           <q-icon
@@ -32,8 +32,7 @@
         placeholder="Description"
         autogrow
         borderless
-        class="!text-stone-4"
-        input-class="leading-snug !pt-0"
+        input-class="leading-snug !pt-0 !text-stone-4"
       />
       <q-input
         v-model="goggle.metaData.author"
@@ -90,14 +89,14 @@
         />
       </div>
       <div class="flex justify-between space-x-2 pt-4">
-        <div class="flex items-center text-xs text-gray">
+        <div class="flex items-center text-(xs gray)">
           <q-checkbox
-            class="g-advanced-toggle"
-            size="30px"
             v-model="pref.editor.showAdvanced"
+            size="30px"
             :label="
               pref.editor.showAdvanced ? 'Hide advanced' : 'Show advanced'
             "
+            class="g-advanced-toggle"
           />
         </div>
       </div>
