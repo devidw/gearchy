@@ -100,13 +100,15 @@ export const useGistStore = defineStore('gist', {
             after: this.pagination.pageInfo.endCursor,
           },
         )
-        // console.log(pageInfo, edges)
+
         this.login = login
         this.pagination.pageInfo = pageInfo
+
         const filtered = edges.filter(
           (edge: { node: { files: { extension: string }[] } }) =>
             edge.node.files[0].extension === '.goggle',
         )
+
         this.gists = this.gists.concat(
           filtered.map((edge: { node: object }) => edge.node),
         )

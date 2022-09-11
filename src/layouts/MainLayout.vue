@@ -31,12 +31,11 @@
         />
       </q-toolbar>
     </q-header>
-
     <q-drawer
       v-model="rightDrawerOpen"
       side="right"
+      :width="200"
       overlay
-      :width="$q.screen.xs ? $q.screen.width : 200"
       class="shadow-2xl"
     >
       <div class="h-full flex flex-col justify-between flex-wrap">
@@ -61,32 +60,35 @@
             :active="false"
           >
             <q-item-section
-              class="color-gray tracking-wide font-medium md:pr-5 text-center at-sm:text-center sm:text-end"
+              class="tracking-wide font-medium text-(gray center) sm:(text-end) md:pr-5"
             >
               {{ link.label }}
             </q-item-section>
           </q-item>
         </q-list>
 
-        <div class="w-full space-y-20 text-(gray)">
-          <div class="flex justify-center sm:-space-x-1 opacity-50">
-            <q-btn
+        <div class="w-full space-y-20 text-(gray end) pr-8">
+          <div class="lt-sm:(flex justify-center) opacity-50">
+            <template
               v-for="({ icon, href, classes }, index) in footerLinks"
               :key="index"
-              :icon="icon"
-              :href="href"
-              target="_blank"
-              flat
-              round
-              :class="classes ? classes : ''"
-            />
+            >
+              <div>
+                <q-btn
+                  :icon="icon"
+                  :href="href"
+                  target="_blank"
+                  flat
+                  round
+                  class=""
+                  :class="classes ? classes : ''"
+                />
+              </div>
+            </template>
           </div>
 
-          <div
-            class="px-3 pb-3 flex justify-between opacity-35 font-(mono) text-(end [10px])"
-          >
-            <div>Gearchy {{ version }}</div>
-            <div>&copy; {{ new Date().getFullYear() }}</div>
+          <div class="px-3 pb-3 opacity-35 font-(mono) text-(end [10px])">
+            <div>{{ version }}</div>
           </div>
         </div>
       </div>
@@ -158,12 +160,15 @@ const footerLinks = [
   {
     href: 'https://github.com/sponsors/devidw',
     icon: 'eva-heart-outline',
-    classes: 'hover:text-red-3 transition transition-300',
+    classes: 'hover:(text-red-3 scale-[1.1]) transition transition-300',
   },
 ]
 </script>
 
 <style lang="sass">
+.q-drawer
+  @apply #{"!"}lt-sm:w-full
+
 .q-loading__message
-  margin: 0 !important
+  @apply #{"!"}m-0
 </style>
