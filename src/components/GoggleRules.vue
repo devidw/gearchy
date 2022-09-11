@@ -1,11 +1,11 @@
 <template>
-  <RecycleScroller :items="rules" :item-size="100" v-slot="{ index }">
+  <q-virtual-scroll :items="rules" v-slot="{ index }" class="max-h-[60vh]">
     <goggle-rule
       :action="action"
       :index="index"
       @rule-action-change="$emit('ruleActionChange', $event)"
     />
-  </RecycleScroller>
+  </q-virtual-scroll>
 </template>
 
 <script setup lang="ts">
@@ -15,8 +15,6 @@ import { useGoggleStore } from 'stores/goggle'
 import GoggleRule from 'components/GoggleRule.vue'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
 import { GoggleActionObject } from 'src/types'
-import { RecycleScroller } from 'vue-virtual-scroller'
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey

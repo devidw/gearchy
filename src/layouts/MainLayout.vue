@@ -36,7 +36,7 @@
       v-model="rightDrawerOpen"
       side="right"
       overlay
-      :width="$q.screen.lt.sm ? $q.screen.width : 200"
+      :width="$q.screen.xs ? $q.screen.width : 200"
       class="shadow-2xl"
     >
       <div class="h-full flex flex-col justify-between flex-wrap">
@@ -61,7 +61,7 @@
             :active="false"
           >
             <q-item-section
-              class="color-gray tracking-wide font-medium md:pr-5 text-center sm:text-end"
+              class="color-gray tracking-wide font-medium md:pr-5 text-center at-sm:text-center sm:text-end"
             >
               {{ link.label }}
             </q-item-section>

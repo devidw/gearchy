@@ -125,8 +125,8 @@ const { submitGoggle: automaticallySubmitGoggle } =
 const showCode = ref(false)
 
 const props = defineProps<{
-  context: string
-  action: GoggleEditTab
+  context?: string
+  action?: GoggleEditTab
 }>()
 
 function copyCode() {

@@ -53,8 +53,8 @@ import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
 import GoggleMetaData from 'components/GoggleMetaData.vue'
-import GoggleRules from 'components/GoggleRules.vue'
 import { GoggleEditTab } from 'src/types'
+import GoggleRules from 'components/GoggleRules.vue'
 
 const route = useRoute()
 const tab: Ref<GoggleEditTab> = ref('meta')
