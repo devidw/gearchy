@@ -12,7 +12,7 @@ endif::[]
 [subs=attributes]
 ++++
 <h1 align=center>
-<img src=./src/assets/logo.png width=75>
+<img src=./apps/app/src/assets/logo.svg width=75>
 <br>
 {product}
 </h1>
