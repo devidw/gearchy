@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "outDir": "dist",
+        "rootDir": "src",
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": true,
+        "declaration": true,
+        "declarationMap": true,
+    },
+    "exclude": [
+        "__tests__",
+        "dist",
+        "node_modules",
+    ]
+}

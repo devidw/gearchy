@@ -1,0 +1,22 @@
+---
+import Footer from '../components/Footer.astro'
+
+const { title, description } = Astro.props
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/x+icon" href="/favicon.ico" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        {description && <meta name="description" content={description} />}
+    </head>
+    <body class="m-0 p-0 bg-dark text-light">
+        <slot />
+
+        <Footer />
+    </body>
+</html>

@@ -29,7 +29,9 @@
 		"MichaelCurrin.auto-commit-msg",
 		"Tobermory.es6-string-html",
 		"wix.vscode-import-cost",
-		"GraphQL.vscode-graphql"
+		"GraphQL.vscode-graphql",
+		"astro-build.astro-vscode",
+		"sysoev.language-stylus"
 	],
       "settings": {
         "editor.bracketPairColorization.enabled": true,
@@ -52,11 +54,7 @@
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "yarn install",
+  "postCreateCommand": "pnpm install",
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-  "remoteUser": "node",
-  "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/Desktop/GitHub/goggledy,target=/workspaces/goggledy,type=bind,consistency=cached",
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/Desktop/GitHub/hljs-goggles,target=/workspaces/highlightjs-goggles,type=bind,consistency=cached"
-  ]
+  "remoteUser": "node"
 }

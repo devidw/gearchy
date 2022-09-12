@@ -1,0 +1,59 @@
+{
+  "name": "goggledy",
+  "version": "0.1.0",
+  "description": "Library to parse and generate Goggles.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "files": [
+    "./dist"
+  ],
+  "license": "GPL-3.0-or-later",
+  "private": false,
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "rm -rf ./dist && tsc",
+    "test": "jest --collect-coverage",
+    "lint": "eslint ./src",
+    "build:readme": "node --es-module-specifier-resolution=node ./scripts/generate-comparison-table.js"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^28.0.0",
+    "@types/node": "^18.6.5",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "eslint": "^8.23.0",
+    "jest": "^28.0.0",
+    "ts-jest": "^28.0.8",
+    "typescript": "^4.8.2"
+  },
+  "homepage": "https://github.com/devidw/gearchy#readme",
+  "repository": "https://github.com/devidw/gearchy",
+  "bugs": "https://github.com/devidw/gearchy/issues",
+  "author": {
+    "name": "David Wolf",
+    "email": "david@wolf.gdn",
+    "url": "https://david.wolf.gdn"
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/devidw"
+    }
+  ],
+  "keywords": [
+    "goggles",
+    "goggle",
+    "search",
+    "brave",
+    "transparency",
+    "search algorithm",
+    "parser",
+    "generator"
+  ]
+}
