@@ -1,5 +1,9 @@
 <template>
-  <highlightjs :code="stringifiedGoggle" lang="goggle" />
+  <highlightjs
+    :code="stringifiedGoggle"
+    lang="goggle"
+    class="bg-stone-7 rounded-2 px-6 py-4 max-h-xl overflow-y-scroll"
+  />
 </template>
 
 <script setup lang="ts">
@@ -10,6 +14,9 @@ const { stringifiedGoggle } = storeToRefs(useGoggleStore())
 </script>
 
 <style lang="sass">
-.hljs
-  @apply bg-transparent whitespace-pre-wrap font-mono leading-loose
+pre[lang="goggle"]
+  @apply m-0
+
+  & > code
+    @apply #{'!'}p-0 bg-transparent whitespace-pre-wrap font-mono leading-loose
 </style>

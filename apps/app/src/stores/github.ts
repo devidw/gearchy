@@ -9,7 +9,6 @@ export const useGitHubStore = defineStore('github', {
 
   getters: {
     api(state) {
-      console.log(state.accessToken)
       return new Octokit({ auth: state.accessToken })
     },
   },

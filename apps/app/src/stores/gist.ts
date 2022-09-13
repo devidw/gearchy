@@ -1,12 +1,12 @@
-import { Notify } from 'quasar'
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { components } from '@octokit/openapi-types'
+import { Notify } from 'quasar'
 import { useGitHubStore } from './github'
 import { useGoggleStore } from './goggle'
 
-export type Gist = components['schemas']['base-gist']
+type Gist = components['schemas']['base-gist']
 
-const api = useGitHubStore().api
+const { api } = storeToRefs(useGitHubStore())
 
 export const useGistStore = defineStore('gist', {
   state: () => ({
@@ -66,7 +66,7 @@ export const useGistStore = defineStore('gist', {
             gists: { pageInfo, edges },
             login,
           },
-        } = await api.graphql(
+        } = await api.value.graphql(
           `#graphql
           query GetGists ($perPage: Int!, $after: String) {
             viewer {
@@ -133,7 +133,7 @@ export const useGistStore = defineStore('gist', {
       try {
         const {
           viewer: { gist, login },
-        } = await api.graphql(
+        } = await api.value.graphql(
           `query GetGist($name: String!) {
             viewer {
               gist(name: $name) {
@@ -178,7 +178,7 @@ export const useGistStore = defineStore('gist', {
       this.pagination.pageInfo.hasNextPage = true
       this.gist = {} as Gist
       try {
-        const res = await api.request('POST /gists', {
+        const res = await api.value.request('POST /gists', {
           public: isPublic,
           files: {
             'index.goggle': {
@@ -200,7 +200,7 @@ export const useGistStore = defineStore('gist', {
       this.resetGists()
       const goggleStore = useGoggleStore()
       try {
-        await api.request(`PATCH /gists/${this.gist.id}`, {
+        await api.value.request(`PATCH /gists/${this.gist.id}`, {
           gist_id: this.gist.id,
           description:
             goggleStore.goggle.metaData.name ||
@@ -226,7 +226,7 @@ export const useGistStore = defineStore('gist', {
       try {
         this.gists = this.gists.filter((gist: Gist) => gist.id !== this.gist.id)
         this.router.push('/')
-        await api.request(`DELETE /gists/${this.gist.id}`, {
+        await api.value.request(`DELETE /gists/${this.gist.id}`, {
           gist_id: this.gist.id,
         })
         Notify.create({

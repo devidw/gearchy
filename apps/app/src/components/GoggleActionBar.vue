@@ -90,12 +90,7 @@
       enter-from-class="opacity-0 -translate-y-3"
       leave-to-class="opacity-0 -translate-y-3"
     >
-      <div
-        v-if="showCode"
-        class="bg-stone-7 rounded-4 px-6 py-2 max-h-xl overflow-y-scroll"
-      >
-        <goggle-code />
-      </div>
+      <goggle-code v-if="showCode" />
     </Transition>
   </div>
 </template>

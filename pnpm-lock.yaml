@@ -95,11 +95,13 @@ importers:
       '@types/scrollreveal': ^0.0.8
       '@unocss/reset': ^0.45.21
       astro: ^1.1.1
+      github-markdown-css: ^5.1.0
       scrollreveal: ^4.0.9
       stylus: ^0.55.0
       unocss: ^0.45.6
     dependencies:
       '@unocss/reset': 0.45.21
+      github-markdown-css: 5.1.0
       scrollreveal: 4.0.9
     devDependencies:
       '@astrojs/image': 0.3.7
@@ -5632,6 +5634,10 @@ packages:
   /github-from-package/0.0.0:
     resolution: {integrity: sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw==}
     dev: true
+
+  /github-markdown-css/5.1.0:
+    resolution: {integrity: sha512-QLtORwHHtUHhPMHu7i4GKfP6Vx5CWZn+NKQXe+cBhslY1HEt0CTEkP4d/vSROKV0iIJSpl4UtlQ16AD8C6lMug==}
+    dev: false
 
   /github-slugger/1.4.0:
     resolution: {integrity: sha512-w0dzqw/nt51xMVmlaV1+JRzN+oCa1KfcgGEWhxUG16wbdA+Xnt/yoFO8Z8x/V82ZcZ0wy6ln9QDup5avbhiDhQ==}

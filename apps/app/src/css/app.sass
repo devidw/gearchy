@@ -1,5 +1,15 @@
 @import ./input
 
+*
+  &::selection
+    @apply bg-sky text-sky-1
+    
+  &::-webkit-scrollbar
+    @apply w-2
+
+  &::-webkit-scrollbar-thumb
+    @apply bg-(stone-3 opacity-25) rounded-full
+
 a
   @apply no-underline color-sky
 

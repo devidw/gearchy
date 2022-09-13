@@ -1,0 +1,21 @@
+---
+import Layout from './Layout.astro'
+import 'github-markdown-css/github-markdown-dark.css'
+
+const { frontmatter } = Astro.props
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description}>
+  <article
+    class="lt-sm:w-[90%] sm:max-w-lg mx-auto my-10 sm:my-20 md:my-30 space-y-3"
+  >
+    <header>
+      <h1 class="text-(3xl gray-3) font-(extrabold heading) tracking-wide">
+        {frontmatter.title}
+      </h1>
+    </header>
+    <div class="markdown-body !bg-transparent">
+      <slot />
+    </div>
+  </article>
+</Layout>

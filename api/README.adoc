@@ -1,0 +1,14 @@
+= Brave Goggles Submit API Proxy
+
+Brave Goggles can be submitted to:
+
+[source,http]
+----
+POST https://search.brave.com/api/goggles/submit?url=
+----
+
+However, this is not possible from a front-end only application due to CORS
+restrictions. 
+
+To work around this, this is a simple API proxy that can be used to submit
+Goggles without CORS restrictions.

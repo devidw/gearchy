@@ -1,8 +1,8 @@
 import { defineConfig } from 'astro/config'
 import image from '@astrojs/image'
-import Unocss from 'unocss/astro'
+import UnoCss from 'unocss/astro'
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [image(), Unocss()],
+  integrations: [image(), UnoCss()],
 })
