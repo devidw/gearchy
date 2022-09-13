@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Header from '../components/Header.astro'
-import Footer from '../components/Footer.astro'
 import Cards from '../components/Cards.astro'
 import GetStarted from '../components/GetStarted.astro'
 import '../styles/global.styl'
@@ -10,8 +9,7 @@ const description = "Internet's first Goggles manager."
 ---
 
 <Layout title="Gearchy" {description}>
-    <Header />
-    <Cards />
-    <GetStarted />
-    <Footer />
+  <Header />
+  <Cards />
+  <GetStarted />
 </Layout>
