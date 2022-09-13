@@ -8,7 +8,7 @@
  * As vercel serverless function.
  */
 
-const fetch = import('node-fetch')
+import fetch from 'node-fetch'
 
 export default async (req, res) => {
   const url = req.query.url
