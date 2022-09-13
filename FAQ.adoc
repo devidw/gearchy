@@ -48,7 +48,7 @@ But you can easily add the following proxy, which is provided by the {product} a
 
 [source]
 ----
-https://app.gearchy.wolf.gdn/submit?url=%s
+https://app.gearchy.wolf.gdn/api/submit?url=%s
 ----
 
 The source of the proxy is available at
