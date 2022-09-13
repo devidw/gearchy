@@ -27,6 +27,4 @@ app.get('/submit', async (req, res) => {
   res.status(response.status).send(await response.text())
 })
 
-app.listen(3000, () => {
-  console.log('Brave API proxy listening on port 3000!')
-})
+export default app
