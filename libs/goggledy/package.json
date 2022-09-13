@@ -3,19 +3,19 @@
   "version": "0.1.0",
   "description": "Library to parse and generate Goggles.",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "files": [
-    "./dist"
+    "dist"
   ],
   "license": "GPL-3.0-or-later",
   "private": false,
   "scripts": {
     "watch": "tsc --watch",
-    "build": "rm -rf ./dist && tsc",
+    "build": "rm -rf dist && tsc",
     "test": "jest --collect-coverage",
-    "lint": "eslint ./src",
-    "build:readme": "node --es-module-specifier-resolution=node ./scripts/generate-comparison-table.js"
+    "lint": "eslint src",
+    "build:readme": "node --es-module-specifier-resolution=node scripts/generate-comparison-table.js"
   },
   "jest": {
     "preset": "ts-jest",
