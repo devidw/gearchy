@@ -48,19 +48,12 @@ But you can easily add the following proxy, which is provided by the {product} a
 
 [source]
 ----
-https://submit.gearchy.wolf.gdn/submit?url=%s
+https://app.gearchy.wolf.gdn/submit?url=%s
 ----
 
 The source of the proxy is available at
-https://github.com/devidw/brave-goggles-api-proxy, feel free to fork it and
+https://github.com/devidw/gearchy/tree/main/api, feel free to fork it and
 adjust it to your needs.
-
-Even running it locally on your machine is possible:
-
-[source]
-----
-http://127.0.0.1:8000/submit?url=%s
-----
 
 NOTE: The API proxy is not required for {product} to work. It's only purpose
 is to automate the process of submitting goggles to Brave Search. If you don't
