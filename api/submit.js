@@ -8,6 +8,8 @@
  * As vercel serverless function.
  */
 
+import fetch from 'node-fetch'
+
 export default async (req, res) => {
   const url = req.query.url
   if (!url) {
