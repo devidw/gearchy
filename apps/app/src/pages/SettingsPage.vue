@@ -76,12 +76,12 @@
 import { storeToRefs } from 'pinia'
 import { Notify, openURL } from 'quasar'
 import { useGitHubStore } from 'stores/github'
-import { useBraveSubmissionProxyStore } from 'stores/brave-api-proxy'
+import { useBraveStore } from 'stores/brave'
 import CustomPageHeader from 'components/CustomPageHeader.vue'
 
 const { accessToken } = storeToRefs(useGitHubStore())
 const { isValidAccessToken } = useGitHubStore()
-const { apiUrl } = storeToRefs(useBraveSubmissionProxyStore())
+const { apiUrl } = storeToRefs(useBraveStore())
 
 function validateApiUrl(value: string) {
   return /^https:\/\/.+%s.*/.test(value)

@@ -101,7 +101,7 @@ import { openURL, copyToClipboard, useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
-import { useBraveSubmissionProxyStore } from 'stores/brave-api-proxy'
+import { useBraveStore } from 'stores/brave'
 import { GoggleActionObject } from 'src/types'
 import CustomDialogVue from './CustomDialog.vue'
 import GoggleCode from 'components/GoggleCode.vue'
@@ -114,9 +114,8 @@ const { updateGist, deleteGist } = useGistStore()
 const { gist } = storeToRefs(useGistStore())
 const { addActionRule } = useGoggleStore()
 const { goggle, stringifiedGoggle } = storeToRefs(useGoggleStore())
-const { hasApiUrl } = storeToRefs(useBraveSubmissionProxyStore())
-const { submitGoggle: automaticallySubmitGoggle } =
-  useBraveSubmissionProxyStore()
+const { hasApiUrl } = storeToRefs(useBraveStore())
+const { submitGoggle: automaticallySubmitGoggle } = useBraveStore()
 const showCode = ref(false)
 
 const props = defineProps<{
@@ -150,9 +149,13 @@ function deleteGoggle() {
     component: CustomDialogVue,
     componentProps: {
       title: 'Delete this Goggle?',
-      message: 'This will also permanently delete the associated Gist.',
+      message:
+        'This will permanently delete the associated Gist on GitHub. Once the gist is deleted, it has to be resubmitted on Brave to remove it from the search engine as well.',
     },
-  }).onOk(deleteGist)
+  }).onOk(async () => {
+    await deleteGist()
+    submitGoggle()
+  })
 }
 
 function submitGoggle() {
