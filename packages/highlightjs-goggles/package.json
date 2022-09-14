@@ -1,0 +1,49 @@
+{
+  "name": "highlightjs-goggles",
+  "version": "0.1.0",
+  "description": "Goggles Language Definition for Highlight.js",
+  "keywords": [
+    "highlight.js",
+    "highlightjs",
+    "highlight",
+    "goggles",
+    "language",
+    "definition"
+  ],
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/devidw/gearchy/tree/main/packages/highlightjs-goggles#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devidw/gearchy.git",
+    "directory": "packages/highlightjs-goggles"
+  },
+  "bugs": "https://github.com/devidw/gearchy/issues",
+  "funding": "https://github.com/sponsors/devidw",
+  "author": {
+    "name": "David Wolf",
+    "email": "david@wolf.gdn",
+    "url": "https://david.wolf.gdn"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "lint": "eslint src",
+    "watch": "tsc --watch",
+    "build": "rm -rf dist && tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "eslint": "^8.23.0",
+    "typescript": "^4.8.2"
+  },
+  "dependencies": {
+    "highlight.js": "^11.6.0"
+  },
+  "packageManager": "pnpm@7.11.0"
+}

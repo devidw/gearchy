@@ -1,4 +1,4 @@
 packages:
   - api
   - apps/*
-  - libs/*
+  - packages/*

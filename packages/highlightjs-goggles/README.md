@@ -13,7 +13,7 @@ pnpm add highlightjs-goggles
 ## Usage
 
 ```ts
-import goggles from "highlightjs-goggles"
+import goggles from 'highlightjs-goggles'
 
-hljs.registerLanguage("goggles", goggles)
+hljs.registerLanguage('goggles', goggles)
 ```

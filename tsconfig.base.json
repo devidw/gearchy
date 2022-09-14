@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
         "strict": true,
-        "outDir": "dist",
-        "rootDir": "src",
         "target": "ESNext",
         "module": "ESNext",
         "moduleResolution": "node",
@@ -12,9 +10,4 @@
         "declaration": true,
         "declarationMap": true,
     },
-    "exclude": [
-        "__tests__",
-        "dist",
-        "node_modules",
-    ]
 }
