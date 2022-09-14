@@ -7,10 +7,12 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('pages/GoggleList.vue') },
       {
+        name: 'goggle-detail',
         path: 'goggle/:id',
         component: () => import('pages/GoggleSingle.vue'),
       },
       {
+        name: 'goggle-edit',
         path: 'goggle/:id/edit',
         component: () => import('pages/GoggleEdit.vue'),
       },

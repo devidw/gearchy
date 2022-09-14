@@ -1,25 +1,8 @@
 <template>
   <q-layout view="hHr lpR fFr">
     <q-header class="bg-transparent backdrop-blur md:px-5 md:py-3">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-btn
-            flat
-            rounded
-            :disable="$route.path === '/'"
-            to="/"
-            class="text-dark lt-md:!p-0"
-          >
-            <div class="flex no-wrap items-center space-x-2">
-              <img src="../assets/logo.svg" alt="logo" width="35" />
-              <div
-                class="mt-1 font-[heading] font-extrabold tracking-widest uppercase text-(sm gray opacity-50)"
-              >
-                Gearchy
-              </div>
-            </div>
-          </q-btn>
-        </q-toolbar-title>
+      <q-toolbar class="flex justify-between">
+        <breadcrumbs-navigation />
 
         <q-btn
           dense
@@ -105,6 +88,7 @@ import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useGistStore } from 'stores/gist'
+import BreadcrumbsNavigation from 'components/BreadcrumbsNavigation.vue'
 
 const $q = useQuasar()
 const rightDrawerOpen = ref(false)

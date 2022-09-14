@@ -38,13 +38,15 @@
         />
       </div>
       <div class="sm:w-2/5 flex justify-end">
-        <q-btn
-          v-if="showCode"
-          round
-          flat
-          icon="eva-copy-outline"
-          @click="copyCode()"
-        />
+        <smooth-transition>
+          <q-btn
+            v-if="showCode"
+            round
+            flat
+            icon="eva-copy-outline"
+            @click="copyCode()"
+          />
+        </smooth-transition>
         <q-btn
           round
           flat
@@ -103,11 +105,12 @@ import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import { useBraveStore } from 'stores/brave'
 import { GoggleActionObject } from 'src/types'
-import CustomDialogVue from './CustomDialog.vue'
+import CustomDialog from './CustomDialog.vue'
 import GoggleCode from 'components/GoggleCode.vue'
 import { v4 as uuidv4 } from 'uuid'
 import { GoggleEditTab } from 'src/types'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
+import SmoothTransition from './SmoothTransition.vue'
 
 const $q = useQuasar()
 const { updateGist, deleteGist } = useGistStore()
@@ -146,7 +149,7 @@ function addRule() {
 
 function deleteGoggle() {
   $q.dialog({
-    component: CustomDialogVue,
+    component: CustomDialog,
     componentProps: {
       title: 'Delete this Goggle?',
       message:
@@ -168,7 +171,7 @@ function submitGoggle() {
 
 function manuallySubmitGoggle(url: string) {
   $q.dialog({
-    component: CustomDialogVue,
+    component: CustomDialog,
     componentProps: {
       title: 'Manually Submit Goggle',
       message:

@@ -4,7 +4,7 @@ importers:
 
   .:
     specifiers:
-      prettier: ^2.5.1
+      prettier: ^2.7.1
       turbo: ^1.4.6
       vercel: ^28.2.5
     devDependencies:
@@ -2391,7 +2391,7 @@ packages:
   /@types/keyv/3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.7.16
+      '@types/node': 18.7.18
     dev: true
 
   /@types/mdast/3.0.10:
@@ -2426,6 +2426,10 @@ packages:
     resolution: {integrity: sha512-EQHhixfu+mkqHMZl1R2Ovuvn47PUw18azMJOTwSZr9/fhzHNGXAJ0ma0dayRVchprpCj0Kc1K1xKoWaATWF1qg==}
     dev: true
 
+  /@types/node/18.7.18:
+    resolution: {integrity: sha512-m+6nTEOadJZuTPkKR/SYK3A2d7FZrgElol9UP1Kae90VVU4a6mxnPuLiIW1m4Cq4gZ/nWb9GrdVXJCoCazDAbg==}
+    dev: true
+
   /@types/parse5/6.0.3:
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
     dev: true
@@ -2455,7 +2459,7 @@ packages:
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.7.16
+      '@types/node': 18.7.18
     dev: true
 
   /@types/scrollreveal/0.0.8:
@@ -2846,7 +2850,7 @@ packages:
     resolution: {integrity: sha512-JXhxM9tiAIxAS+rZcoo7VquOBqzWlC83h9ZLdzkHdO39GGmHyrCCnmQJooffaBr1QYuDXfJhMHBp7QWqEVsarw==}
     dependencies:
       '@edge-runtime/vm': 1.1.0-beta.32
-      '@types/node': 18.7.16
+      '@types/node': 18.7.18
       '@vercel/build-utils': 5.4.2
       '@vercel/node-bridge': 3.0.0
       '@vercel/static-config': 2.0.3
