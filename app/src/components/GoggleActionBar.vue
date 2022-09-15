@@ -28,7 +28,7 @@
       </div>
       <div class="sm:w-1/5 flex justify-center">
         <q-btn
-          v-if="tab && tab !== 'meta'"
+          v-if="tab && !['meta', 'codes'].includes(tab)"
           round
           flat
           icon="eva-plus-circle-outline"
@@ -86,7 +86,6 @@ import { useGoggleStore } from 'stores/goggle'
 import { useBraveStore } from 'stores/brave'
 import CustomDialog from './CustomDialog.vue'
 import { GoggleEditTab } from 'src/types'
-
 
 const $q = useQuasar()
 const { updateGist, deleteGist } = useGistStore()
