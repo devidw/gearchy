@@ -1,8 +1,6 @@
 <template>
   <div class="g-box p-4 space-y-10 text-gray">
-    <div>
-      <slot></slot>
-    </div>
+    <slot name="before"></slot>
     <div class="flex justify-between">
       <div class="sm:w-2/5">
         <q-btn
@@ -30,30 +28,20 @@
       </div>
       <div class="sm:w-1/5 flex justify-center">
         <q-btn
-          v-if="action && action !== 'meta'"
+          v-if="tab && tab !== 'meta'"
           round
           flat
           icon="eva-plus-circle-outline"
-          @click="addRule()"
+          @click="$emit('add-rule')"
         />
       </div>
       <div class="sm:w-2/5 flex justify-end">
-        <smooth-transition>
-          <q-btn
-            v-if="showCode"
-            round
-            flat
-            icon="eva-copy-outline"
-            @click="copyCode()"
-          />
-        </smooth-transition>
         <q-btn
+          v-if="tab && tab === 'code'"
           round
           flat
-          icon="eva-code-download-outline"
-          @click="() => (showCode = !showCode)"
-          :class="{ 'rotate-180 ': showCode }"
-          class="transition-(transform duration-300)"
+          icon="eva-copy-outline"
+          @click="copyCode()"
         />
         <q-btn round flat icon="eva-cloud-upload-outline" @click="submitGoggle">
           <q-tooltip> Submit Goggle on Brave </q-tooltip>
@@ -86,44 +74,34 @@
         </q-btn>
       </div>
     </div>
-    <Transition
-      enter-active-class="transition-(all duration-300)"
-      leave-active-class="transition-(all duration-300)"
-      enter-from-class="opacity-0 -translate-y-3"
-      leave-to-class="opacity-0 -translate-y-3"
-    >
-      <goggle-code v-if="showCode" />
-    </Transition>
+    <slot name="after"></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { openURL, copyToClipboard, useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import { useBraveStore } from 'stores/brave'
-import { GoggleActionObject } from 'src/types'
 import CustomDialog from './CustomDialog.vue'
-import GoggleCode from 'components/GoggleCode.vue'
-import { v4 as uuidv4 } from 'uuid'
 import { GoggleEditTab } from 'src/types'
-import { GoggleInstructionActionOptionKey } from 'goggledy'
-import SmoothTransition from './SmoothTransition.vue'
+
 
 const $q = useQuasar()
 const { updateGist, deleteGist } = useGistStore()
 const { gist } = storeToRefs(useGistStore())
-const { addActionRule } = useGoggleStore()
 const { goggle, stringifiedGoggle } = storeToRefs(useGoggleStore())
 const { hasApiUrl } = storeToRefs(useBraveStore())
 const { submitGoggle: automaticallySubmitGoggle } = useBraveStore()
-const showCode = ref(false)
 
-const props = defineProps<{
+defineProps<{
   context?: string
-  action?: GoggleEditTab
+  tab?: GoggleEditTab
+}>()
+
+defineEmits<{
+  (event: 'addRule'): void
 }>()
 
 function copyCode() {
@@ -134,17 +112,6 @@ function copyCode() {
     position: 'top',
     timeout: 1000,
   })
-}
-
-function addRule() {
-  const actionObj: GoggleActionObject = {
-    id: uuidv4(),
-    pattern: '',
-    site: '',
-    options: [],
-  }
-
-  addActionRule(props.action as GoggleInstructionActionOptionKey, actionObj)
 }
 
 function deleteGoggle() {

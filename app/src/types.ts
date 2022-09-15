@@ -3,7 +3,7 @@ import {
   GoggleInstructionGenericOptionValue,
 } from 'goggledy'
 
-export type GoggleEditTab = 'meta' | GoggleInstructionActionOptionKey
+export type GoggleEditTab = 'meta' | 'code' | GoggleInstructionActionOptionKey
 
 export type GoggleActionObject = {
   id: string

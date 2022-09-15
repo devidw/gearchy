@@ -18,7 +18,7 @@ importers:
     dependencies:
       node-fetch: 3.2.10
 
-  apps/app:
+  app:
     specifiers:
       '@highlightjs/vue-plugin': ^2.1.2
       '@octokit/core': ^4.0.4
@@ -58,9 +58,9 @@ importers:
       '@quasar/extras': 1.15.3
       '@types/uuid': 8.3.4
       '@vueuse/core': 9.2.0_vue@3.2.39
-      goggledy: link:../../packages/goggledy
+      goggledy: link:../packages/goggledy
       highlight.js: 11.6.0
-      highlightjs-goggles: link:../../packages/highlightjs-goggles
+      highlightjs-goggles: link:../packages/highlightjs-goggles
       pinia: 2.0.22_arz4dztosvwy2ghjrlh2wdhejm
       quasar: 2.7.7
       uuid: 8.3.2
@@ -88,26 +88,6 @@ importers:
       workbox-precaching: 6.5.4
       workbox-routing: 6.5.4
       workbox-strategies: 6.5.4
-
-  apps/site:
-    specifiers:
-      '@astrojs/image': ^0.3.6
-      '@types/scrollreveal': ^0.0.8
-      '@unocss/reset': ^0.45.21
-      astro: ^1.1.1
-      github-markdown-css: ^5.1.0
-      scrollreveal: ^4.0.9
-      stylus: ^0.55.0
-      unocss: ^0.45.6
-    devDependencies:
-      '@astrojs/image': 0.3.7
-      '@types/scrollreveal': 0.0.8
-      '@unocss/reset': 0.45.21
-      astro: 1.2.1_stylus@0.55.0
-      github-markdown-css: 5.1.0
-      scrollreveal: 4.0.9
-      stylus: 0.55.0
-      unocss: 0.45.21_vite@3.0.9
 
   packages/goggledy:
     specifiers:
@@ -143,6 +123,26 @@ importers:
       '@typescript-eslint/parser': 5.36.2_irgkl5vooow2ydyo6aokmferha
       eslint: 8.23.1
       typescript: 4.8.3
+
+  site:
+    specifiers:
+      '@astrojs/image': ^0.3.6
+      '@types/scrollreveal': ^0.0.8
+      '@unocss/reset': ^0.45.21
+      astro: ^1.1.1
+      github-markdown-css: ^5.1.0
+      scrollreveal: ^4.0.9
+      stylus: ^0.55.0
+      unocss: ^0.45.6
+    devDependencies:
+      '@astrojs/image': 0.3.7
+      '@types/scrollreveal': 0.0.8
+      '@unocss/reset': 0.45.21
+      astro: 1.2.1_stylus@0.55.0
+      github-markdown-css: 5.1.0
+      scrollreveal: 4.0.9
+      stylus: 0.55.0
+      unocss: 0.45.21
 
 packages:
 
@@ -2626,22 +2626,22 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
+  /@unocss/astro/0.45.21:
+    resolution: {integrity: sha512-6lsDQu6nBX5CZZ+JPqAdp9ypkZrzi6NuBgyjZtChCoLhwEB2kNDCg7Qwu93Ee7/TT8MYAiANar9N+U2EuxzcKA==}
+    dependencies:
+      '@unocss/core': 0.45.21
+      '@unocss/reset': 0.45.21
+      '@unocss/vite': 0.45.21
+    transitivePeerDependencies:
+      - vite
+    dev: true
+
   /@unocss/astro/0.45.21_vite@2.9.15:
     resolution: {integrity: sha512-6lsDQu6nBX5CZZ+JPqAdp9ypkZrzi6NuBgyjZtChCoLhwEB2kNDCg7Qwu93Ee7/TT8MYAiANar9N+U2EuxzcKA==}
     dependencies:
       '@unocss/core': 0.45.21
       '@unocss/reset': 0.45.21
       '@unocss/vite': 0.45.21_vite@2.9.15
-    transitivePeerDependencies:
-      - vite
-    dev: true
-
-  /@unocss/astro/0.45.21_vite@3.0.9:
-    resolution: {integrity: sha512-6lsDQu6nBX5CZZ+JPqAdp9ypkZrzi6NuBgyjZtChCoLhwEB2kNDCg7Qwu93Ee7/TT8MYAiANar9N+U2EuxzcKA==}
-    dependencies:
-      '@unocss/core': 0.45.21
-      '@unocss/reset': 0.45.21
-      '@unocss/vite': 0.45.21_vite@3.0.9
     transitivePeerDependencies:
       - vite
     dev: true
@@ -2771,6 +2771,21 @@ packages:
       '@unocss/core': 0.45.21
     dev: true
 
+  /@unocss/vite/0.45.21:
+    resolution: {integrity: sha512-BrCJMSy9i9j9mmzu2pfPFQuRPNWASxQfy3D6k+4R3c51OfKBSDcfeD7FyM866TE1gllCIFdQQH1Ay+tXkjlOMQ==}
+    peerDependencies:
+      vite: ^2.9.0 || ^3.0.0-0
+    dependencies:
+      '@ampproject/remapping': 2.2.0
+      '@rollup/pluginutils': 4.2.1
+      '@unocss/config': 0.45.21
+      '@unocss/core': 0.45.21
+      '@unocss/inspector': 0.45.21
+      '@unocss/scope': 0.45.21
+      '@unocss/transformer-directives': 0.45.21
+      magic-string: 0.26.3
+    dev: true
+
   /@unocss/vite/0.45.21_vite@2.9.15:
     resolution: {integrity: sha512-BrCJMSy9i9j9mmzu2pfPFQuRPNWASxQfy3D6k+4R3c51OfKBSDcfeD7FyM866TE1gllCIFdQQH1Ay+tXkjlOMQ==}
     peerDependencies:
@@ -2785,22 +2800,6 @@ packages:
       '@unocss/transformer-directives': 0.45.21
       magic-string: 0.26.3
       vite: 2.9.15
-    dev: true
-
-  /@unocss/vite/0.45.21_vite@3.0.9:
-    resolution: {integrity: sha512-BrCJMSy9i9j9mmzu2pfPFQuRPNWASxQfy3D6k+4R3c51OfKBSDcfeD7FyM866TE1gllCIFdQQH1Ay+tXkjlOMQ==}
-    peerDependencies:
-      vite: ^2.9.0 || ^3.0.0-0
-    dependencies:
-      '@ampproject/remapping': 2.2.0
-      '@rollup/pluginutils': 4.2.1
-      '@unocss/config': 0.45.21
-      '@unocss/core': 0.45.21
-      '@unocss/inspector': 0.45.21
-      '@unocss/scope': 0.45.21
-      '@unocss/transformer-directives': 0.45.21
-      magic-string: 0.26.3
-      vite: 3.0.9_stylus@0.55.0
     dev: true
 
   /@vercel/build-utils/5.4.2:
@@ -9981,6 +9980,37 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: true
 
+  /unocss/0.45.21:
+    resolution: {integrity: sha512-tx0FZEbRhl4pjo9LQaFXIBzSt3EqWujPdNaaLypVPIqPEwms49cXw4vi3JKDYrL9xbQ+Xf0izwPpCIwBxMprDA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@unocss/webpack': 0.45.21
+    peerDependenciesMeta:
+      '@unocss/webpack':
+        optional: true
+    dependencies:
+      '@unocss/astro': 0.45.21
+      '@unocss/cli': 0.45.21
+      '@unocss/core': 0.45.21
+      '@unocss/preset-attributify': 0.45.21
+      '@unocss/preset-icons': 0.45.21
+      '@unocss/preset-mini': 0.45.21
+      '@unocss/preset-tagify': 0.45.21
+      '@unocss/preset-typography': 0.45.21
+      '@unocss/preset-uno': 0.45.21
+      '@unocss/preset-web-fonts': 0.45.21
+      '@unocss/preset-wind': 0.45.21
+      '@unocss/reset': 0.45.21
+      '@unocss/transformer-attributify-jsx': 0.45.21
+      '@unocss/transformer-compile-class': 0.45.21
+      '@unocss/transformer-directives': 0.45.21
+      '@unocss/transformer-variant-group': 0.45.21
+      '@unocss/vite': 0.45.21
+    transitivePeerDependencies:
+      - supports-color
+      - vite
+    dev: true
+
   /unocss/0.45.21_vite@2.9.15:
     resolution: {integrity: sha512-tx0FZEbRhl4pjo9LQaFXIBzSt3EqWujPdNaaLypVPIqPEwms49cXw4vi3JKDYrL9xbQ+Xf0izwPpCIwBxMprDA==}
     engines: {node: '>=14'}
@@ -10007,37 +10037,6 @@ packages:
       '@unocss/transformer-directives': 0.45.21
       '@unocss/transformer-variant-group': 0.45.21
       '@unocss/vite': 0.45.21_vite@2.9.15
-    transitivePeerDependencies:
-      - supports-color
-      - vite
-    dev: true
-
-  /unocss/0.45.21_vite@3.0.9:
-    resolution: {integrity: sha512-tx0FZEbRhl4pjo9LQaFXIBzSt3EqWujPdNaaLypVPIqPEwms49cXw4vi3JKDYrL9xbQ+Xf0izwPpCIwBxMprDA==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@unocss/webpack': 0.45.21
-    peerDependenciesMeta:
-      '@unocss/webpack':
-        optional: true
-    dependencies:
-      '@unocss/astro': 0.45.21_vite@3.0.9
-      '@unocss/cli': 0.45.21
-      '@unocss/core': 0.45.21
-      '@unocss/preset-attributify': 0.45.21
-      '@unocss/preset-icons': 0.45.21
-      '@unocss/preset-mini': 0.45.21
-      '@unocss/preset-tagify': 0.45.21
-      '@unocss/preset-typography': 0.45.21
-      '@unocss/preset-uno': 0.45.21
-      '@unocss/preset-web-fonts': 0.45.21
-      '@unocss/preset-wind': 0.45.21
-      '@unocss/reset': 0.45.21
-      '@unocss/transformer-attributify-jsx': 0.45.21
-      '@unocss/transformer-compile-class': 0.45.21
-      '@unocss/transformer-directives': 0.45.21
-      '@unocss/transformer-variant-group': 0.45.21
-      '@unocss/vite': 0.45.21_vite@3.0.9
     transitivePeerDependencies:
       - supports-color
       - vite

@@ -6,5 +6,4 @@
 .eslintrc.js
 /src-ssr
 
-../../goggledy
-../../highlightjs-goggles
+../packages

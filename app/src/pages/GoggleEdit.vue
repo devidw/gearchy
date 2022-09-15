@@ -2,32 +2,18 @@
   <q-page padding>
     <template v-if="!isLoading && !error && gist && goggle">
       <div class="space-y-10">
-        <goggle-action-bar context="edit" :action="tab">
-          <q-tabs
-            v-model="tab"
-            align="justify"
-            indicator-color="transparent"
-            content-class="g-tabs"
-          >
-            <q-tab name="meta" icon="eva-edit-outline" />
-            <q-tab
-              v-for="(action, index) in actions"
-              :key="index"
-              :name="action.key"
-              :icon="action.icon"
-            />
-          </q-tabs>
-        </goggle-action-bar>
-
         <q-tab-panels
           v-model="tab"
           animated
           transition-next="fade"
           transition-prev="fade"
-          class="g-tab-panels"
+          class="g-tab-panels h-[65vh] md:h-[55vh]"
         >
           <q-tab-panel name="meta">
             <goggle-meta-data />
+          </q-tab-panel>
+          <q-tab-panel name="code">
+            <goggle-code />
           </q-tab-panel>
           <q-tab-panel
             v-for="(action, i) in actions"
@@ -35,11 +21,32 @@
             :name="action.key"
           >
             <goggle-rules
+              ref="goggleRulesRef"
               :action="action.key"
               @rule-action-change="(newTab) => (tab = newTab)"
             />
           </q-tab-panel>
         </q-tab-panels>
+
+        <goggle-action-bar context="edit" :tab="tab" @add-rule="addRuleHandler">
+          <template v-slot:after>
+            <q-tabs
+              v-model="tab"
+              align="justify"
+              indicator-color="transparent"
+              content-class="g-tabs"
+            >
+              <q-tab name="meta" icon="eva-edit-outline" />
+              <q-tab
+                v-for="(action, index) in actions"
+                :key="index"
+                :name="action.key"
+                :icon="action.icon"
+              />
+              <q-tab name="code" icon="eva-code-outline" />
+            </q-tabs>
+          </template>
+        </goggle-action-bar>
       </div>
     </template>
   </q-page>
@@ -53,14 +60,20 @@ import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
 import GoggleMetaData from 'components/GoggleMetaData.vue'
+import GoggleCode from 'components/GoggleCode.vue'
 import { GoggleEditTab } from 'src/types'
 import GoggleRules from 'components/GoggleRules.vue'
 
 const route = useRoute()
 const tab: Ref<GoggleEditTab> = ref('meta')
+const goggleRulesRef = ref<InstanceType<typeof GoggleRules>[]>()
 const { error, isLoading, gist } = storeToRefs(useGistStore())
 const { goggle, actions } = storeToRefs(useGoggleStore())
 const { fetchGist } = useGistStore()
+
+function addRuleHandler() {
+  goggleRulesRef.value?.[0].addRule()
+}
 
 fetchGist(route.params.id as string)
 </script>
@@ -82,5 +95,5 @@ fetchGist(route.params.id as string)
   @apply bg-transparent
 
   .q-tab-panel
-    @apply overflow-y-hidden
+    @apply p-0 overflow-y-hidden
 </style>
