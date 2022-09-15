@@ -3,16 +3,18 @@
     <template v-if="!isLoading && !error && gist && goggle">
       <div class="space-y-12">
         <goggle-action-bar>
-          <div class="px-2">
-            <div
-              class="mb-2 tracking-wider font-(extrabold [heading]) text-(3xl stone-3)"
-            >
-              {{ goggle.metaData?.name || 'Untitled' }}
-            </div>
-            <div class="leading-snug w-1/2 text-(stone-4)">
-              {{ goggle.metaData?.description || 'No description' }}
-            </div>
-          </div>
+          <template v-slot:before>
+            <div class="px-2">
+              <div
+                class="mb-2 tracking-wider font-(extrabold [heading]) text-(3xl stone-3)"
+              >
+                {{ goggle.metaData?.name || 'Untitled' }}
+              </div>
+              <div class="leading-snug w-1/2 text-(stone-4)">
+                {{ goggle.metaData?.description || 'No description' }}
+              </div>
+            </div></template
+          >
         </goggle-action-bar>
 
         <div class="lt-md:space-y-6 md:(space-x-5 flex)">

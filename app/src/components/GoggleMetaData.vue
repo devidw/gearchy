@@ -1,5 +1,5 @@
 <template>
-  <div class="g-box p-5">
+  <div class="g-box p-5 h-full overflow-y-scroll">
     <div class="flex">
       <q-input
         v-model="goggle.metaData.name"
@@ -44,7 +44,7 @@
         input-class="!text-stone-4"
       />
 
-      <div v-if="pref.editor.showAdvanced" class="space-y-2 mt-6">
+      <div class="space-y-2 mt-6">
         <q-input
           v-model="goggle.metaData.avatar"
           label="Avatar"
@@ -88,18 +88,6 @@
           borderless
         />
       </div>
-      <div class="flex justify-between space-x-2 pt-4">
-        <div class="flex items-center text-(xs gray)">
-          <q-checkbox
-            v-model="pref.editor.showAdvanced"
-            size="30px"
-            :label="
-              pref.editor.showAdvanced ? 'Hide advanced' : 'Show advanced'
-            "
-            class="g-advanced-toggle"
-          />
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -107,13 +95,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
-import { usePrefStore } from 'stores/pref'
 
-const { pref } = usePrefStore()
 const { goggle } = storeToRefs(useGoggleStore())
 </script>
 
-<style lang="sass">
-.g-advanced-toggle > .q-checkbox__inner
-  @apply hidden
-</style>
+<style lang="sass"></style>

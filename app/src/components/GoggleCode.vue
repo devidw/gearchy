@@ -2,7 +2,7 @@
   <highlightjs
     :code="stringifiedGoggle"
     lang="goggle"
-    class="bg-stone-7 rounded-2 px-6 py-4 max-h-xl overflow-y-scroll"
+    class="g-box px-6 py-4 h-full overflow-y-scroll"
   />
 </template>
 

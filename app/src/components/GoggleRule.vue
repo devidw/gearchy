@@ -112,7 +112,7 @@
               flat
               round
               icon="eva-trash-2-outline"
-              @click="removeActionRule(action, index)"
+              @click="removeActionRuleHandler()"
             />
           </q-menu>
         </q-btn>
@@ -124,9 +124,8 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useQuasar } from 'quasar'
+import { useQuasar, type QMenu } from 'quasar'
 import { useGoggleStore } from 'stores/goggle'
-import { QMenu } from 'quasar'
 import CustomDialogVue from './CustomDialog.vue'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
 
@@ -154,6 +153,11 @@ const { changeActionOnRule } = useGoggleStore()
 
 const rule = computed(() => goggle.value.rules[props.action][props.index])
 
+function removeActionRuleHandler() {
+  moreMenu.value?.hide()
+  removeActionRule(props.action, props.index)
+}
+
 function duplicateActionRuleHandler() {
   moreMenu.value?.hide()
   duplicateActionRule(props.action, props.index)
@@ -171,7 +175,7 @@ function changeActionOnRuleHandler() {
     component: CustomDialogVue,
     componentProps: {
       title: 'Change rule action',
-      message: '…',
+      message: 'To which action do you want to change this rule?',
       actions: [
         ...swapOptions.map((action) => ({
           type: 'ok',
