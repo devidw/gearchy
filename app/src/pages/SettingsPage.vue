@@ -7,6 +7,7 @@
     <div class="g-box px-6 py-5 text-stone-3">
       <q-input
         v-model="accessToken"
+        :type="isPwd ? 'password' : 'text'"
         label="GitHub Personal access token"
         placeholder="ghp_*"
         hide-hint
@@ -15,15 +16,22 @@
         input-class="!text-stone-3"
       >
         <template v-slot:append>
-          <q-btn
-            round
-            flat
-            icon="eva-done-all-outline"
-            @click="validateAccessToken"
-            class="text-stone-5"
-          >
-            <q-tooltip> Validate token </q-tooltip>
-          </q-btn>
+          <div class="text-stone-5">
+            <q-btn
+              round
+              flat
+              :icon="isPwd ? 'eva-eye-off-outline' : 'eva-eye-outline'"
+              @click="() => (isPwd = !isPwd)"
+            />
+            <q-btn
+              round
+              flat
+              icon="eva-done-all-outline"
+              @click="validateAccessToken"
+            >
+              <q-tooltip> Validate token </q-tooltip>
+            </q-btn>
+          </div>
         </template>
         <template v-slot:hint>
           <span class="text-stone-5">
@@ -47,10 +55,9 @@
         placeholder="https://example.org/submit?url=%s"
         input-class="!text-stone-3"
         borderless
-        :rules="[
-          validateApiUrl ||
-            'Invalid API URL, make sure it starts with https:// and contains %s',
-        ]"
+        bottom-slots
+        :error="!isValidApiUrl"
+        error-message="Invalid API URL, make sure it starts with https:// and contains %s"
       >
         <template v-slot:append>
           <q-btn
@@ -73,19 +80,19 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { Notify, openURL } from 'quasar'
 import { useGitHubStore } from 'stores/github'
 import { useBraveStore } from 'stores/brave'
 import CustomPageHeader from 'components/CustomPageHeader.vue'
 
+const isPwd = ref(true)
 const { accessToken } = storeToRefs(useGitHubStore())
 const { isValidAccessToken } = useGitHubStore()
 const { apiUrl } = storeToRefs(useBraveStore())
 
-function validateApiUrl(value: string) {
-  return /^https:\/\/.+%s.*/.test(value)
-}
+const isValidApiUrl = computed(() => /^https:\/\/.+%s.*/.test(apiUrl.value))
 
 async function validateAccessToken() {
   const accessTokenIsValid = await isValidAccessToken(accessToken.value)
