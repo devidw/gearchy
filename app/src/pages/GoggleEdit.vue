@@ -7,7 +7,7 @@
           animated
           transition-next="fade"
           transition-prev="fade"
-          class="g-tab-panels h-[65vh] md:h-[55vh]"
+          class="g-tab-panels h-[70vh] md:h-[55vh]"
         >
           <q-tab-panel name="meta">
             <goggle-meta-data />
@@ -80,10 +80,10 @@ fetchGist(route.params.id as string)
 
 <style lang="sass">
 .g-tabs .q-tab
-  @apply rounded-4 bg-stone-7 text-stone-4 py-4 tracking-widest
+  @apply rounded-4 bg-stone-7 text-stone-4 tracking-widest sm:py-4 lt-sm:px-0
 
   & + .q-tab
-    @apply ml-4
+    @apply ml-2 sm:ml-4
 
   &.q-tab--active
     @apply bg-stone-6 text-stone-3
@@ -93,6 +93,9 @@ fetchGist(route.params.id as string)
 
 .g-tab-panels
   @apply bg-transparent
+
+  @media (max-height: 700px)
+    @apply h-[60vh]
 
   .q-tab-panel
     @apply p-0 overflow-y-hidden

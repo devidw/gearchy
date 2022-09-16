@@ -1,5 +1,7 @@
 <template>
-  <div class="g-box p-4 space-y-10 text-gray">
+  <div
+    class="g-box p-4 text-gray space-y-5 sm:space-y-10 lt-md:(fixed left-0 bottom-0 w-full rounded-0)"
+  >
     <slot name="before"></slot>
     <div class="flex justify-between">
       <div class="sm:w-2/5">
@@ -36,13 +38,6 @@
         />
       </div>
       <div class="sm:w-2/5 flex justify-end">
-        <q-btn
-          v-if="tab && tab === 'code'"
-          round
-          flat
-          icon="eva-copy-outline"
-          @click="copyCode()"
-        />
         <q-btn round flat icon="eva-cloud-upload-outline" @click="submitGoggle">
           <q-tooltip> Submit Goggle on Brave </q-tooltip>
         </q-btn>
@@ -58,7 +53,6 @@
           <q-tooltip> Search with this Goggle </q-tooltip>
         </q-btn>
         <q-btn
-          v-if="goggle.metaData.public"
           round
           flat
           icon="eva-external-link-outline"
@@ -82,7 +76,6 @@
 import { openURL, copyToClipboard, useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
-import { useGoggleStore } from 'stores/goggle'
 import { useBraveStore } from 'stores/brave'
 import CustomDialog from './CustomDialog.vue'
 import { GoggleEditTab } from 'src/types'
@@ -90,7 +83,6 @@ import { GoggleEditTab } from 'src/types'
 const $q = useQuasar()
 const { updateGist, deleteGist } = useGistStore()
 const { gist } = storeToRefs(useGistStore())
-const { goggle, stringifiedGoggle } = storeToRefs(useGoggleStore())
 const { hasApiUrl } = storeToRefs(useBraveStore())
 const { submitGoggle: automaticallySubmitGoggle } = useBraveStore()
 
@@ -102,16 +94,6 @@ defineProps<{
 defineEmits<{
   (e: 'addRule'): void
 }>()
-
-function copyCode() {
-  copyToClipboard(stringifiedGoggle.value)
-  $q.notify({
-    message: 'Goggle code copied to clipboard',
-    type: 'positive',
-    position: 'top',
-    timeout: 1000,
-  })
-}
 
 function deleteGoggle() {
   $q.dialog({

@@ -6,11 +6,21 @@
           <template v-slot:before>
             <div class="px-2">
               <div
-                class="mb-2 tracking-wider font-(extrabold [heading]) text-(3xl stone-3)"
+                class="mb-2 tracking-wider font-(extrabold [heading]) text-(3xl stone-3) grid grid-cols-6 gap-2"
               >
-                {{ goggle.metaData?.name || 'Untitled' }}
+                <div class="col-span-5">
+                  {{ goggle.metaData?.name || 'Untitled' }}
+                </div>
+                <div class="col-span-1 flex justify-end sm:items-end">
+                  <q-icon
+                    :name="
+                      gist.public ? 'eva-eye-outline' : 'eva-eye-off-outline'
+                    "
+                    class="opacity-25"
+                  />
+                </div>
               </div>
-              <div class="leading-snug w-1/2 text-(stone-4)">
+              <div class="leading-snug text-(stone-4) sm:w-1/2">
                 {{ goggle.metaData?.description || 'No description' }}
               </div>
             </div></template
