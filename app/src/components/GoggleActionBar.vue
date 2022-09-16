@@ -28,11 +28,11 @@
       </div>
       <div class="sm:w-1/5 flex justify-center">
         <q-btn
-          v-if="tab && !['meta', 'codes'].includes(tab)"
+          v-if="tab && !['meta', 'code'].includes(tab)"
           round
           flat
           icon="eva-plus-circle-outline"
-          @click="$emit('add-rule')"
+          @click="$emit('addRule')"
         />
       </div>
       <div class="sm:w-2/5 flex justify-end">
@@ -100,7 +100,7 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (event: 'addRule'): void
+  (e: 'addRule'): void
 }>()
 
 function copyCode() {

@@ -16,12 +16,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { GoggleActionObject } from 'src/types'
+import { GoggleActionRule } from 'src/types'
 
-const props = defineProps<{ rules: GoggleActionObject[] }>()
+const props = defineProps<{ rules: GoggleActionRule[] }>()
 
 // Filter rules where site or pattern is not empty
 const filteredRules = computed(() =>
-  props.rules.filter((rule) => rule.site || rule.pattern)
+  props.rules.filter((rule) => rule.site || rule.pattern),
 )
 </script>

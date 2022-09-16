@@ -100,19 +100,19 @@
               flat
               round
               icon="eva-copy-outline"
-              @click="duplicateActionRuleHandler"
+              @click="duplicateRuleHandler"
             />
             <q-btn
               flat
               round
               icon="eva-swap-outline"
-              @click="changeActionOnRuleHandler"
+              @click="changeRuleActionHandler"
             />
             <q-btn
               flat
               round
               icon="eva-trash-2-outline"
-              @click="removeActionRuleHandler()"
+              @click="removeRuleHandler()"
             />
           </q-menu>
         </q-btn>
@@ -127,7 +127,10 @@ import { storeToRefs } from 'pinia'
 import { useQuasar, type QMenu } from 'quasar'
 import { useGoggleStore } from 'stores/goggle'
 import CustomDialogVue from './CustomDialog.vue'
-import { GoggleInstructionActionOptionKey } from 'goggledy'
+import {
+  GoggleInstructionActionOptionKey,
+  GoggleInstructionNumericOptionKey,
+} from 'goggledy'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey
@@ -148,22 +151,22 @@ const options = ref([
 ])
 
 const { goggle, actions } = storeToRefs(useGoggleStore())
-const { removeActionRule, duplicateActionRule } = useGoggleStore()
-const { changeActionOnRule } = useGoggleStore()
+const { removeRule, duplicateRule } = useGoggleStore()
+const { changeRuleAction } = useGoggleStore()
 
 const rule = computed(() => goggle.value.rules[props.action][props.index])
 
-function removeActionRuleHandler() {
+function removeRuleHandler() {
   moreMenu.value?.hide()
-  removeActionRule(props.action, props.index)
+  removeRule(props.action, props.index)
 }
 
-function duplicateActionRuleHandler() {
+function duplicateRuleHandler() {
   moreMenu.value?.hide()
-  duplicateActionRule(props.action, props.index)
+  duplicateRule(props.action, props.index)
 }
 
-function changeActionOnRuleHandler() {
+function changeRuleActionHandler() {
   moreMenu.value?.hide()
 
   // create an array of action where the current action is not included
@@ -189,7 +192,7 @@ function changeActionOnRuleHandler() {
       ],
     },
   }).onOk((payload) => {
-    changeActionOnRule(props.action, payload.action, payload.index)
+    changeRuleAction(props.action, payload.action, payload.index)
     emit('ruleActionChange', payload.action)
   })
 }
@@ -197,8 +200,9 @@ function changeActionOnRuleHandler() {
 function shiftRuleValue() {
   if (!rule.value.value) {
     return
-  } else if (rule.value.value === 10) {
-    rule.value.value = 1
+  }
+  if (rule.value.value === 10) {
+    rule.value.value = 2
   } else {
     rule.value.value++
   }
@@ -209,20 +213,14 @@ watchEffect(() => {
     return
   }
 
-  if (props.action === 'discard' && !rule.value.value) {
-    rule.value.value = 2
+  // Default to 'inurl' option, when no option is selected and pattern is provided
+  if (rule.value.pattern && !rule.value.options?.length) {
+    rule.value.options = ['inurl']
   }
 
-  if (rule.value.pattern) {
-    // Default to 'inurl' option, if a pattern is provided
-    if (!rule.value.options || !rule.value.options.length) {
-      rule.value.options = ['inurl']
-    }
-  } else {
-    // Empty options, if no pattern is provided
-    if (rule.value.options?.length) {
-      rule.value.options = []
-    }
+  // Empty options, if options are provided but no pattern
+  if (!rule.value.pattern && rule.value.options?.length) {
+    rule.value.options = []
   }
 })
 </script>

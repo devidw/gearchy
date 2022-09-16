@@ -59,7 +59,7 @@
             icon="eva-question-mark-outline"
             @click="
               openURL(
-                'https://github.com/devidw/gearchy/blob/master/faq.adoc#how-to-automatically-submit-updated-goggles-to-brave-search',
+                'https://github.com/devidw/gearchy/blob/master/FAQ.adoc#how-to-automatically-submit-updated-goggles-to-brave-search',
               )
             "
             class="text-stone-5"

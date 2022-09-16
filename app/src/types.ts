@@ -5,7 +5,7 @@ import {
 
 export type GoggleEditTab = 'meta' | 'code' | GoggleInstructionActionOptionKey
 
-export type GoggleActionObject = {
+export type GoggleActionRule = {
   id: string
   value?: number
   pattern?: string

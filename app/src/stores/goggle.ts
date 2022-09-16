@@ -10,7 +10,7 @@ import {
   GoggleEmpty,
   GoggleComment,
 } from 'goggledy'
-import { GoggleActionObject } from 'src/types'
+import { GoggleActionRule } from 'src/types'
 import { v4 as uuidv4 } from 'uuid'
 
 export const useGoggleStore = defineStore('goggle', {
@@ -18,9 +18,9 @@ export const useGoggleStore = defineStore('goggle', {
     goggle: {} as {
       metaData: GoggleMetaData
       rules: {
-        discard: GoggleActionObject[]
-        boost: GoggleActionObject[]
-        downrank: GoggleActionObject[]
+        discard: GoggleActionRule[]
+        boost: GoggleActionRule[]
+        downrank: GoggleActionRule[]
       }
     },
   }),
@@ -124,8 +124,8 @@ export const useGoggleStore = defineStore('goggle', {
             : action === 'boost'
             ? 'boosts'
             : 'downranks'
-        return goggle[key].map((inObj): GoggleActionObject => {
-          const outObj: GoggleActionObject = {
+        return goggle[key].map((inObj): GoggleActionRule => {
+          const outObj: GoggleActionRule = {
             id: uuidv4(),
             pattern: inObj.pattern,
             site: inObj.options.site,
@@ -165,21 +165,23 @@ export const useGoggleStore = defineStore('goggle', {
         },
       }
     },
-    addActionRule(
-      action: GoggleInstructionActionOptionKey,
-      rule: GoggleActionObject,
-    ) {
+    addRule(action: GoggleInstructionActionOptionKey, rule?: GoggleActionRule) {
+      if (!rule) {
+        rule = {
+          id: uuidv4(),
+          pattern: '',
+          site: '',
+          options: [],
+        }
+      }
       this.goggle.rules[action] = [rule, ...this.goggle.rules[action]]
     },
-    removeActionRule(action: GoggleInstructionActionOptionKey, index: number) {
+    removeRule(action: GoggleInstructionActionOptionKey, index: number) {
       this.goggle.rules[action] = this.goggle.rules[action].filter(
         (_, i) => i !== index,
       )
     },
-    duplicateActionRule(
-      action: GoggleInstructionActionOptionKey,
-      index: number,
-    ) {
+    duplicateRule(action: GoggleInstructionActionOptionKey, index: number) {
       const clone = { ...this.goggle.rules[action][index] }
       clone.id = uuidv4()
       this.goggle.rules[action] = [
@@ -188,14 +190,18 @@ export const useGoggleStore = defineStore('goggle', {
         ...this.goggle.rules[action].slice(index),
       ]
     },
-    changeActionOnRule(
+    changeRuleAction(
       sourceAction: GoggleInstructionActionOptionKey,
       targetAction: GoggleInstructionActionOptionKey,
       index: number,
     ) {
       const rule = this.goggle.rules[sourceAction][index]
-      this.removeActionRule(sourceAction, index)
-      this.addActionRule(targetAction, rule)
+      // Handle the conversion of discard to boost/downrank
+      if (sourceAction === 'discard') {
+        rule.value = 2
+      }
+      this.removeRule(sourceAction, index)
+      this.addRule(targetAction, rule)
     },
   },
 })

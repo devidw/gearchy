@@ -21,40 +21,34 @@ import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
 import GoggleRule from 'components/GoggleRule.vue'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
-import { GoggleActionObject } from 'src/types'
+import { GoggleActionRule } from 'src/types'
 import type { QVirtualScroll } from 'quasar'
-import { v4 as uuidv4 } from 'uuid'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey
 }>()
 
 defineEmits<{
-  (event: 'ruleActionChange', action: GoggleInstructionActionOptionKey): void
+  (e: 'ruleActionChange', action: GoggleInstructionActionOptionKey): void
 }>()
 
 defineExpose({
-  addRule,
+  addRuleHandler,
 })
 
 const virtualScroll = ref<QVirtualScroll>()
 const { goggle } = storeToRefs(useGoggleStore())
-const { addActionRule } = useGoggleStore()
+const { addRule } = useGoggleStore()
 
 const rules = computed({
   get: () => goggle.value.rules[props.action],
-  set: (value: GoggleActionObject[]) => {
+  set: (value: GoggleActionRule[]) => {
     goggle.value.rules[props.action] = value
   },
 })
 
-async function addRule() {
-  addActionRule(props.action as GoggleInstructionActionOptionKey, {
-    id: uuidv4(),
-    pattern: '',
-    site: '',
-    options: [],
-  })
+async function addRuleHandler() {
+  addRule(props.action as GoggleInstructionActionOptionKey)
   await nextTick()
   virtualScroll.value?.scrollTo(0)
 }

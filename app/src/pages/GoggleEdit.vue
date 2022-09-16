@@ -72,7 +72,7 @@ const { goggle, actions } = storeToRefs(useGoggleStore())
 const { fetchGist } = useGistStore()
 
 function addRuleHandler() {
-  goggleRulesRef.value?.[0].addRule()
+  goggleRulesRef.value?.[0].addRuleHandler()
 }
 
 fetchGist(route.params.id as string)
