@@ -4,6 +4,7 @@
     :virtual-scroll-item-size="100"
     v-slot="{ index }"
     ref="virtualScroll"
+    @virtual-scroll="onVirtualScroll"
     class="g-visual-rules h-full overflow-y-scroll"
   >
     <div class="pb-[18px]">
@@ -18,9 +19,10 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
+import { useEditorStore } from 'stores/editor'
 import GoggleRule from 'components/GoggleRule.vue'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
 import { GoggleActionRule } from 'src/types'
@@ -39,9 +41,11 @@ defineExpose({
 })
 
 const route = useRoute()
+const router = useRouter()
 const virtualScroll = ref<QVirtualScroll>()
 const { goggle } = storeToRefs(useGoggleStore())
 const { addRule } = useGoggleStore()
+const { tabScrollIndexes } = storeToRefs(useEditorStore())
 
 const rules = computed({
   get: () => goggle.value.rules[props.action],
@@ -60,10 +64,24 @@ function addRuleHandler() {
   scrollTo(0)
 }
 
-if (route.params.action && route.params.index) {
-  if (route.params.action === props.action) {
-    scrollTo(Number(route.params.index))
-  }
+function onVirtualScroll(details: { index: number }) {
+  tabScrollIndexes.value[props.action] = details.index
+}
+
+if (
+  route.params.action &&
+  route.params.index &&
+  route.params.action === props.action
+) {
+  scrollTo(Number(route.params.index))
+  router.replace({
+    params: {
+      action: undefined,
+      index: undefined,
+    },
+  })
+} else if (tabScrollIndexes.value[props.action]) {
+  scrollTo(tabScrollIndexes.value[props.action])
 }
 </script>
 

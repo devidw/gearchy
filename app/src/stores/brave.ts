@@ -6,14 +6,10 @@ export const useBraveStore = defineStore('brave', {
   state: () => ({
     apiUrl: useStorage('braveApiUrl', ''),
   }),
-  getters: {
-    hasApiUrl(state) {
-      return state.apiUrl !== ''
-    },
-  },
+  getters: {},
   actions: {
     async submitGoggle(url: string) {
-      if (!this.hasApiUrl) {
+      if (!this.apiUrl) {
         return
       }
 

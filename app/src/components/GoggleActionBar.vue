@@ -81,7 +81,7 @@ import { GoggleEditTab } from 'src/types'
 const $q = useQuasar()
 const { updateGist, deleteGist } = useGistStore()
 const { gist } = storeToRefs(useGistStore())
-const { hasApiUrl } = storeToRefs(useBraveStore())
+const { apiUrl } = storeToRefs(useBraveStore())
 const { submitGoggle: automaticallySubmitGoggle } = useBraveStore()
 
 defineProps<{
@@ -108,7 +108,7 @@ function deleteGoggle() {
 }
 
 function submitGoggle() {
-  if (hasApiUrl.value) {
+  if (apiUrl.value) {
     automaticallySubmitGoggle(gist.value.url)
   } else {
     manuallySubmitGoggle(gist.value.url)

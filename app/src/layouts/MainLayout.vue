@@ -83,7 +83,7 @@
   </q-layout>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
@@ -102,7 +102,7 @@ watch(isLoading, (newVal) => {
       spinnerSize: 0,
       html: true,
       message: /* html */ `
-      <div class="-left-[100px] -top-[100px] relative animate-pulse animate-count-infinit">
+      <div class="-left-[100px] -top-[100px] relative animate-(pulse count-infinit)">
         <img class="absolute animate-spin" src="/circle.svg" width="200" />
         <img class="absolute" src="/face.svg" width="200" />
       </div>

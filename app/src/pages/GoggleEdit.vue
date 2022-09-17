@@ -57,12 +57,13 @@
   </q-page>
 </template>
 
-<script lang="ts" setup>
-import { ref, Ref } from 'vue'
+<script setup lang="ts">
+import { ref, Ref, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
+import { useEditorStore } from 'stores/editor'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
 import GoggleMetaData from 'components/GoggleMetaData.vue'
 import GoggleCode from 'components/GoggleCode.vue'
@@ -79,6 +80,15 @@ const { fetchGist } = useGistStore()
 function addRuleHandler() {
   goggleRulesRef.value?.[0].addRuleHandler()
 }
+
+onBeforeUnmount(() => {
+  // TODO: Anyway to get this working inside a action of the store itself?
+  useEditorStore().tabScrollIndexes = {
+    discard: 0,
+    boost: 0,
+    downrank: 0,
+  }
+})
 
 fetchGist(route.params.id as string)
 
