@@ -21,6 +21,24 @@ describe('GoggleMeta', () => {
     expect(() => GoggleMeta.parse('! foo: bar')).toThrow(Error)
   })
 
+  test('parsing empty value', () => {
+    const meta = GoggleMeta.parse('! name: ')
+    expect(meta.key).toBe('name')
+    expect(meta.value).toBe('')
+  })
+
+  test('parising without leading space', () => {
+    const meta = GoggleMeta.parse('!name: some name')
+    expect(meta.key).toBe('name')
+    expect(meta.value).toBe('some name')
+  })
+
+  test('parsing without space after colon', () => {
+    const meta = GoggleMeta.parse('! name:foo')
+    expect(meta.key).toBe('name')
+    expect(meta.value).toBe('foo')
+  })
+
   test('parsing string', () => {
     const meta = GoggleMeta.parse('! name: some name')
     expect(meta.key).toBe('name')

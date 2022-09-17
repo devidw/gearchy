@@ -156,7 +156,7 @@ export const useGistStore = defineStore('gist', {
                 description
                 files {
                   filename: name
-                  text
+                  content: text
                 }
                 public: isPublic
               }
@@ -192,28 +192,35 @@ export const useGistStore = defineStore('gist', {
         this.isLoading = false
       }
     },
-    async createGist(isPublic: boolean) {
+    async createGist(
+      isPublic: boolean,
+      description = '',
+      filename = 'index.goggle',
+      content = '! This is the default template for a new Goggle created with Gearchy\n! You can edit the Goggle on https://app.gearchy.wolf.gdn',
+    ) {
       this.isLoading = true
       this.error = undefined
       this.pagination.pageInfo.hasNextPage = true // Reload gists list with new gist
       this.gist = {} as Gist
+
       try {
         const res = await api.value.request('POST /gists', {
           public: isPublic,
+          description,
           files: {
-            'index.goggle': {
-              content:
-                '! This is the default template for a new Goggle created with Gearchy\n! You can edit the Goggle on https://app.gearchy.wolf.gdn',
+            [filename]: {
+              content,
             },
           },
         })
-        if (!res.data.html_url || !res.data.id) {
+
+        if (!res.data.id) {
           throw new Error('Invalid response')
         }
-        this.gist.public = false
-        this.gist.url = res.data.html_url
+
         this.gist.id = res.data.id
-        this.router.push(`/goggle/${this.gist.id}`)
+
+        return this.gist.id
       } catch (e) {
         this.error = e
       } finally {
@@ -249,7 +256,6 @@ export const useGistStore = defineStore('gist', {
       this.error = undefined
       try {
         this.gists = this.gists.filter((gist: Gist) => gist.id !== this.gist.id)
-        this.router.push('/')
         await api.value.request(`DELETE /gists/${this.gist.id}`, {
           gist_id: this.gist.id,
         })
@@ -260,6 +266,18 @@ export const useGistStore = defineStore('gist', {
       } catch (e) {
         this.error = e
       }
+    },
+    duplicateGist(isPublic: boolean) {
+      if (!this.gist.files || !this.gist.files[0]) {
+        return
+      }
+
+      return this.createGist(
+        isPublic,
+        this.gist.description ?? '',
+        this.gist.files[0].filename,
+        this.gist.files[0].content,
+      )
     },
   },
 })

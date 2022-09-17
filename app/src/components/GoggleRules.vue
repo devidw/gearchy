@@ -54,14 +54,14 @@ const rules = computed({
   },
 })
 
-async function scrollTo(index: number) {
-  await nextTick()
-  virtualScroll.value?.scrollTo(index)
-}
-
 function addRuleHandler() {
   addRule(props.action as GoggleInstructionActionOptionKey)
   scrollTo(0)
+}
+
+async function scrollTo(index: number) {
+  await nextTick()
+  virtualScroll.value?.scrollTo(index)
 }
 
 function onVirtualScroll(details: { index: number }) {

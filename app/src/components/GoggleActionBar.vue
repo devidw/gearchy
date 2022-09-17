@@ -18,12 +18,8 @@
             icon="eva-edit-outline"
             @click="$router.push(`/goggle/${gist.id}/edit`)"
           />
-          <q-btn
-            round
-            flat
-            icon="eva-trash-2-outline"
-            @click="deleteGoggle()"
-          />
+          <q-btn round flat icon="eva-copy-outline" @click="duplicateGoggle" />
+          <q-btn round flat icon="eva-trash-2-outline" @click="deleteGoggle" />
         </template>
       </div>
       <div class="sm:w-1/5 flex justify-center">
@@ -71,18 +67,17 @@
 </template>
 
 <script setup lang="ts">
-import { openURL, copyToClipboard, useQuasar } from 'quasar'
+import { openURL } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
+import { useGoggleStore } from 'stores/goggle'
 import { useBraveStore } from 'stores/brave'
-import CustomDialog from './CustomDialog.vue'
 import { GoggleEditTab } from 'src/types'
 
-const $q = useQuasar()
-const { updateGist, deleteGist } = useGistStore()
+const { updateGist } = useGistStore()
 const { gist } = storeToRefs(useGistStore())
-const { apiUrl } = storeToRefs(useBraveStore())
-const { submitGoggle: automaticallySubmitGoggle } = useBraveStore()
+const { duplicateGoggle, deleteGoggle } = useGoggleStore()
+const { submitGoggle } = useBraveStore()
 
 defineProps<{
   context?: string
@@ -92,40 +87,4 @@ defineProps<{
 defineEmits<{
   (e: 'addRule'): void
 }>()
-
-function deleteGoggle() {
-  $q.dialog({
-    component: CustomDialog,
-    componentProps: {
-      title: 'Delete this Goggle?',
-      message:
-        'This will permanently delete the associated Gist on GitHub. Once the gist is deleted, it has to be resubmitted on Brave to remove it from the search engine as well.',
-    },
-  }).onOk(async () => {
-    await deleteGist()
-    submitGoggle()
-  })
-}
-
-function submitGoggle() {
-  if (apiUrl.value) {
-    automaticallySubmitGoggle(gist.value.url)
-  } else {
-    manuallySubmitGoggle(gist.value.url)
-  }
-}
-
-function manuallySubmitGoggle(url: string) {
-  $q.dialog({
-    component: CustomDialog,
-    componentProps: {
-      title: 'Manually Submit Goggle',
-      message:
-        'The goggle URL will be copied to your clipboard. And you will be redirected to the Goggle submission page on Brave. For automated submissions, please refer to the FAQ.',
-    },
-  }).onOk(async () => {
-    await copyToClipboard(url)
-    openURL('https://search.brave.com/goggles/create')
-  })
-}
 </script>

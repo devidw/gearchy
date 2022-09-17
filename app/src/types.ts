@@ -4,7 +4,9 @@ import {
   GoggleInstructionGenericOptionValue,
 } from 'goggledy'
 
-export type Gist = components['schemas']['base-gist']
+export type Gist = components['schemas']['gist-simple'] & {
+  url: string
+}
 
 export type GoggleEditTab = 'meta' | 'code' | GoggleInstructionActionOptionKey
 

@@ -26,7 +26,7 @@ export type GoggleMetaData = Partial<{
 
 export class GoggleMeta extends GoggleLine {
   static regex =
-    /! (?<key>(name|description|public|author|homepage|issues|transferred_to|avatar|license)): (?<value>(.+))/
+    /!\s?(?<key>(name|description|public|author|homepage|issues|transferred_to|avatar|license)):\s?(?<value>(.*))/
   #key!: GoggleMetaDataKey
   #value!: string | boolean
 
@@ -84,7 +84,7 @@ export class GoggleMeta extends GoggleLine {
   // checks via the user defined type guards testKey() and testValue()
   static parse(line: string): GoggleMeta {
     const groups = line.match(this.regex)?.groups
-    if (!groups?.key || !groups?.value) {
+    if (!groups?.key) {
       throw new Error(`Invalid meta data: ${line}`)
     }
     switch (true) {
@@ -98,10 +98,7 @@ export class GoggleMeta extends GoggleLine {
       case Object.values(GoggleMetaDataKey).includes(
         groups.key as GoggleMetaDataKey,
       ):
-        return new GoggleMeta(
-          groups.key as GoggleMetaDataKey,
-          groups?.value || '',
-        )
+        return new GoggleMeta(groups.key as GoggleMetaDataKey, groups?.value)
       // Should never happen because regex already checks for valid keys,
       // but typescript complains if we don't handle "all" cases.
       default:

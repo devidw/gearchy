@@ -128,8 +128,7 @@ const filterdCheckQs = computed(() => {
 })
 </script>
 
-<style>
-.q-checkbox__bg {
-  @apply rounded-full;
-}
+<style lang="sass">
+.q-checkbox__bg
+  @apply rounded-full
 </style>

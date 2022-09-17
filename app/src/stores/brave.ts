@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
-import { Notify } from 'quasar'
+import { openURL, copyToClipboard, Notify, Dialog } from 'quasar'
+import { useGistStore } from 'stores/gist'
+import CustomDialog from 'components/CustomDialog.vue'
 
 export const useBraveStore = defineStore('brave', {
   state: () => ({
@@ -8,11 +10,15 @@ export const useBraveStore = defineStore('brave', {
   }),
   getters: {},
   actions: {
-    async submitGoggle(url: string) {
-      if (!this.apiUrl) {
-        return
+    submitGoggle() {
+      const { url } = useGistStore().gist
+      if (this.apiUrl) {
+        this.automaticallySubmitGoggle(url)
+      } else {
+        this.manuallySubmitGoggle(url)
       }
-
+    },
+    async automaticallySubmitGoggle(url: string) {
       try {
         const response = await fetch(
           this.apiUrl.replace('%s', encodeURIComponent(url)),
@@ -41,6 +47,19 @@ export const useBraveStore = defineStore('brave', {
           type: 'negative',
         })
       }
+    },
+    manuallySubmitGoggle(url: string) {
+      Dialog.create({
+        component: CustomDialog,
+        componentProps: {
+          title: 'Manually Submit Goggle',
+          message:
+            'The goggle URL will be copied to your clipboard. And you will be redirected to the Goggle submission page on Brave. For automated submissions, please refer to the FAQ.',
+        },
+      }).onOk(async () => {
+        await copyToClipboard(url)
+        openURL('https://search.brave.com/goggles/create')
+      })
     },
   },
 })

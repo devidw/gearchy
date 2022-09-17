@@ -66,7 +66,7 @@ export type Action = {
 export interface Props {
   title?: string
   message?: string
-  actions: Action[]
+  actions?: Action[]
 }
 
 withDefaults(defineProps<Props>(), {

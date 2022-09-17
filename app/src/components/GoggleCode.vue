@@ -12,7 +12,7 @@
       <q-btn
         round
         flat
-        icon="eva-copy-outline"
+        icon="eva-clipboard-outline"
         @click="copyCode()"
         class="text-gray fixed"
       />

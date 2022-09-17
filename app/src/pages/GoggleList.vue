@@ -34,49 +34,20 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
+import { useGoggleStore } from 'src/stores/goggle'
 import GoggleListItem from 'components/GoggleListItem.vue'
 import CustomPageHeader from 'components/CustomPageHeader.vue'
-import CustomDialogVue from 'components/CustomDialog.vue'
 
-const $q = useQuasar()
-const { login, gists, pagination } = storeToRefs(useGistStore())
-const { resetGists, fetchGists, createGist } = useGistStore()
+const { gists, pagination } = storeToRefs(useGistStore())
+const { resetGists, fetchGists } = useGistStore()
+const { createGoggle } = useGoggleStore()
 
 async function onLoad(index: number, done: (stop: boolean) => void) {
   await fetchGists()
   done(!pagination.value.pageInfo.hasNextPage)
   // console.info('onLoad', index)
-}
-
-function createGoggle() {
-  $q.dialog({
-    component: CustomDialogVue,
-    componentProps: {
-      title: 'Create new Goggle',
-      message:
-        'Choose if you want to create a public or private Goggle. This will determine the initial visibility of the Gist as well.',
-      actions: [
-        {
-          type: 'ok',
-          label: 'Public',
-          payload: {
-            isPublic: true,
-          },
-        },
-        {
-          type: 'ok',
-          label: 'Private',
-          payload: {
-            isPublic: false,
-          },
-        },
-        { type: 'cancel' },
-      ],
-    },
-  }).onOk(({ isPublic }) => createGist(isPublic))
 }
 
 fetchGists()

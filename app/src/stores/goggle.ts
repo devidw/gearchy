@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
-import { useGistStore } from './gist'
+import { useGistStore } from 'stores/gist'
+import { useBraveStore } from 'stores/brave'
+import { GoggleActionRule } from 'src/types'
 import {
   Goggle,
   GoggleInstruction,
@@ -10,8 +12,27 @@ import {
   GoggleEmpty,
   GoggleComment,
 } from 'goggledy'
-import { GoggleActionRule } from 'src/types'
+import { Dialog } from 'quasar'
 import { v4 as uuidv4 } from 'uuid'
+import CustomDialog from 'components/CustomDialog.vue'
+
+const publicOrPrivateDialogOptions = [
+  {
+    type: 'ok',
+    label: 'Public',
+    payload: {
+      isPublic: true,
+    },
+  },
+  {
+    type: 'ok',
+    label: 'Private',
+    payload: {
+      isPublic: false,
+    },
+  },
+  { type: 'cancel' },
+]
 
 export const useGoggleStore = defineStore('goggle', {
   state: () => ({
@@ -87,14 +108,60 @@ export const useGoggleStore = defineStore('goggle', {
   },
 
   actions: {
+    createGoggle() {
+      Dialog.create({
+        component: CustomDialog,
+        componentProps: {
+          title: 'Create new Goggle',
+          message:
+            'Choose if you want to create a public or private Goggle. This will determine the initial visibility of the Gist as well.',
+          actions: publicOrPrivateDialogOptions,
+        },
+      }).onOk(async ({ isPublic }) => {
+        const { createGist } = useGistStore()
+        const id = await createGist(isPublic)
+        this.router.push({ name: 'goggle-edit', params: { id } })
+      })
+    },
+    duplicateGoggle() {
+      Dialog.create({
+        component: CustomDialog,
+        componentProps: {
+          title: 'Duplicate this Goggle?',
+          message:
+            'Choose if you want to duplicate this Goggle as a public or private Goggle. This will determine the initial visibility of the Gist as well.',
+          actions: publicOrPrivateDialogOptions,
+        },
+      }).onOk(async ({ isPublic }) => {
+        const { duplicateGist } = useGistStore()
+        const id = await duplicateGist(isPublic)
+        this.router.push({ name: 'goggle-edit', params: { id } })
+      })
+    },
+    deleteGoggle() {
+      Dialog.create({
+        component: CustomDialog,
+        componentProps: {
+          title: 'Delete this Goggle?',
+          message:
+            'This will permanently delete the associated Gist on GitHub. Once the gist is deleted, it has to be resubmitted on Brave to remove it from the search engine as well.',
+        },
+      }).onOk(async () => {
+        const { deleteGist } = useGistStore()
+        const { submitGoggle } = useBraveStore()
+        this.router.push('/')
+        await deleteGist()
+        submitGoggle()
+      })
+    },
     parseGoggle() {
       const { gist, login } = useGistStore()
 
-      if (!gist) {
+      if (!gist || !gist.files || !gist.files[0]) {
         return
       }
 
-      const goggle = Goggle.parse((gist.files[0] as { text: string }).text)
+      const goggle = Goggle.parse(String(gist.files[0].content))
 
       const metaData = goggle.metaData
 
