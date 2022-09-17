@@ -45,6 +45,7 @@ export const useGistStore = defineStore('gist', {
       }
     },
     async fetchGists() {
+      // if (this.gists.length > 4) return
       // setTimeout(() => {
       //   this.gists = [
       //     ...this.gists,

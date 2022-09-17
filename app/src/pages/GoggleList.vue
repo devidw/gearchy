@@ -48,8 +48,14 @@ import CustomPageHeader from 'components/CustomPageHeader.vue'
 import CustomDialogVue from 'components/CustomDialog.vue'
 
 const $q = useQuasar()
-const { login, gists } = storeToRefs(useGistStore())
+const { login, gists, pagination } = storeToRefs(useGistStore())
 const { resetGists, fetchGists, createGist } = useGistStore()
+
+async function onLoad(index: number, done: (stop: boolean) => void) {
+  await fetchGists()
+  done(!pagination.value.pageInfo.hasNextPage)
+  // console.info('onLoad', index)
+}
 
 function createGoggle() {
   $q.dialog({
@@ -77,12 +83,6 @@ function createGoggle() {
       ],
     },
   }).onOk(({ isPublic }) => createGist(isPublic))
-}
-
-async function onLoad(index: number, done: () => void) {
-  console.log('onLoad', index)
-  await fetchGists()
-  done()
 }
 
 fetchGists()
