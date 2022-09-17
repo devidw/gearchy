@@ -127,10 +127,7 @@ import { storeToRefs } from 'pinia'
 import { useQuasar, type QMenu } from 'quasar'
 import { useGoggleStore } from 'stores/goggle'
 import CustomDialogVue from './CustomDialog.vue'
-import {
-  GoggleInstructionActionOptionKey,
-  GoggleInstructionNumericOptionKey,
-} from 'goggledy'
+import { GoggleInstructionActionOptionKey } from 'goggledy'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey

@@ -214,5 +214,11 @@ export const useGoggleStore = defineStore('goggle', {
       this.removeRule(sourceAction, index)
       this.addRule(targetAction, rule)
     },
+    getRuleIndexById(
+      action: GoggleInstructionActionOptionKey,
+      id: string,
+    ): number {
+      return this.goggle.rules[action].findIndex((rule) => rule.id === id)
+    },
   },
 })

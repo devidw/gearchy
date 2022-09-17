@@ -43,7 +43,10 @@
                 header-class="px-6 py-4 font-([heading] bold) text-(lg stone-3)
                 tracking-wide capitalize"
               >
-                <goggle-single-rules-list :rules="goggle.rules[action.key]" />
+                <goggle-single-rules-list
+                  :action="action.key"
+                  :rules="goggle.rules[action.key]"
+                />
               </q-expansion-item>
             </div>
           </template>
@@ -60,7 +63,7 @@ import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
 import { useGoggleStore } from 'stores/goggle'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
-import GoggleSingleRulesList from 'components/GoggleSingleRulesList.vue'
+import GoggleSingleRulesList from 'components/GoggleSingleRules.vue'
 
 const route = useRoute()
 const { error, isLoading, gist } = storeToRefs(useGistStore())

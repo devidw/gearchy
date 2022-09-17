@@ -81,6 +81,10 @@ function addRuleHandler() {
 }
 
 fetchGist(route.params.id as string)
+
+if (route.params.action) {
+  tab.value = route.params.action as GoggleEditTab
+}
 </script>
 
 <style lang="sass">

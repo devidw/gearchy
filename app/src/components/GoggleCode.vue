@@ -1,7 +1,14 @@
 <template>
   <div class="g-box px-6 py-4 h-full overflow-y-scroll relative">
-    <highlightjs :code="stringifiedGoggle" lang="goggle" />
-    <div class="absolute right-13 top-3">
+    <q-virtual-scroll
+      :items="stringifiedGoggleLines"
+      v-slot="{ item }"
+      class="h-full"
+    >
+      <highlightjs :code="item" lang="goggle" />
+    </q-virtual-scroll>
+
+    <div class="absolute right-20 top-3">
       <q-btn
         round
         flat
@@ -14,15 +21,19 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { copyToClipboard, useQuasar } from 'quasar'
-import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
 
 const $q = useQuasar()
-const { stringifiedGoggle } = storeToRefs(useGoggleStore())
+const { stringifiedGoggle } = useGoggleStore()
+
+const stringifiedGoggleLines = computed(() => {
+  return stringifiedGoggle.split('\n')
+})
 
 function copyCode() {
-  copyToClipboard(stringifiedGoggle.value)
+  copyToClipboard(stringifiedGoggle)
   $q.notify({
     message: 'Goggle code copied to clipboard',
     type: 'positive',
@@ -36,4 +47,8 @@ pre[lang="goggle"]
 
   & > code
     @apply #{'!'}p-0 bg-transparent whitespace-pre-wrap break-all font-mono leading-loose
+
+    // empty lines
+    &:not(.goggle)
+      @apply h-[1.5rem]
 </style>

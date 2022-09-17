@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         name: 'goggle-edit',
-        path: 'goggle/:id/edit',
+        path: 'goggle/:id/:action?/:index?/edit',
         component: () => import('pages/GoggleEdit.vue'),
       },
       { path: 'settings', component: () => import('pages/SettingsPage.vue') },
