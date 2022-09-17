@@ -1,12 +1,6 @@
 <template>
   <q-page padding>
     <custom-page-header>
-      <template v-slot:title>
-        Goggles
-        <span v-if="login" class="text-size-4 opacity-50">
-          by {{ login }}
-        </span>
-      </template>
       <template v-slot:actions>
         <q-btn
           flat

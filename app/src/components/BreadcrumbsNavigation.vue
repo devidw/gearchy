@@ -9,11 +9,14 @@
     <q-breadcrumbs-el to="/">
       <div class="flex items-center space-x-2 sm:space-x-3">
         <img src="../assets/logo.svg" alt="logo" width="35" />
-        <span
-          class="text-(gray opacity-50) uppercase tracking-widest sm:tracking-[5px]"
-        >
-          Gearchy
-        </span>
+        <div class="relative uppercase tracking-widest">
+          <div class="text-(gray opacity-50) sm:tracking-[5px]">Gearchy</div>
+          <div
+            class="absolute left-0 top-[14px] text-[10px] text-([#f8f] opacity-65) sm:tracking-[3px]"
+          >
+            beta
+          </div>
+        </div>
       </div>
     </q-breadcrumbs-el>
 

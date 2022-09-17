@@ -7,6 +7,7 @@
   "author": "David Wolf <d@wolf.gdn>",
   "private": true,
   "scripts": {
+    "quasar": "quasar",
     "dev": "quasar dev",
     "build": "quasar build",
     "lint": "eslint --ext .js,.ts,.vue ./",
