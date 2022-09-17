@@ -6,12 +6,12 @@
           <template v-slot:before>
             <div class="px-2">
               <div
-                class="mb-2 tracking-wider font-(extrabold [heading]) text-(3xl stone-3) grid grid-cols-6 gap-2"
+                class="mb-2 tracking-wider font-(extrabold [heading]) text-(3xl stone-3) grid grid-cols-[1fr_2.5rem]"
               >
-                <div class="col-span-5">
+                <div>
                   {{ goggle.metaData?.name || 'Untitled' }}
                 </div>
-                <div class="col-span-1 flex justify-end sm:items-end">
+                <div class="flex justify-end sm:items-end">
                   <q-icon
                     :name="
                       gist.public ? 'eva-eye-outline' : 'eva-eye-off-outline'

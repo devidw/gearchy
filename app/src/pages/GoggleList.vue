@@ -89,13 +89,14 @@ fetchGists()
 </script>
 
 <style scoped lang="sass">
-.q-infinite-scroll
-  // By default all cards same size
-  & > div
-    @apply scale-[1]
-  // When hoving over list all cards scale down
-  &:hover > div
-    @apply scale-[0.98] opacity-75
-  & > div:hover
-    @apply scale-[1] opacity-100
+@media (hover: hover)
+  .q-infinite-scroll
+    // By default all cards same size
+    & > div
+      @apply scale-[1]
+    // When hoving over list all cards scale down
+    &:hover > div
+      @apply scale-[0.98] opacity-75
+    & > div:hover
+      @apply scale-[1] opacity-100
 </style>

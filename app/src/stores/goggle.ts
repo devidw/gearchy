@@ -44,7 +44,11 @@ export const useGoggleStore = defineStore('goggle', {
     },
     stringifiedGoggle(state): string {
       const goggle = new Goggle(
-        [new GoggleComment(` generator: Gearchy ${process.env.VERSION}`)],
+        [
+          new GoggleComment(
+            ` generator: Gearchy/${process.env.VERSION} <https://app.gearchy.wolf.gdn>`,
+          ),
+        ],
         state.goggle.metaData,
       )
 
@@ -132,8 +136,14 @@ export const useGoggleStore = defineStore('goggle', {
             options: [],
           }
 
-          if (typeof inObj.options[action] === 'number') {
-            outObj.value = inObj.options[action] as number
+          if (action !== 'discard') {
+            // Goggle parser does not return obmited default values ($boost) and
+            // invalid values ($boost=99), therfore we add a default value here
+            if (typeof inObj.options[action] === 'number') {
+              outObj.value = inObj.options[action] as number
+            } else {
+              outObj.value = 2
+            }
           }
 
           Object.keys(inObj.options).forEach((optionKey) => {
@@ -172,6 +182,7 @@ export const useGoggleStore = defineStore('goggle', {
           pattern: '',
           site: '',
           options: [],
+          value: action !== 'discard' ? 2 : undefined,
         }
       }
       this.goggle.rules[action] = [rule, ...this.goggle.rules[action]]
