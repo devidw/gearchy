@@ -36,7 +36,6 @@ export const useBraveStore = defineStore('brave', {
               .join(', '),
             type: 'negative',
             multiLine: data.errors.length > 1,
-            timeout: 1000 * 60 * 5,
           })
         }
       } catch (error) {

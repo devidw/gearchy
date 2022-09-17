@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="g-box p-4 text-gray space-y-5 sm:space-y-10 lt-md:(fixed left-0 bottom-0 w-full rounded-0)"
-  >
+  <div class="g-box p-4 text-gray space-y-5 sm:space-y-10">
     <slot name="before"></slot>
     <div class="flex justify-between">
       <div class="sm:w-2/5">

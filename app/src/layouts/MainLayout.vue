@@ -51,7 +51,7 @@
         </q-list>
 
         <div class="w-full space-y-20 text-(gray end) pr-8">
-          <div class="lt-sm:(flex justify-center) opacity-50">
+          <div class="lt-sm:(flex justify-center space-x-3) opacity-50">
             <template
               v-for="({ icon, href, classes }, index) in footerLinks"
               :key="index"

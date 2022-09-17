@@ -19,6 +19,7 @@ Notify.registerType('positive', {
 Notify.registerType('negative', {
   icon: 'eva-alert-triangle-outline',
   classes: defaultClasses + ' bg-amber-900 !text-amber-200',
+  timeout: 1000 * 60,
   actions: [
     {
       icon: 'eva-close-circle-outline',

@@ -1,17 +1,19 @@
 <template>
-  <q-list class="px-6 py-4 space-y-2 font-mono">
-    <template v-for="(rule, i) in filteredRules" :key="i">
-      <q-item class="p-0">
-        <q-item-section v-if="rule.value" avatar class="w-10 text-xs">
-          {{ rule.value }}
-        </q-item-section>
-        <q-item-section>
-          <q-item-label v-if="rule.pattern">{{ rule.pattern }}</q-item-label>
-          <q-item-label v-if="rule.site" caption>{{ rule.site }}</q-item-label>
-        </q-item-section>
-      </q-item>
-    </template>
-  </q-list>
+  <q-virtual-scroll
+    :items="filteredRules"
+    v-slot="{ item }"
+    class="max-h-[30vh] md:max-h-xl px-6 py-4 space-y-2 font-mono"
+  >
+    <q-item class="p-0">
+      <q-item-section v-if="item.value" avatar class="w-10 text-xs">
+        {{ item.value }}
+      </q-item-section>
+      <q-item-section>
+        <q-item-label v-if="item.pattern">{{ item.pattern }}</q-item-label>
+        <q-item-label v-if="item.site" caption>{{ item.site }}</q-item-label>
+      </q-item-section>
+    </q-item>
+  </q-virtual-scroll>
 </template>
 
 <script setup lang="ts">

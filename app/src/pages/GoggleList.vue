@@ -28,11 +28,14 @@
       </template>
     </custom-page-header>
 
-    <template v-if="gists.length">
-      <q-infinite-scroll @load="onLoad" :offset="1" class="space-y-4">
-        <goggle-list-item v-for="(gist, i) in gists" :key="i" :gist="gist" />
-      </q-infinite-scroll>
-    </template>
+    <q-infinite-scroll
+      v-if="gists.length"
+      @load="onLoad"
+      :offset="0"
+      class="space-y-4"
+    >
+      <goggle-list-item v-for="(gist, i) in gists" :key="i" :gist="gist" />
+    </q-infinite-scroll>
   </q-page>
 </template>
 
@@ -77,6 +80,7 @@ function createGoggle() {
 }
 
 async function onLoad(index: number, done: () => void) {
+  console.log('onLoad', index)
   await fetchGists()
   done()
 }

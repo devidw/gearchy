@@ -1,7 +1,10 @@
+import { components } from '@octokit/openapi-types'
 import {
   GoggleInstructionActionOptionKey,
   GoggleInstructionGenericOptionValue,
 } from 'goggledy'
+
+export type Gist = components['schemas']['base-gist']
 
 export type GoggleEditTab = 'meta' | 'code' | GoggleInstructionActionOptionKey
 

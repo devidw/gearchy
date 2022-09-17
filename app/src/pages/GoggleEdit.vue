@@ -28,7 +28,12 @@
           </q-tab-panel>
         </q-tab-panels>
 
-        <goggle-action-bar context="edit" :tab="tab" @add-rule="addRuleHandler">
+        <goggle-action-bar
+          context="edit"
+          :tab="tab"
+          @add-rule="addRuleHandler"
+          class="lt-md:(fixed left-0 bottom-0 w-full rounded-0)"
+        >
           <template v-slot:after>
             <q-tabs
               v-model="tab"

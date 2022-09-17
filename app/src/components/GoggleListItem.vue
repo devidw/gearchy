@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { Gist } from 'stores/gist'
+import { Gist } from 'src/types'
 
 defineProps<{
   gist: Gist

@@ -12,7 +12,6 @@ export default boot(({ router }) => {
         Notify.create({
           message: 'Set your token to be able to access this page',
           type: 'negative',
-          timeout: 2000,
         })
       }
 

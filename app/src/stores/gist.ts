@@ -1,10 +1,8 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { components } from '@octokit/openapi-types'
 import { Notify } from 'quasar'
 import { useGitHubStore } from './github'
 import { useGoggleStore } from './goggle'
-
-type Gist = components['schemas']['base-gist']
+import { Gist } from 'src/types'
 
 const { api } = storeToRefs(useGitHubStore())
 
@@ -32,6 +30,19 @@ export const useGistStore = defineStore('gist', {
       this.gists = []
       this.pagination.pageInfo.endCursor = undefined
       this.pagination.pageInfo.hasNextPage = true
+    },
+    maybeThrowOnResponse(response: unknown) {
+      if (
+        !response ||
+        typeof response !== 'object' ||
+        response.hasOwnProperty('errors')
+      ) {
+        throw new Error(
+          (response as { errors: { message: string }[] }).errors
+            .map((error) => error.message)
+            .join(', '),
+        )
+      }
     },
     async fetchGists() {
       // setTimeout(() => {
@@ -61,12 +72,7 @@ export const useGistStore = defineStore('gist', {
       this.error = undefined
 
       try {
-        const {
-          viewer: {
-            gists: { pageInfo, edges },
-            login,
-          },
-        } = await api.value.graphql(
+        const response = await api.value.graphql(
           `#graphql
           query GetGists ($perPage: Int!, $after: String) {
             viewer {
@@ -101,6 +107,15 @@ export const useGistStore = defineStore('gist', {
           },
         )
 
+        this.maybeThrowOnResponse(response)
+
+        const {
+          viewer: {
+            gists: { pageInfo, edges },
+            login,
+          },
+        } = response
+
         this.login = login
         this.pagination.pageInfo = pageInfo
 
@@ -131,9 +146,7 @@ export const useGistStore = defineStore('gist', {
       this.error = undefined
       this.gist = {} as Gist
       try {
-        const {
-          viewer: { gist, login },
-        } = await api.value.graphql(
+        const response = await api.value.graphql(
           `query GetGist($name: String!) {
             viewer {
               gist(name: $name) {
@@ -152,7 +165,13 @@ export const useGistStore = defineStore('gist', {
           { name: id },
         )
 
-        if (gist === undefined) {
+        this.maybeThrowOnResponse(response)
+
+        const {
+          viewer: { gist, login },
+        } = response
+
+        if (!gist) {
           throw new Error("Gist doesn't exist")
         }
 
@@ -163,6 +182,7 @@ export const useGistStore = defineStore('gist', {
 
         this.login = login
         this.gist = gist
+
         useGoggleStore().parseGoggle()
       } catch (e) {
         this.error = e
@@ -174,18 +194,21 @@ export const useGistStore = defineStore('gist', {
     async createGist(isPublic: boolean) {
       this.isLoading = true
       this.error = undefined
-      // Reload gists list with new gist
-      this.pagination.pageInfo.hasNextPage = true
+      this.pagination.pageInfo.hasNextPage = true // Reload gists list with new gist
       this.gist = {} as Gist
       try {
         const res = await api.value.request('POST /gists', {
           public: isPublic,
           files: {
             'index.goggle': {
-              content: '!',
+              content:
+                '! This is the default template for a new Goggle created with Gearchy\n! You can edit the Goggle on https://app.gearchy.wolf.gdn',
             },
           },
         })
+        if (!res.data.html_url || !res.data.id) {
+          throw new Error('Invalid response')
+        }
         this.gist.public = false
         this.gist.url = res.data.html_url
         this.gist.id = res.data.id

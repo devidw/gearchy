@@ -35,6 +35,7 @@
                 :label="`${goggle.rules[action.key].length} ${action.key}${
                   goggle.rules[action.key].length > 1 ? 's' : ''
                 }`"
+                :group="$q.screen.lt.md ? 'goggle-rule' : undefined"
                 :icon="action.icon"
                 expand-icon="eva-plus-circle-outline"
                 expanded-icon="eva-minus-circle-outline"

@@ -13,7 +13,7 @@
         hide-hint
         bottom-slots
         borderless
-        input-class="!text-stone-3"
+        input-class="!text-stone-3 font-mono"
       >
         <template v-slot:append>
           <div class="text-stone-5">
@@ -53,7 +53,7 @@
         type="url"
         label="Brave Submission API Proxy"
         placeholder="https://example.org/submit?url=%s"
-        input-class="!text-stone-3"
+        input-class="!text-stone-3 font-mono"
         borderless
         bottom-slots
         :error="!isValidApiUrl"
