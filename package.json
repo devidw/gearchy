@@ -6,8 +6,8 @@
         "build": "turbo run build --filter=!site",
         "pretty": "prettier --write \"./**/*.{js,ts}\"",
         "prepublishOnly": "pnpm -F './packages/**' build",
-        "pkg:publish": "pnpm publish --dry-run --filter './packages/**'",
-        "release": "bumpp package.json packages/*/package.json && pnpm pkg:publish",
+        "pkg:publish": "pnpm publish --filter './packages/**'",
+        "release": "bumpp package.json app/package.json packages/*/package.json && pnpm pkg:publish",
         "preview": "vercel dev"
     },
     "devDependencies": {

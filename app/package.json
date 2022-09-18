@@ -1,6 +1,7 @@
 {
   "name": "app",
   "description": "Graphical user interface to interact with search goggles.",
+  "version": "0.1.0",
   "productName": "Gearchy",
   "homepage": "https://app.gearchy.wolf.gdn",
   "author": "David Wolf <d@wolf.gdn>",
