@@ -5,8 +5,8 @@ ifdef::env-github[]
 :caution-caption: :fire:
 :warning-caption: :warning:
 endif::[]
-:product: Gearchy
 :hide-uri-schema:
+:product: Gearchy
 :app-name: {product}
 
 [subs=attributes]
@@ -18,20 +18,24 @@ endif::[]
 </h1>
 ++++
 
-_{product}_ is a web app that lets you manage all your
-https://github.com/brave/goggles-quickstart[brave search goggles] with ease.
+{product} (https://gearchy.wolf.gdn/gearchy.mp3[pronounced like "gearky"]) has two main goals:
 
-Your goggles are stored as gists directly in your GitHub account.
+. Enhance the overall experience of interacting with
+https://github.com/brave/goggles-quickstart[Brave Search Goggles]
+. Lower the barrier for new users (especially non-technical users) to join the
+community
+
+This is done by:
+
+* Providing a graphical interface to interact with Goggles, including an
+interactive Goggle editor which does not require any knowledge of the Goggle's syntax
+* Integrating with GitHub Gists as a Goggle hosting provider to permanently
+store Goggles
+* Integrating with the Brave Search API to automatically submit Goggles without
+the need to reenter the Goggle URL on any change made to the Goggle
 
 NOTE: A GitHub account as well as a
 https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token[GitHub
-personal access token] are required to use this app.
-
-_{product}_ provides a graphical user interface to manage all your goggle gists.
-
-You can create and edit your goggles with _{product}'s_ advanced interactive goggle editor.
-
-_{product}_ aims to make it as easy as possible to a wide range of internet users
-to create new goggles without having to come from a developer background.
+personal access token] are required to use {product}.
 
 //
