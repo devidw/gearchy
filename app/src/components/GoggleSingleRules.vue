@@ -1,7 +1,26 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useGoggleStore } from 'stores/goggle'
+import { GoggleActionRule } from 'src/types'
+import { GoggleInstructionActionOptionKey } from 'goggledy'
+
+const props = defineProps<{
+  action: GoggleInstructionActionOptionKey
+  rules: GoggleActionRule[]
+}>()
+
+const { getRuleIndexById } = useGoggleStore()
+
+// Filter rules where site or pattern is not empty
+const filteredRules = computed(() =>
+  props.rules.filter((rule) => rule.site || rule.pattern),
+)
+</script>
+
 <template>
   <q-virtual-scroll
-    :items="filteredRules"
     v-slot="{ item }"
+    :items="filteredRules"
     class="max-h-[30vh] md:max-h-xl px-6 py-4 space-y-2 font-mono"
   >
     <q-item
@@ -25,22 +44,3 @@
     </q-item>
   </q-virtual-scroll>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useGoggleStore } from 'stores/goggle'
-import { GoggleActionRule } from 'src/types'
-import { GoggleInstructionActionOptionKey } from 'goggledy'
-
-const props = defineProps<{
-  action: GoggleInstructionActionOptionKey
-  rules: GoggleActionRule[]
-}>()
-
-const { getRuleIndexById } = useGoggleStore()
-
-// Filter rules where site or pattern is not empty
-const filteredRules = computed(() =>
-  props.rules.filter((rule) => rule.site || rule.pattern),
-)
-</script>

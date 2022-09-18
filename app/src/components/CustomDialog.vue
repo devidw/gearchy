@@ -1,10 +1,38 @@
+<script setup lang="ts">
+import { useDialogPluginComponent } from 'quasar'
+
+export type Action = {
+  type: 'ok' | 'cancel'
+  label?: string
+  payload?: object
+  class?: string
+}
+
+export interface Props {
+  title?: string
+  message?: string
+  actions?: Action[]
+}
+
+withDefaults(defineProps<Props>(), {
+  title: 'Dialog',
+  message: 'This is a dialog',
+  actions: () => [{ type: 'ok' }, { type: 'cancel' }],
+})
+
+defineEmits([...useDialogPluginComponent.emits])
+
+const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
+  useDialogPluginComponent()
+</script>
+
 <template>
   <q-dialog
     ref="dialogRef"
-    @hide="onDialogHide"
     transition-show="flip-up"
     transition-hide="flip-down"
     transition-duration="500"
+    @hide="onDialogHide"
   >
     <q-card class="pa-2 pt-4 w-70 !rounded-xl">
       <q-card-section class="mb-6 text-(center)">
@@ -36,45 +64,19 @@
               ? 'OK'
               : 'Cancel'
           "
-          @click="
-            action.type === 'ok'
-              ? onDialogOK(action.payload || {})
-              : onDialogCancel()
-          "
           class="w-full tracking-wide !rounded-2 capitalize"
           :class="{
             'bg-amber-700 font-bold': action.type === 'ok' && action.class === undefined,
             'bg-stone-7 text-stone-4': action.type === 'cancel'  && action.class === undefined,
             [action.class as string]: action.class !== undefined,
           }"
+          @click="
+            action.type === 'ok'
+              ? onDialogOK(action.payload || {})
+              : onDialogCancel()
+          "
         />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
-
-<script setup lang="ts">
-import { useDialogPluginComponent } from 'quasar'
-
-export type Action = {
-  type: 'ok' | 'cancel'
-  label?: string
-  payload?: object
-  class?: string
-}
-
-export interface Props {
-  title?: string
-  message?: string
-  actions?: Action[]
-}
-
-withDefaults(defineProps<Props>(), {
-  actions: () => [{ type: 'ok' }, { type: 'cancel' }],
-})
-
-defineEmits([...useDialogPluginComponent.emits])
-
-const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } =
-  useDialogPluginComponent()
-</script>

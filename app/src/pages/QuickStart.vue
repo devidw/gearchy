@@ -1,67 +1,3 @@
-<template>
-  <q-page padding class="flex justify-center items-center">
-    <div class="g-box px-6 pt-12 pb-16 w-lg space-y-10">
-      <div class="text-(center) space-y-3">
-        <img src="../assets/logo.svg" width="80" />
-        <div class="g-heading">Quickstart</div>
-      </div>
-      <q-list class="w-5/6 mx-auto space-y-3 font-(mono)">
-        <q-item
-          tag="label"
-          v-for="(checkQ, i) in filterdCheckQs"
-          :key="i"
-          :class="{ 'cursor-not-allowed': checkQ.nxtHasVal }"
-        >
-          <q-item-section avatar>
-            <!-- Since all question build on each other, only the last one can always be answered. -->
-            <q-checkbox
-              v-model="checkAs"
-              :val="checkQ.val"
-              :disable="checkQ.nxtHasVal"
-              checked-icon="eva-done-all-outline"
-            />
-          </q-item-section>
-          <q-item-section class="space-y-2">
-            <q-item-label class="font-(extrabold)">
-              {{ checkQ.label }}
-            </q-item-label>
-            <q-item-label v-if="!checkQ.hasVal" caption>
-              <span v-html="checkQ.help"> </span>
-            </q-item-label>
-          </q-item-section>
-          <q-item-section v-if="!checkQ.hasVal" side>
-            <q-btn
-              round
-              flat
-              icon="eva-question-mark-outline"
-              :href="checkQ.whyUrl"
-              target="_blank"
-              class="text-gray"
-            >
-              <q-tooltip> Why do I need this? </q-tooltip>
-            </q-btn>
-          </q-item-section>
-        </q-item>
-      </q-list>
-
-      <div
-        v-if="checkAs.length === checkQs.length"
-        class="flex justify-center !mt-24"
-      >
-        <q-btn
-          no-caps
-          rounded
-          outline
-          label="Finish Setup"
-          to="/settings"
-          color="primary"
-          class="tracking-wider font-([heading] bold)"
-        />
-      </div>
-    </div>
-  </q-page>
-</template>
-
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 
@@ -127,6 +63,68 @@ const filterdCheckQs = computed(() => {
   })
 })
 </script>
+
+<template>
+  <q-page padding class="flex justify-center items-center">
+    <div class="g-box px-6 pt-12 pb-16 w-lg space-y-10">
+      <div class="text-(center) space-y-3">
+        <img src="../assets/logo.svg" width="80" />
+        <div class="g-heading">Quickstart</div>
+      </div>
+      <q-list class="w-5/6 mx-auto space-y-3 font-(mono)">
+        <q-item
+          v-for="(checkQ, i) in filterdCheckQs"
+          :key="i"
+          tag="label"
+          :class="{ 'cursor-not-allowed': checkQ.nxtHasVal }"
+        >
+          <q-item-section avatar>
+            <!-- Since all question build on each other, only the last one can always be answered. -->
+            <q-checkbox
+              v-model="checkAs"
+              :val="checkQ.val"
+              :disable="checkQ.nxtHasVal"
+              checked-icon="eva-done-all-outline"
+            />
+          </q-item-section>
+          <q-item-section class="space-y-2">
+            <q-item-label class="font-(extrabold)">
+              {{ checkQ.label }}
+            </q-item-label>
+            <q-item-label v-if="!checkQ.hasVal" caption>
+              <span v-html="checkQ.help"> </span>
+            </q-item-label>
+          </q-item-section>
+          <q-item-section v-if="!checkQ.hasVal" side>
+            <g-btn
+              icon="eva-question-mark-outline"
+              :href="checkQ.whyUrl"
+              target="_blank"
+              class="text-gray"
+            >
+              <q-tooltip> Why do I need this? </q-tooltip>
+            </g-btn>
+          </q-item-section>
+        </q-item>
+      </q-list>
+
+      <div
+        v-if="checkAs.length === checkQs.length"
+        class="flex justify-center !mt-24"
+      >
+        <q-btn
+          no-caps
+          rounded
+          outline
+          label="Finish Setup"
+          to="/settings"
+          color="primary"
+          class="tracking-wider font-([heading] bold)"
+        />
+      </div>
+    </div>
+  </q-page>
+</template>
 
 <style lang="sass">
 .q-checkbox__bg

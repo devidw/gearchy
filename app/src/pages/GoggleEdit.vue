@@ -1,75 +1,3 @@
-<template>
-  <q-page padding>
-    <template v-if="!isLoading && !error && gist && goggle">
-      <div class="space-y-10">
-        <q-tab-panels
-          v-model="tab"
-          animated
-          transition-next="fade"
-          transition-prev="fade"
-          class="g-tab-panels h-[70vh] md:h-[55vh]"
-        >
-          <q-tab-panel name="meta">
-            <goggle-meta-data />
-          </q-tab-panel>
-          <q-tab-panel name="code">
-            <goggle-code />
-          </q-tab-panel>
-          <q-tab-panel
-            v-for="(action, i) in actions"
-            :key="i"
-            :name="action.key"
-          >
-            <goggle-rules
-              ref="goggleRulesRef"
-              :action="action.key"
-              @rule-action-change="(newTab) => (tab = newTab)"
-            />
-          </q-tab-panel>
-        </q-tab-panels>
-
-        <goggle-action-bar
-          context="edit"
-          :tab="tab"
-          @add-rule="addRuleHandler"
-          class="lt-md:(fixed left-0 bottom-0 w-full rounded-0)"
-        >
-          <template v-slot:actions>
-            <q-btn round flat icon="eva-save-outline" @click="updateGist" />
-            <q-btn
-              round
-              flat
-              icon="eva-flash-outline"
-              @click="updateAndSubmitGoggle"
-            >
-              <q-tooltip anchor="top middle" self="bottom middle">
-                Save and Submit
-              </q-tooltip>
-            </q-btn>
-          </template>
-          <template v-slot:after>
-            <q-tabs
-              v-model="tab"
-              align="justify"
-              indicator-color="transparent"
-              content-class="g-tabs"
-            >
-              <q-tab name="meta" icon="eva-edit-outline" />
-              <q-tab
-                v-for="(action, index) in actions"
-                :key="index"
-                :name="action.key"
-                :icon="action.icon"
-              />
-              <q-tab name="code" icon="eva-code-outline" />
-            </q-tabs>
-          </template>
-        </goggle-action-bar>
-      </div>
-    </template>
-  </q-page>
-</template>
-
 <script setup lang="ts">
 import { ref, Ref, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
@@ -79,10 +7,10 @@ import { useBraveStore } from 'stores/brave'
 import { useGoggleStore } from 'stores/goggle'
 import { useEditorStore } from 'stores/editor'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
-import GoggleMetaData from 'components/GoggleMetaData.vue'
+import GoggleMetaData from 'components/GoggleEditMetaData.vue'
+import GoggleEditRules from 'components/GoggleEditRules.vue'
 import GoggleCode from 'components/GoggleCode.vue'
 import { GoggleEditTab } from 'src/types'
-import GoggleRules from 'components/GoggleRules.vue'
 
 const route = useRoute()
 const tab: Ref<GoggleEditTab> = ref('meta')
@@ -116,6 +44,73 @@ if (route.params.action) {
   tab.value = route.params.action as GoggleEditTab
 }
 </script>
+
+<template>
+  <q-page padding>
+    <template v-if="!isLoading && !error && gist && goggle">
+      <div class="space-y-10">
+        <q-tab-panels
+          v-model="tab"
+          animated
+          transition-next="fade"
+          transition-prev="fade"
+          class="g-tab-panels h-[70vh] md:h-[55vh]"
+        >
+          <q-tab-panel name="meta">
+            <goggle-meta-data />
+          </q-tab-panel>
+          <q-tab-panel name="code">
+            <goggle-code />
+          </q-tab-panel>
+          <q-tab-panel
+            v-for="(action, i) in actions"
+            :key="i"
+            :name="action.key"
+          >
+            <goggle-edit-rules
+              ref="goggleRulesRef"
+              :action="action.key"
+              @rule-action-change="(newTab) => (tab = newTab)"
+            />
+          </q-tab-panel>
+        </q-tab-panels>
+
+        <goggle-action-bar
+          context="edit"
+          :tab="tab"
+          class="lt-md:(fixed left-0 bottom-0 w-full rounded-0)"
+          @add-rule="addRuleHandler"
+        >
+          <template #actions>
+            <g-btn icon="eva-save-outline" @click="updateGist" />
+            <g-btn icon="eva-flash-outline" @click="updateAndSubmitGoggle">
+              <q-tooltip anchor="top middle" self="bottom middle">
+                Save and Submit
+              </q-tooltip>
+            </g-btn>
+          </template>
+          <template #after>
+            <q-tabs
+              v-model="tab"
+              align="justify"
+              indicator-color="transparent"
+              content-class="g-tabs"
+            >
+              <q-tab name="meta" icon="eva-edit-outline" />
+              <q-tab
+                v-for="(action, index) in actions"
+                :key="index"
+                :name="action.key"
+                :icon="action.icon"
+              />
+              <q-tab name="code" icon="eva-code-outline" />
+            </q-tabs>
+          </template>
+        </goggle-action-bar>
+      </div>
+    </template>
+  </q-page>
+</template>
 
 <style lang="sass">
 .g-tabs .q-tab

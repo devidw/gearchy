@@ -1,32 +1,13 @@
-<template>
-  <q-virtual-scroll
-    :items="rules"
-    :virtual-scroll-item-size="100"
-    v-slot="{ index }"
-    ref="virtualScroll"
-    @virtual-scroll="onVirtualScroll"
-    class="g-visual-rules h-full overflow-y-scroll"
-  >
-    <div class="pb-[18px]">
-      <goggle-rule
-        :action="action"
-        :index="index"
-        @rule-action-change="$emit('ruleActionChange', $event)"
-      />
-    </div>
-  </q-virtual-scroll>
-</template>
-
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
 import { useEditorStore } from 'stores/editor'
-import GoggleRule from 'components/GoggleRule.vue'
+import GoggleEditRule from 'components/GoggleEditRule.vue'
+import type { QVirtualScroll } from 'quasar'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
 import { GoggleActionRule } from 'src/types'
-import type { QVirtualScroll } from 'quasar'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey
@@ -85,4 +66,21 @@ if (
 }
 </script>
 
-<style lang="sass"></style>
+<template>
+  <q-virtual-scroll
+    v-slot="{ index }"
+    ref="virtualScroll"
+    :items="rules"
+    :virtual-scroll-item-size="100"
+    class="g-visual-rules h-full overflow-y-scroll"
+    @virtual-scroll="onVirtualScroll"
+  >
+    <div class="pb-[18px]">
+      <goggle-edit-rule
+        :action="action"
+        :index="index"
+        @rule-action-change="$emit('ruleActionChange', $event)"
+      />
+    </div>
+  </q-virtual-scroll>
+</template>

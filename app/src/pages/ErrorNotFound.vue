@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useGistStore } from 'stores/gist'
+
+const { login } = storeToRefs(useGistStore())
+
+const searchUrl = computed(() => {
+  return `https://gist.github.com/search?q=filename%3A.goggle${
+    login.value ? `+user%3A${login.value}` : ''
+  }`
+})
+</script>
+
 <template>
   <q-page padding class="flex justify-center items-center">
     <div class="space-y-6 text-(center)">
@@ -17,17 +31,3 @@
     </div>
   </q-page>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useGistStore } from 'stores/gist'
-
-const { login } = storeToRefs(useGistStore())
-
-const searchUrl = computed(() => {
-  return `https://gist.github.com/search?q=filename%3A.goggle${
-    login.value ? `+user%3A${login.value}` : ''
-  }`
-})
-</script>

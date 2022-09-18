@@ -10,12 +10,12 @@ export default boot(async (/* { app, router, ... } */) => {
     return
   }
 
-  function migrateFromTo(from: string, to: string, fn: () => void) {
-    if (version.value === from) {
-      fn()
-      version.value = to
-    }
-  }
+  // function migrateFromTo(from: string, to: string, fn: () => void) {
+  //   if (version.value === from) {
+  //     fn()
+  //     version.value = to
+  //   }
+  // }
 
   // migrateFromTo('0.1.0', 'x.x.x', () => {
   //   localStorage.removeItem('old-key')

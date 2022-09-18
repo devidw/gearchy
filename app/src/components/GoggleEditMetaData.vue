@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useGoggleStore } from 'stores/goggle'
+
+const { goggle } = storeToRefs(useGoggleStore())
+</script>
+
 <template>
   <div class="g-box p-5 h-full overflow-y-scroll">
     <div class="flex">
@@ -10,7 +17,7 @@
         class="w-full"
         input-class="!pt-0 !leading-snug tracking-wider !text-(3xl stone-3) font-(extrabold [heading])"
       >
-        <template v-slot:prepend>
+        <template #prepend>
           <q-icon
             class="cursor-pointer !mb-3"
             :name="
@@ -51,14 +58,14 @@
           borderless
           class="-ml-8.5"
         >
-          <template v-slot:prepend>
+          <template #prepend>
             <q-icon name="eva-color-picker-outline" class="cursor-pointer">
               <q-popup-proxy
                 cover
                 transition-show="scale"
                 transition-hide="scale"
               >
-                <q-color flat v-model="goggle.metaData.avatar" />
+                <q-color v-model="goggle.metaData.avatar" flat />
               </q-popup-proxy>
             </q-icon>
           </template>
@@ -91,12 +98,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useGoggleStore } from 'stores/goggle'
-
-const { goggle } = storeToRefs(useGoggleStore())
-</script>
-
-<style lang="sass"></style>

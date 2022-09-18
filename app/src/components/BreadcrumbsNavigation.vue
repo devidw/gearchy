@@ -1,8 +1,17 @@
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useGoggleStore } from 'stores/goggle'
+import { useGistStore } from 'src/stores/gist'
+
+const { goggle } = storeToRefs(useGoggleStore())
+const { gist } = storeToRefs(useGistStore())
+</script>
+
 <template>
   <q-breadcrumbs
     class="font-([heading] extrabold) text-(sm gray opacity-75) tracking-wide sm:tracking-widest lt-sm:text-xs"
   >
-    <template v-slot:separator>
+    <template #separator>
       <span class="text-(gray opacity-50)">/</span>
     </template>
 
@@ -28,12 +37,3 @@
     />
   </q-breadcrumbs>
 </template>
-
-<script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useGoggleStore } from 'stores/goggle'
-import { useGistStore } from 'src/stores/gist'
-
-const { goggle } = storeToRefs(useGoggleStore())
-const { gist } = storeToRefs(useGistStore())
-</script>

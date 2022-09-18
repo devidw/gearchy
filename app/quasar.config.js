@@ -27,7 +27,14 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['migrate', 'unocss', 'notify', 'auth', 'hljs'],
+    boot: [
+      // 'migrate',
+      'register-global-components',
+      'unocss',
+      'notify',
+      'hljs',
+      'auth',
+    ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.sass'],

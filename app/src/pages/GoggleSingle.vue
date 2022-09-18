@@ -1,30 +1,50 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useGistStore } from 'stores/gist'
+import { useGoggleStore } from 'stores/goggle'
+import GoggleActionBar from 'components/GoggleActionBar.vue'
+import GoggleSingleRulesList from 'components/GoggleSingleRules.vue'
+
+const route = useRoute()
+const { error, isLoading, gist } = storeToRefs(useGistStore())
+const { fetchGist } = useGistStore()
+const { goggle, actions } = storeToRefs(useGoggleStore())
+const { duplicateGoggle, deleteGoggle } = useGoggleStore()
+
+fetchGist(String(route.params.id))
+
+const filteredActions = computed(() => {
+  return actions.value.filter(
+    (action) =>
+      goggle.value.rules &&
+      goggle.value.rules[action.key] &&
+      goggle.value.rules[action.key].length,
+  )
+})
+</script>
+
 <template>
   <q-page padding>
     <template v-if="!isLoading && !error && gist && goggle">
       <div class="space-y-12">
         <goggle-action-bar>
-          <template v-slot:actions>
-            <q-btn
-              round
-              flat
+          <template #actions>
+            <g-btn
               icon="eva-edit-outline"
               @click="
                 $router.push({ name: 'goggle-edit', params: { id: gist.id } })
               "
             />
-            <q-btn round flat icon="eva-copy-outline" @click="duplicateGoggle">
+            <g-btn icon="eva-copy-outline" @click="duplicateGoggle">
               <q-tooltip anchor="top middle" self="bottom middle">
                 Duplicate Goggle
               </q-tooltip>
-            </q-btn>
-            <q-btn
-              round
-              flat
-              icon="eva-trash-2-outline"
-              @click="deleteGoggle"
-            />
+            </g-btn>
+            <g-btn icon="eva-trash-2-outline" @click="deleteGoggle" />
           </template>
-          <template v-slot:before>
+          <template #before>
             <div class="px-2">
               <div
                 class="mb-2 tracking-wider font-(extrabold [heading]) text-(3xl stone-3) grid grid-cols-[1fr_2.5rem]"
@@ -76,33 +96,6 @@
     </template>
   </q-page>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { useGistStore } from 'stores/gist'
-import { useGoggleStore } from 'stores/goggle'
-import GoggleActionBar from 'components/GoggleActionBar.vue'
-import GoggleSingleRulesList from 'components/GoggleSingleRules.vue'
-
-const route = useRoute()
-const { error, isLoading, gist } = storeToRefs(useGistStore())
-const { fetchGist } = useGistStore()
-const { goggle, actions } = storeToRefs(useGoggleStore())
-const { duplicateGoggle, deleteGoggle } = useGoggleStore()
-
-fetchGist(route.params.id)
-
-const filteredActions = computed(() => {
-  return actions.value.filter(
-    (action) =>
-      goggle.value.rules &&
-      goggle.value.rules[action.key] &&
-      goggle.value.rules[action.key].length,
-  )
-})
-</script>
 
 <style lang="sass">
 .q-item__section--side

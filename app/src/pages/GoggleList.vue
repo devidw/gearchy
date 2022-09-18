@@ -1,38 +1,3 @@
-<template>
-  <q-page padding>
-    <custom-page-header>
-      <template v-slot:actions>
-        <q-btn
-          flat
-          round
-          icon="eva-refresh-outline"
-          @click="
-            () => {
-              resetGists()
-              fetchGists()
-            }
-          "
-        />
-        <q-btn
-          flat
-          round
-          icon="eva-plus-circle-outline"
-          @click="createGoggle"
-        />
-      </template>
-    </custom-page-header>
-
-    <q-infinite-scroll
-      v-if="gists.length"
-      @load="onLoad"
-      :offset="0"
-      class="space-y-4"
-    >
-      <goggle-list-item v-for="(gist, i) in gists" :key="i" :gist="gist" />
-    </q-infinite-scroll>
-  </q-page>
-</template>
-
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
@@ -52,6 +17,34 @@ async function onLoad(index: number, done: (stop: boolean) => void) {
 
 fetchGists()
 </script>
+
+<template>
+  <q-page padding>
+    <custom-page-header>
+      <template #actions>
+        <g-btn
+          icon="eva-refresh-outline"
+          @click="
+            () => {
+              resetGists()
+              fetchGists()
+            }
+          "
+        />
+        <g-btn icon="eva-plus-circle-outline" @click="createGoggle" />
+      </template>
+    </custom-page-header>
+
+    <q-infinite-scroll
+      v-if="gists.length"
+      :offset="0"
+      class="space-y-4"
+      @load="onLoad"
+    >
+      <goggle-list-item v-for="(gist, i) in gists" :key="i" :gist="gist" />
+    </q-infinite-scroll>
+  </q-page>
+</template>
 
 <style scoped lang="sass">
 @media (hover: hover)

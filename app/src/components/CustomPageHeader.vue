@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <div class="flex justify-between mb-8 text-(gray)">
     <div class="g-heading">
@@ -8,5 +10,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts"></script>

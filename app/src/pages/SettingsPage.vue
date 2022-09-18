@@ -1,7 +1,41 @@
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useQuasar, openURL } from 'quasar'
+import { useGitHubStore } from 'stores/github'
+import { useBraveStore } from 'stores/brave'
+import CustomPageHeader from 'components/CustomPageHeader.vue'
+
+const $q = useQuasar()
+const isPwd = ref(true)
+const { accessToken } = storeToRefs(useGitHubStore())
+const { isValidAccessToken } = useGitHubStore()
+const { apiUrl } = storeToRefs(useBraveStore())
+
+const isValidApiUrl = computed(() => /^https:\/\/.+%s.*/.test(apiUrl.value))
+
+async function validateAccessToken() {
+  const accessTokenIsValid = await isValidAccessToken(accessToken.value)
+
+  if (accessTokenIsValid) {
+    $q.notify({
+      type: 'positive',
+      message: 'Access token is valid',
+    })
+  } else {
+    $q.notify({
+      type: 'negative',
+      message: 'Invalid access token',
+      caption: 'Make sure the token is not expired and has the "gist" scope',
+    })
+  }
+}
+</script>
+
 <template>
   <q-page padding>
     <custom-page-header>
-      <template v-slot:title> Settings </template>
+      <template #title> Settings </template>
     </custom-page-header>
 
     <div class="g-box px-6 py-5 text-stone-3">
@@ -15,25 +49,18 @@
         borderless
         input-class="!text-stone-3 font-mono"
       >
-        <template v-slot:append>
+        <template #append>
           <div class="text-stone-5">
-            <q-btn
-              round
-              flat
+            <g-btn
               :icon="isPwd ? 'eva-eye-off-outline' : 'eva-eye-outline'"
               @click="() => (isPwd = !isPwd)"
             />
-            <q-btn
-              round
-              flat
-              icon="eva-done-all-outline"
-              @click="validateAccessToken"
-            >
+            <g-btn icon="eva-done-all-outline" @click="validateAccessToken">
               <q-tooltip> Validate token </q-tooltip>
-            </q-btn>
+            </g-btn>
           </div>
         </template>
-        <template v-slot:hint>
+        <template #hint>
           <span class="text-stone-5">
             <q-icon name="eva-question-mark-circle-outline" />
             See GitHub docs for
@@ -59,55 +86,20 @@
         :error="!isValidApiUrl"
         error-message="Invalid API URL, make sure it starts with https:// and contains %s"
       >
-        <template v-slot:append>
-          <q-btn
-            round
-            flat
+        <template #append>
+          <g-btn
             icon="eva-question-mark-outline"
+            class="text-stone-5"
             @click="
               openURL(
                 'https://github.com/devidw/gearchy/blob/master/FAQ.adoc#how-to-automatically-submit-updated-goggles-to-brave-search',
               )
             "
-            class="text-stone-5"
           >
             <q-tooltip> What is this? </q-tooltip>
-          </q-btn>
+          </g-btn>
         </template>
       </q-input>
     </div>
   </q-page>
 </template>
-
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import { Notify, openURL } from 'quasar'
-import { useGitHubStore } from 'stores/github'
-import { useBraveStore } from 'stores/brave'
-import CustomPageHeader from 'components/CustomPageHeader.vue'
-
-const isPwd = ref(true)
-const { accessToken } = storeToRefs(useGitHubStore())
-const { isValidAccessToken } = useGitHubStore()
-const { apiUrl } = storeToRefs(useBraveStore())
-
-const isValidApiUrl = computed(() => /^https:\/\/.+%s.*/.test(apiUrl.value))
-
-async function validateAccessToken() {
-  const accessTokenIsValid = await isValidAccessToken(accessToken.value)
-
-  if (accessTokenIsValid) {
-    Notify.create({
-      message: 'Access token is valid',
-      type: 'positive',
-    })
-  } else {
-    Notify.create({
-      message: 'Invalid access token',
-      caption: 'Make sure the token is not expired and has the "gist" scope',
-      type: 'negative',
-    })
-  }
-}
-</script>
