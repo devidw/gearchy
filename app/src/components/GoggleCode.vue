@@ -8,7 +8,7 @@
       <highlightjs :code="item" lang="goggle" />
     </q-virtual-scroll>
 
-    <div class="absolute right-20 top-3">
+    <div class="absolute right-19 top-3">
       <q-btn
         round
         flat
@@ -21,16 +21,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { copyToClipboard, useQuasar } from 'quasar'
 import { useGoggleStore } from 'stores/goggle'
 
 const $q = useQuasar()
 const { stringifiedGoggle } = useGoggleStore()
 
-const stringifiedGoggleLines = computed(() => {
-  return stringifiedGoggle.split('\n')
-})
+const stringifiedGoggleLines = stringifiedGoggle.split('\n')
 
 function copyCode() {
   copyToClipboard(stringifiedGoggle)

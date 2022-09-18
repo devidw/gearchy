@@ -3,6 +3,27 @@
     <template v-if="!isLoading && !error && gist && goggle">
       <div class="space-y-12">
         <goggle-action-bar>
+          <template v-slot:actions>
+            <q-btn
+              round
+              flat
+              icon="eva-edit-outline"
+              @click="
+                $router.push({ name: 'goggle-edit', params: { id: gist.id } })
+              "
+            />
+            <q-btn round flat icon="eva-copy-outline" @click="duplicateGoggle">
+              <q-tooltip anchor="top middle" self="bottom middle">
+                Duplicate Goggle
+              </q-tooltip>
+            </q-btn>
+            <q-btn
+              round
+              flat
+              icon="eva-trash-2-outline"
+              @click="deleteGoggle"
+            />
+          </template>
           <template v-slot:before>
             <div class="px-2">
               <div
@@ -67,8 +88,9 @@ import GoggleSingleRulesList from 'components/GoggleSingleRules.vue'
 
 const route = useRoute()
 const { error, isLoading, gist } = storeToRefs(useGistStore())
-const { goggle, actions } = storeToRefs(useGoggleStore())
 const { fetchGist } = useGistStore()
+const { goggle, actions } = storeToRefs(useGoggleStore())
+const { duplicateGoggle, deleteGoggle } = useGoggleStore()
 
 fetchGist(route.params.id)
 

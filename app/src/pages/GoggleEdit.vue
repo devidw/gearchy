@@ -34,6 +34,19 @@
           @add-rule="addRuleHandler"
           class="lt-md:(fixed left-0 bottom-0 w-full rounded-0)"
         >
+          <template v-slot:actions>
+            <q-btn round flat icon="eva-save-outline" @click="updateGist" />
+            <q-btn
+              round
+              flat
+              icon="eva-flash-outline"
+              @click="updateAndSubmitGoggle"
+            >
+              <q-tooltip anchor="top middle" self="bottom middle">
+                Save and Submit
+              </q-tooltip>
+            </q-btn>
+          </template>
           <template v-slot:after>
             <q-tabs
               v-model="tab"
@@ -62,6 +75,7 @@ import { ref, Ref, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
+import { useBraveStore } from 'stores/brave'
 import { useGoggleStore } from 'stores/goggle'
 import { useEditorStore } from 'stores/editor'
 import GoggleActionBar from 'components/GoggleActionBar.vue'
@@ -74,8 +88,14 @@ const route = useRoute()
 const tab: Ref<GoggleEditTab> = ref('meta')
 const goggleRulesRef = ref<InstanceType<typeof GoggleRules>[]>()
 const { error, isLoading, gist } = storeToRefs(useGistStore())
+const { fetchGist, updateGist } = useGistStore()
 const { goggle, actions } = storeToRefs(useGoggleStore())
-const { fetchGist } = useGistStore()
+const { submitGoggle } = useBraveStore()
+
+async function updateAndSubmitGoggle() {
+  await updateGist()
+  submitGoggle()
+}
 
 function addRuleHandler() {
   goggleRulesRef.value?.[0].addRuleHandler()

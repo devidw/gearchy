@@ -3,24 +3,7 @@
     <slot name="before"></slot>
     <div class="flex justify-between">
       <div class="sm:w-2/5">
-        <q-btn
-          v-if="context === 'edit'"
-          round
-          flat
-          icon="eva-save-outline"
-          @click="updateGist"
-        />
-
-        <template v-else>
-          <q-btn
-            round
-            flat
-            icon="eva-edit-outline"
-            @click="$router.push(`/goggle/${gist.id}/edit`)"
-          />
-          <q-btn round flat icon="eva-copy-outline" @click="duplicateGoggle" />
-          <q-btn round flat icon="eva-trash-2-outline" @click="deleteGoggle" />
-        </template>
+        <slot name="actions"></slot>
       </div>
       <div class="sm:w-1/5 flex justify-center">
         <q-btn
@@ -33,7 +16,9 @@
       </div>
       <div class="sm:w-2/5 flex justify-end">
         <q-btn round flat icon="eva-cloud-upload-outline" @click="submitGoggle">
-          <q-tooltip> Submit Goggle on Brave </q-tooltip>
+          <q-tooltip anchor="top middle" self="bottom middle">
+            Submit Goggle on Brave
+          </q-tooltip>
         </q-btn>
         <q-btn
           round
@@ -44,7 +29,9 @@
           )}`"
           target="_blank"
         >
-          <q-tooltip> Search with this Goggle </q-tooltip>
+          <q-tooltip anchor="top middle" self="bottom middle">
+            Search with this Goggle
+          </q-tooltip>
         </q-btn>
         <q-btn
           round
@@ -55,10 +42,14 @@
           )}`"
           target="_blank"
         >
-          <q-tooltip> View Goggle's about page on Brave </q-tooltip>
+          <q-tooltip anchor="top middle" self="bottom middle">
+            View Goggle's about page on Brave
+          </q-tooltip>
         </q-btn>
         <q-btn round flat icon="eva-github-outline" @click="openURL(gist.url)">
-          <q-tooltip> Open gist on GitHub </q-tooltip>
+          <q-tooltip anchor="top middle" self="bottom middle">
+            Open gist on GitHub
+          </q-tooltip>
         </q-btn>
       </div>
     </div>
@@ -70,13 +61,10 @@
 import { openURL } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGistStore } from 'stores/gist'
-import { useGoggleStore } from 'stores/goggle'
 import { useBraveStore } from 'stores/brave'
 import { GoggleEditTab } from 'src/types'
 
-const { updateGist } = useGistStore()
 const { gist } = storeToRefs(useGistStore())
-const { duplicateGoggle, deleteGoggle } = useGoggleStore()
 const { submitGoggle } = useBraveStore()
 
 defineProps<{
