@@ -42,7 +42,7 @@ importers:
       highlightjs-goggles: workspace:*
       pinia: ^2.0.11
       prettier: ^2.5.1
-      quasar: ^2.6.0
+      quasar: ^2.8.3
       typescript: ^4.5.4
       unocss: ^0.45.6
       uuid: ^8.3.2
@@ -64,7 +64,7 @@ importers:
       highlight.js: 11.6.0
       highlightjs-goggles: link:../packages/highlightjs-goggles
       pinia: 2.0.22_arz4dztosvwy2ghjrlh2wdhejm
-      quasar: 2.7.7
+      quasar: 2.8.3
       uuid: 8.3.2
       vue: 3.2.39
       vue-router: 4.1.5_vue@3.2.39
@@ -72,7 +72,7 @@ importers:
       '@octokit/core': 4.0.5
       '@octokit/openapi-types': 13.9.1
       '@octokit/types': 7.3.1
-      '@quasar/app-vite': 1.0.6_yfvvmn7mnv3b6zh4aq3h5vodny
+      '@quasar/app-vite': 1.0.6_ad5t3leg3tfrke6atekzshkaj4
       '@types/node': 12.20.55
       '@typescript-eslint/eslint-plugin': 5.36.2_wxqvmnl3i4rbvz4ixyoiufmx3e
       '@typescript-eslint/parser': 5.36.2_irgkl5vooow2ydyo6aokmferha
@@ -82,7 +82,7 @@ importers:
       eslint-plugin-vue: 9.4.0_eslint@8.23.1
       prettier: 2.7.1
       typescript: 4.8.3
-      unocss: 0.45.21_vite@2.9.15
+      unocss: 0.45.21_vite@3.0.0-beta.10
       workbox-build: 6.5.4
       workbox-cacheable-response: 6.5.4
       workbox-core: 6.5.4
@@ -2025,7 +2025,7 @@ packages:
       tsm: 2.2.2
     dev: true
 
-  /@quasar/app-vite/1.0.6_yfvvmn7mnv3b6zh4aq3h5vodny:
+  /@quasar/app-vite/1.0.6_ad5t3leg3tfrke6atekzshkaj4:
     resolution: {integrity: sha512-7rQQREeOQ3YaVq2i9QL4LrxJWGKcOeM3XuT7+6+tPSGqV7jCQkR70wcakUTAthSsegjFp/seqPHoGNXzGfoZ0Q==}
     engines: {node: ^18 || ^16 || ^14.19, npm: '>= 6.14.12', yarn: '>= 1.17.3'}
     hasBin: true
@@ -2054,7 +2054,7 @@ packages:
         optional: true
     dependencies:
       '@quasar/fastclick': 1.1.5
-      '@quasar/vite-plugin': 1.1.1_2yxnnikjpvyzncfhvtpcqezfjq
+      '@quasar/vite-plugin': 1.1.1_srdxbczuus5b34aqnrymzbgagq
       '@rollup/pluginutils': 4.2.1
       '@types/chrome': 0.0.191
       '@types/compression': 1.7.2
@@ -2083,7 +2083,7 @@ packages:
       ouch: 2.0.1
       pinia: 2.0.22_arz4dztosvwy2ghjrlh2wdhejm
       postcss: 8.4.16
-      quasar: 2.7.7
+      quasar: 2.8.3
       register-service-worker: 1.7.2
       rollup-plugin-visualizer: 5.8.1_rollup@2.79.0
       sass: 1.32.12
@@ -2110,7 +2110,7 @@ packages:
     resolution: {integrity: sha512-p3JKgTjRlJ1YQXbqTw3Bsa4j0mQdt5dq+WfYvyb7MgKGdephHCKdR/kxA5PCTAmJanGJuDKqRdyGYX/hYN4KGw==}
     dev: true
 
-  /@quasar/vite-plugin/1.1.1_2yxnnikjpvyzncfhvtpcqezfjq:
+  /@quasar/vite-plugin/1.1.1_srdxbczuus5b34aqnrymzbgagq:
     resolution: {integrity: sha512-qTFXSprubTEdKxoWqmkQi8rwSRf6l5IvGD2svUFZzt3jz9brr2nBsRsUbhN4byryUwGdJ4HoN3vpoFi13A5uTQ==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -2118,7 +2118,7 @@ packages:
       vite: ^2.0.0 || ^3.0.0
       vue: ^3.0.0
     dependencies:
-      quasar: 2.7.7
+      quasar: 2.8.3
       vite: 2.9.15_sass@1.32.12
       vue: 3.2.39
     dev: true
@@ -2648,12 +2648,12 @@ packages:
       - vite
     dev: true
 
-  /@unocss/astro/0.45.21_vite@2.9.15:
+  /@unocss/astro/0.45.21_vite@3.0.0-beta.10:
     resolution: {integrity: sha512-6lsDQu6nBX5CZZ+JPqAdp9ypkZrzi6NuBgyjZtChCoLhwEB2kNDCg7Qwu93Ee7/TT8MYAiANar9N+U2EuxzcKA==}
     dependencies:
       '@unocss/core': 0.45.21
       '@unocss/reset': 0.45.21
-      '@unocss/vite': 0.45.21_vite@2.9.15
+      '@unocss/vite': 0.45.21_vite@3.0.0-beta.10
     transitivePeerDependencies:
       - vite
     dev: true
@@ -2798,7 +2798,7 @@ packages:
       magic-string: 0.26.3
     dev: true
 
-  /@unocss/vite/0.45.21_vite@2.9.15:
+  /@unocss/vite/0.45.21_vite@3.0.0-beta.10:
     resolution: {integrity: sha512-BrCJMSy9i9j9mmzu2pfPFQuRPNWASxQfy3D6k+4R3c51OfKBSDcfeD7FyM866TE1gllCIFdQQH1Ay+tXkjlOMQ==}
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0
@@ -2811,7 +2811,7 @@ packages:
       '@unocss/scope': 0.45.21
       '@unocss/transformer-directives': 0.45.21
       magic-string: 0.26.3
-      vite: 2.9.15
+      vite: 3.0.0-beta.10
     dev: true
 
   /@vercel/build-utils/5.4.2:
@@ -8427,8 +8427,8 @@ packages:
       side-channel: 1.0.4
     dev: true
 
-  /quasar/2.7.7:
-    resolution: {integrity: sha512-tegG6EmEmv5i24MoNopRkhZOdT5kdLSAxQMA0V/fG04oco52hk2xwvB0EVS8WzT0bZZbc/9iXlAm1c29rZ3yVA==}
+  /quasar/2.8.3:
+    resolution: {integrity: sha512-ioiXQ8vaims9nW1+cNqkSvK0zQZGToYmiGLNcHHxRT5+dYhY0l1YCSXR54ZbXVNAgdCNs1va63Mnfq5UU9miDA==}
     engines: {node: '>= 10.18.1', npm: '>= 6.13.4', yarn: '>= 1.21.1'}
 
   /queue-microtask/1.2.3:
@@ -10045,7 +10045,7 @@ packages:
       - vite
     dev: true
 
-  /unocss/0.45.21_vite@2.9.15:
+  /unocss/0.45.21_vite@3.0.0-beta.10:
     resolution: {integrity: sha512-tx0FZEbRhl4pjo9LQaFXIBzSt3EqWujPdNaaLypVPIqPEwms49cXw4vi3JKDYrL9xbQ+Xf0izwPpCIwBxMprDA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -10054,7 +10054,7 @@ packages:
       '@unocss/webpack':
         optional: true
     dependencies:
-      '@unocss/astro': 0.45.21_vite@2.9.15
+      '@unocss/astro': 0.45.21_vite@3.0.0-beta.10
       '@unocss/cli': 0.45.21
       '@unocss/core': 0.45.21
       '@unocss/preset-attributify': 0.45.21
@@ -10070,7 +10070,7 @@ packages:
       '@unocss/transformer-compile-class': 0.45.21
       '@unocss/transformer-directives': 0.45.21
       '@unocss/transformer-variant-group': 0.45.21
-      '@unocss/vite': 0.45.21_vite@2.9.15
+      '@unocss/vite': 0.45.21_vite@3.0.0-beta.10
     transitivePeerDependencies:
       - supports-color
       - vite
@@ -10218,30 +10218,6 @@ packages:
       vfile-message: 3.1.2
     dev: true
 
-  /vite/2.9.15:
-    resolution: {integrity: sha512-fzMt2jK4vQ3yK56te3Kqpkaeq9DkcZfBbzHwYpobasvgYmP2SoAr6Aic05CsB4CzCZbsDv4sujX3pkEGhLabVQ==}
-    engines: {node: '>=12.2.0'}
-    hasBin: true
-    peerDependencies:
-      less: '*'
-      sass: '*'
-      stylus: '*'
-    peerDependenciesMeta:
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-    dependencies:
-      esbuild: 0.14.54
-      postcss: 8.4.16
-      resolve: 1.22.1
-      rollup: 2.77.3
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
   /vite/2.9.15_sass@1.32.12:
     resolution: {integrity: sha512-fzMt2jK4vQ3yK56te3Kqpkaeq9DkcZfBbzHwYpobasvgYmP2SoAr6Aic05CsB4CzCZbsDv4sujX3pkEGhLabVQ==}
     engines: {node: '>=12.2.0'}
@@ -10263,6 +10239,33 @@ packages:
       resolve: 1.22.1
       rollup: 2.77.3
       sass: 1.32.12
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /vite/3.0.0-beta.10:
+    resolution: {integrity: sha512-QtzSQVuhNLDp9j4wNdVT3aDyWyvoAL4QxBU/lnMyEKqTzYrXdqyHpFmfWW/wo/0uTluZKzbsUm89eQq2RxiKMg==}
+    engines: {node: '>=14.18.0'}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: 0.14.54
+      postcss: 8.4.16
+      resolve: 1.22.1
+      rollup: 2.79.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true

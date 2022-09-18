@@ -184,7 +184,8 @@ export const useGistStore = defineStore('gist', {
         this.login = login
         this.gist = gist
 
-        useGoggleStore().parseGoggle()
+        const { parseGoggle } = useGoggleStore()
+        parseGoggle()
       } catch (e) {
         this.error = e
         this.router.push('/')

@@ -1,4 +1,4 @@
-import { Goggle, GoggleEmpty, GoggleMeta } from '../src'
+import { Goggle, GoggleEmpty, GoggleMetaGeneric } from '../src'
 
 const sampleGoggleStr = `! name: Goggle
 
@@ -19,7 +19,7 @@ describe('Goggle', () => {
   test('constructing with meta data should set meta lines as well', () => {
     const goggle = new Goggle([new GoggleEmpty()], sampleMetaData)
     expect(goggle.lines.length).toEqual(Object.keys(sampleMetaData).length + 1)
-    expect(goggle.lines[0]).toBeInstanceOf(GoggleMeta)
+    expect(goggle.lines[0]).toBeInstanceOf(GoggleMetaGeneric)
   })
 
   test('parsing line count', () => {
@@ -41,11 +41,11 @@ describe('Goggle', () => {
   test('boost actions count', () => {
     const goggle = Goggle.parse(
       `$boost=5
-             $boost=10
-             $downrank=10
-             ! no action should also mean boost
-             pattern
-             $boost`,
+       $boost=10
+       $downrank=10
+       ! no action should also mean boost
+       pattern
+       $boost`,
     )
     expect(goggle.boosts.length).toEqual(4)
   })
@@ -53,8 +53,8 @@ describe('Goggle', () => {
   test('downrank actions count', () => {
     const goggle = Goggle.parse(
       `$downrank
-             $boost=10
-             $downrank=1`,
+       $boost=10
+       $downrank=1`,
     )
     expect(goggle.downranks.length).toEqual(2)
   })
@@ -62,7 +62,7 @@ describe('Goggle', () => {
   test('parse and get meta data', () => {
     const goggle = Goggle.parse(
       `! name: Goggle
-             ! description: A description`,
+       ! description: A description`,
     )
     expect(goggle.metaData).toHaveProperty('name', 'Goggle')
     expect(goggle.metaData).toHaveProperty('description', 'A description')
@@ -72,5 +72,11 @@ describe('Goggle', () => {
     const goggle = Goggle.parse(sampleGoggleStr)
     goggle.metaData = sampleMetaData
     expect(goggle.metaData).toEqual(sampleMetaData)
+  })
+
+  test('previous meta data should be overwritten', () => {
+    const goggle = Goggle.parse('! name: Old name')
+    goggle.metaData = { name: 'New name' }
+    expect(goggle.metaData).toHaveProperty('name', 'New name')
   })
 })

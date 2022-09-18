@@ -12,7 +12,9 @@
   "scripts": {
     "watch": "tsc --watch",
     "build": "rm -rf dist && tsc",
-    "test": "jest --collect-coverage",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "test:coverage": "jest --collect-coverage",
     "lint": "eslint src",
     "build:readme": "node --es-module-specifier-resolution=node scripts/generate-comparison-table.js"
   },

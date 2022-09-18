@@ -1,8 +1,8 @@
-import { GoggleMeta, GoggleMetaDataKey } from '../src'
+import { GoggleMeta, GoggleMetaKey } from '../src'
 
 describe('GoggleMeta', () => {
   test('construction', () => {
-    const meta = new GoggleMeta(GoggleMetaDataKey.NAME, 'some name')
+    const meta = GoggleMeta.create(GoggleMetaKey.NAME, 'some name')
     expect(meta.key).toBe('name')
     expect(meta.value).toBe('some name')
   })

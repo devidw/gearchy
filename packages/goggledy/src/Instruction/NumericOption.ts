@@ -1,4 +1,4 @@
-import { GoggleLine } from './GoggleLine'
+import { GoggleBaseLine } from '..'
 
 export enum GoggleInstructionNumericOptionKey {
   BOOST = 'boost',
@@ -17,7 +17,7 @@ export type GoggleInstructionNumericOptionValue =
   | 10
   | undefined
 
-export class GoggleInstructionNumericOption extends GoggleLine {
+export class GoggleInstructionNumericOption extends GoggleBaseLine {
   static regex = /^(boost|downrank)(=([1-9]|10))?$/
   #key!: GoggleInstructionNumericOptionKey
   #value?: GoggleInstructionNumericOptionValue
@@ -44,7 +44,7 @@ export class GoggleInstructionNumericOption extends GoggleLine {
     )
   }
 
-  get key(): GoggleInstructionNumericOptionKey {
+  get key() {
     return this.#key
   }
 
@@ -55,7 +55,7 @@ export class GoggleInstructionNumericOption extends GoggleLine {
     this.#key = key
   }
 
-  get value(): GoggleInstructionNumericOptionValue {
+  get value() {
     return this.#value
   }
 

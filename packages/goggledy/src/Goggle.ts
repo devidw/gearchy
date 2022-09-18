@@ -1,14 +1,19 @@
-import { GoggleEmpty } from './GoggleEmpty'
-import { GoggleMeta, GoggleMetaData, GoggleMetaDataKey } from './GoggleMeta'
-import { GoggleComment } from './GoggleComment'
 import {
+  GoggleEmpty,
+  GoggleMeta,
+  GoggleMetaLine,
+  GoggleMetaBoolean,
+  GoggleMetaGeneric,
+  GoggleMetaKey,
+  GoggleMetaData,
+  GoggleComment,
   GoggleInstruction,
   GoggleInstructionActionOptionKey,
-} from './GoggleInstruction'
+} from '.'
 
 export type GoggleLine =
   | GoggleEmpty
-  | GoggleMeta
+  | GoggleMetaLine
   | GoggleComment
   | GoggleInstruction
 
@@ -55,7 +60,10 @@ export class Goggle {
   get metaData(): GoggleMetaData {
     const meta: GoggleMetaData = {}
     this.lines.forEach((line) => {
-      if (line instanceof GoggleMeta) {
+      if (
+        line instanceof GoggleMetaBoolean ||
+        line instanceof GoggleMetaGeneric
+      ) {
         Object.assign(meta, { [line.key]: line.value })
       }
     })
@@ -70,14 +78,16 @@ export class Goggle {
   set metaData(metaData: GoggleMetaData) {
     // Remove all existing meta data
     this.lines = this.lines.filter((line) => {
-      return !(line instanceof GoggleMeta)
+      return !(
+        line instanceof GoggleMetaBoolean || line instanceof GoggleMetaGeneric
+      )
     })
     // Add all meta data
     Object.entries(metaData)
       .reverse()
       .forEach(([key, value]) => {
         this.lines = [
-          new GoggleMeta(key as GoggleMetaDataKey, value),
+          GoggleMeta.create(key as GoggleMetaKey, value),
           ...this.lines,
         ]
       })

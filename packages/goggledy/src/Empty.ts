@@ -1,6 +1,6 @@
-import { GoggleLine } from './GoggleLine'
+import { GoggleBaseLine } from '.'
 
-export class GoggleEmpty extends GoggleLine {
+export class GoggleEmpty extends GoggleBaseLine {
   static regex = /^$/
 
   constructor() {

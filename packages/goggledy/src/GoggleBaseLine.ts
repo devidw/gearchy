@@ -1,4 +1,4 @@
-export abstract class GoggleLine {
+export abstract class GoggleBaseLine {
   static regex: RegExp
 
   static test(str: string) {

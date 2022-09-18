@@ -1,4 +1,4 @@
-import { GoggleLine } from './GoggleLine'
+import { GoggleBaseLine } from '..'
 
 export enum GoggleInstructionBooleanOptionKey {
   DISCARD = 'discard',
@@ -13,7 +13,7 @@ export enum GoggleInstructionBooleanOptionKey {
 // in the first place. Because this would mean that the option should no bet set
 // at all.
 
-export class GoggleInstructionBooleanOption extends GoggleLine {
+export class GoggleInstructionBooleanOption extends GoggleBaseLine {
   static regex = /^(discard|inurl|intitle|indescription|incontent)$/
   #key!: GoggleInstructionBooleanOptionKey
   #value!: boolean
@@ -34,7 +34,7 @@ export class GoggleInstructionBooleanOption extends GoggleLine {
     return typeof value === 'boolean'
   }
 
-  get key(): GoggleInstructionBooleanOptionKey {
+  get key() {
     return this.#key
   }
 

@@ -23,7 +23,7 @@ import { Goggle } from 'goggledy'
 
 const goggle = Goggle.parse(
   `! name: Some name
-     ! description: Some description`,
+   ! description: Some description`,
 )
 
 console.log(goggle.metaData.name) // Some name

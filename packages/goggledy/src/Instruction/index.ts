@@ -1,17 +1,13 @@
-import { GoggleLine } from './GoggleLine'
 import {
+  GoggleBaseLine,
   GoggleInstructionBooleanOption,
   GoggleInstructionBooleanOptionKey,
-} from './GoggleInstructionBooleanOption'
-import {
   GoggleInstructionNumericOption,
   GoggleInstructionNumericOptionKey,
   GoggleInstructionNumericOptionValue,
-} from './GoggleInstructionNumericOption'
-import {
   GoggleInstructionGenericOption,
   GoggleInstructionGenericOptionKey,
-} from './GoggleInstructionGenericOption'
+} from '..'
 
 export type GoggleInstructionOptionKey =
   | GoggleInstructionBooleanOptionKey
@@ -70,7 +66,7 @@ export type GoggleInstructionOptions =
   | GoggleInstructionBoostOptions
   | GoggleInstructionDownrankOptions
 
-export class GoggleInstruction extends GoggleLine {
+export class GoggleInstruction extends GoggleBaseLine {
   static regex = /^(?!!).+/
   pattern?: string
   optionLines: GoggleInstructionOption[]

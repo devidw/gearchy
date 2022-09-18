@@ -1,6 +1,6 @@
-import { GoggleLine } from './GoggleLine'
+import { GoggleBaseLine } from '.'
 
-export class GoggleComment extends GoggleLine {
+export class GoggleComment extends GoggleBaseLine {
   /**
    * @see https://stackoverflow.com/a/977294/13765033
    */

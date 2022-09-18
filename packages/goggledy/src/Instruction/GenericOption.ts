@@ -1,11 +1,11 @@
-import { GoggleLine } from './GoggleLine'
+import { GoggleBaseLine } from '..'
 
 export enum GoggleInstructionGenericOptionKey {
   SITE = 'site',
 }
 export type GoggleInstructionGenericOptionValue = string
 
-export class GoggleInstructionGenericOption extends GoggleLine {
+export class GoggleInstructionGenericOption extends GoggleBaseLine {
   static regex = /^(site)=(.+)$/
   #key!: GoggleInstructionGenericOptionKey
   #value!: GoggleInstructionGenericOptionValue
@@ -31,7 +31,7 @@ export class GoggleInstructionGenericOption extends GoggleLine {
     return typeof value === 'string' && value.length > 0
   }
 
-  get key(): GoggleInstructionGenericOptionKey {
+  get key() {
     return this.#key
   }
 
@@ -42,7 +42,7 @@ export class GoggleInstructionGenericOption extends GoggleLine {
     this.#key = key
   }
 
-  get value(): GoggleInstructionGenericOptionValue {
+  get value() {
     return this.#value
   }
 
