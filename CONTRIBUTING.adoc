@@ -1,9 +1,0 @@
-= Contributing
-:hide-uri-scheme:
-
-Any contributions are warmly welcome.
-
-Please open an issue to discuss the change you wish to make before making a pull
-request.
-
-Development is done inside a docker container. Refer to https://code.visualstudio.com/docs/remote/containers-tutorial

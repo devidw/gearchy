@@ -1,6 +1,5 @@
 {
   "name": "app",
-  "version": "0.0.0",
   "description": "Graphical user interface to interact with search goggles.",
   "productName": "Gearchy",
   "homepage": "https://app.gearchy.wolf.gdn",

@@ -9,7 +9,6 @@
     "dist"
   ],
   "license": "GPL-3.0-or-later",
-  "private": false,
   "scripts": {
     "watch": "tsc --watch",
     "build": "rm -rf dist && tsc",
