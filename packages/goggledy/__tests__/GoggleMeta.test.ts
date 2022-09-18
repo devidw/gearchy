@@ -1,4 +1,9 @@
-import { GoggleMeta, GoggleMetaKey } from '../src'
+import {
+  GoggleMeta,
+  GoggleMetaKey,
+  GoggleMetaBooleanKey,
+  GoggleMetaGenericKey,
+} from '../src'
 
 describe('GoggleMeta', () => {
   test('construction', () => {
@@ -57,4 +62,34 @@ describe('GoggleMeta', () => {
     const line = '! name: some name'
     expect(GoggleMeta.parse(line).toString()).toBe(line)
   })
+
+  test.each(Object.values(GoggleMetaKey))('parsing %s', (key) => {
+    const meta = GoggleMeta.parse(`! ${key}: true`)
+    expect(meta.key).toBe(key)
+  })
+
+  test.each(Object.values(GoggleMetaBooleanKey))(
+    'parsing boolean key %s with true value',
+    (key) => {
+      const meta = GoggleMeta.parse(`! ${key}: true`)
+      expect(meta.key).toBe(key)
+      expect(meta.value).toBe(true)
+    },
+  )
+
+  test.each(Object.values(GoggleMetaBooleanKey))(
+    'parsing boolean key %s with false value',
+    (key) => {
+      const meta = GoggleMeta.parse(`! ${key}: false`)
+      expect(meta.key).toBe(key)
+      expect(meta.value).toBe(false)
+    },
+  )
+
+  test.each(Object.values(GoggleMetaBooleanKey))(
+    'parsing boolean key %s with invalid value',
+    (key) => {
+      expect(() => GoggleMeta.parse(`! ${key}: foo`)).toThrow(Error)
+    },
+  )
 })

@@ -20,6 +20,19 @@ export type GoggleLine =
 export class Goggle {
   lines: GoggleLine[] = []
 
+  private static lineHandlers: [
+    (str: string) => GoggleLine,
+    (str: string) => boolean,
+  ][] = [
+    [(str) => GoggleEmpty.parse(str), (str) => GoggleEmpty.test(str)],
+    [(str) => GoggleMeta.parse(str), (str) => GoggleMeta.test(str)],
+    [(str) => GoggleComment.parse(str), (str) => GoggleComment.test(str)],
+    [
+      (str) => GoggleInstruction.parse(str),
+      (str) => GoggleInstruction.test(str),
+    ],
+  ]
+
   constructor(lines?: GoggleLine[], metaData?: GoggleMetaData) {
     if (lines?.length) {
       this.lines = lines
@@ -41,19 +54,29 @@ export class Goggle {
   }
 
   static parse(str: string): Goggle {
-    const lines = str.split('\n').map((line) => {
-      line = line.trimStart()
-      switch (true) {
-        case GoggleEmpty.test(line):
-          return new GoggleEmpty()
-        case GoggleMeta.test(line):
-          return GoggleMeta.parse(line)
-        case GoggleComment.test(line):
-          return GoggleComment.parse(line)
-        default:
-          return GoggleInstruction.parse(line)
-      }
+    const rawLines = str.split('\n')
+    const lines: GoggleLine[] = []
+
+    rawLines.forEach((rawLine, index) => {
+      rawLine = rawLine.trimStart()
+      const lineNumber = index + 1
+
+      // Try to parse the line with each line handler
+      this.lineHandlers.forEach(([parse, test]) => {
+        if (!test(rawLine)) {
+          return
+        }
+
+        try {
+          lines.push(parse(rawLine))
+        } catch (error) {
+          throw new Error(
+            `Error parsing line ${lineNumber}: ${(error as Error).message}`,
+          )
+        }
+      })
     })
+
     return new Goggle(lines)
   }
 

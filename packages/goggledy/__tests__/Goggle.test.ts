@@ -79,4 +79,17 @@ describe('Goggle', () => {
     goggle.metaData = { name: 'New name' }
     expect(goggle.metaData).toHaveProperty('name', 'New name')
   })
+
+  test('parsing invalid line should throw', () => {
+    expect(() => Goggle.parse('! public: foo')).toThrow(Error)
+  })
+
+  test('throw on invalid line parsing should include line number', () => {
+    expect(() =>
+      Goggle.parse(
+        `! name: foo
+         ! public: bar`,
+      ),
+    ).toThrow(/line 2/)
+  })
 })

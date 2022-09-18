@@ -16,4 +16,8 @@ export class GoggleEmpty extends GoggleBaseLine {
       type: 'empty',
     }
   }
+
+  static parse(str: string) {
+    return new GoggleEmpty()
+  }
 }
