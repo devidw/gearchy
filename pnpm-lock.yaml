@@ -46,7 +46,7 @@ importers:
       typescript: ^4.5.4
       unocss: ^0.45.6
       uuid: ^8.3.2
-      vue: ^3.0.0
+      vue: 3.2.39
       vue-router: ^4.0.0
       workbox-build: ^6.5.0
       workbox-cacheable-response: ^6.5.0

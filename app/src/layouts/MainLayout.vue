@@ -1,15 +1,36 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useGistStore } from 'stores/gist'
 import BreadcrumbsNavigation from 'components/BreadcrumbsNavigation.vue'
 
 const $q = useQuasar()
-const rightDrawerOpen = ref(false)
-const version = ref(process.env.VERSION)
 const gistStore = useGistStore()
 const { isLoading, error } = storeToRefs(gistStore)
+let rightDrawerOpen = $ref(false)
+let version = $ref(process.env.VERSION)
+
+const menuLinks = [
+  { to: '/', label: 'Goggles' },
+  { to: '/settings', label: 'Settings' },
+]
+
+const footerLinks = [
+  {
+    href: 'https://gearchy.wolf.gdn',
+    icon: 'eva-globe-2-outline',
+  },
+  {
+    href: 'https://github.com/devidw/gearchy',
+    icon: 'eva-github-outline',
+  },
+  {
+    href: 'https://github.com/sponsors/devidw',
+    icon: 'eva-heart-outline',
+    classes: 'hover:(text-red-3 scale-[1.1]) transition transition-300',
+  },
+]
 
 watch(isLoading, (newVal) => {
   if (newVal) {
@@ -39,29 +60,8 @@ watch(error, (error) => {
 })
 
 function toggleRightDrawer() {
-  rightDrawerOpen.value = !rightDrawerOpen.value
+  rightDrawerOpen = !rightDrawerOpen
 }
-
-const menuLinks = [
-  { to: '/', label: 'Goggles' },
-  { to: '/settings', label: 'Settings' },
-]
-
-const footerLinks = [
-  {
-    href: 'https://gearchy.wolf.gdn',
-    icon: 'eva-globe-2-outline',
-  },
-  {
-    href: 'https://github.com/devidw/gearchy',
-    icon: 'eva-github-outline',
-  },
-  {
-    href: 'https://github.com/sponsors/devidw',
-    icon: 'eva-heart-outline',
-    classes: 'hover:(text-red-3 scale-[1.1]) transition transition-300',
-  },
-]
 </script>
 
 <template>

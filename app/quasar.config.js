@@ -78,8 +78,12 @@ module.exports = configure(function (/* ctx */) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
-      // viteVuePluginOptions: {},
+      // extendViteConf(viteConf) {},
+      // https://github.com/vitejs/vite/tree/main/packages/plugin-vue#options
+      viteVuePluginOptions: {
+        // https://vuejs.org/guide/extras/reactivity-transform.html
+        reactivityTransform: true,
+      },
 
       vitePlugins: [['unocss/vite', {}]],
     },

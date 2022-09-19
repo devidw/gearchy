@@ -1,0 +1,1 @@
+* pinning vue version because of enabled experimental reactivity transform

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 
-const checkAs = ref([])
-
-const checkQs = ref([
+let checkAnswers = $ref([])
+let checkQuestions = [
   {
     val: 'gh',
     label: 'I have got a GitHub account',
@@ -18,15 +17,15 @@ const checkQs = ref([
     whyUrl:
       'https://github.com/devidw/gearchy/blob/master/FAQ.adoc#why-do-i-need-a-personal-access-token',
   },
-])
+]
 
 const filterdCheckQs = computed(() => {
   function hasVal(value: string) {
-    return checkAs.value.includes(value)
+    return checkAnswers.includes(value)
   }
 
   function hasNxtVal(index: number) {
-    const next = checkQs.value[index + 1]
+    const next = checkQuestions[index + 1]
 
     if (next) {
       return hasVal(next.val)
@@ -36,10 +35,10 @@ const filterdCheckQs = computed(() => {
   }
 
   function getArr() {
-    const checked = checkQs.value.filter((checkQ) => hasVal(checkQ.val))
+    const checked = checkQuestions.filter((checkQ) => hasVal(checkQ.val))
 
     if (checked.length) {
-      const hasNxt = checkQs.value[checked.length]
+      const hasNxt = checkQuestions[checked.length]
 
       if (hasNxt) {
         // Some are checked and there is a next question that is unchecked
@@ -51,7 +50,7 @@ const filterdCheckQs = computed(() => {
     }
 
     // None are checked
-    return [checkQs.value[0]]
+    return [checkQuestions[0]]
   }
 
   return getArr().map((item, index) => {
@@ -81,7 +80,7 @@ const filterdCheckQs = computed(() => {
           <q-item-section avatar>
             <!-- Since all question build on each other, only the last one can always be answered. -->
             <q-checkbox
-              v-model="checkAs"
+              v-model="checkAnswers"
               :val="checkQ.val"
               :disable="checkQ.nxtHasVal"
               checked-icon="eva-done-all-outline"
@@ -109,7 +108,7 @@ const filterdCheckQs = computed(() => {
       </q-list>
 
       <div
-        v-if="checkAs.length === checkQs.length"
+        v-if="checkAnswers.length === checkQuestions.length"
         class="flex justify-center !mt-24"
       >
         <q-btn
