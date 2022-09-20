@@ -1,8 +1,20 @@
 <script setup lang="ts">
+import { watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
+import { useGoggleFileStore } from 'src/stores/goggle-file'
 
+const { goggleFile } = storeToRefs(useGoggleFileStore())
 const { goggle } = storeToRefs(useGoggleStore())
+
+/**
+ * Keep the goggle name in sync with the goggle file name
+ */
+watchEffect(() => {
+  if (goggleFile.value && goggle.value && goggle.value.metaData.name) {
+    goggleFile.value.name = goggle.value.metaData.name
+  }
+})
 </script>
 
 <template>

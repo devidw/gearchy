@@ -33,7 +33,6 @@ module.exports = configure(function (/* ctx */) {
       'unocss',
       'notify',
       'hljs',
-      'auth',
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css

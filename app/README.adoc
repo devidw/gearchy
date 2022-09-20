@@ -1,1 +1,6 @@
 * pinning vue version because of enabled experimental reactivity transform
+
+* supports multiple goggle hosting apis, each one has its own store
+implementation
+* some refactoring could be done with the search engine store, to be able to
+extend multiple search providers easily

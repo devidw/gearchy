@@ -2,14 +2,13 @@
 import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar, openURL } from 'quasar'
-import { useGitHubStore } from 'stores/github'
-import { useBraveStore } from 'stores/brave'
-import CustomPageHeader from 'components/CustomPageHeader.vue'
+import { useGoggleHostGitHubStore } from 'src/stores/hosts/github'
+import { useBraveStore } from 'src/stores/brave'
 
 const $q = useQuasar()
 const isPwd = ref(true)
-const { accessToken } = storeToRefs(useGitHubStore())
-const { isValidAccessToken } = useGitHubStore()
+const { accessToken } = storeToRefs(useGoggleHostGitHubStore())
+const { isValidAccessToken } = useGoggleHostGitHubStore()
 const { apiUrl } = storeToRefs(useBraveStore())
 
 const isValidApiUrl = computed(() => /^https:\/\/.+%s.*/.test(apiUrl.value))
@@ -34,9 +33,9 @@ async function validateAccessToken() {
 
 <template>
   <q-page padding>
-    <custom-page-header>
-      <template #title> Settings </template>
-    </custom-page-header>
+    <div class="mb-8 text-(gray)">
+      <div class="g-heading">Settings</div>
+    </div>
 
     <div class="g-box px-6 py-5 text-stone-3">
       <q-input

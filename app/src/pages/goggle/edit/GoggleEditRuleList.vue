@@ -4,10 +4,10 @@ import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGoggleStore } from 'stores/goggle'
 import { useEditorStore } from 'stores/editor'
-import GoggleEditRule from 'components/GoggleEditRule.vue'
 import type { QVirtualScroll } from 'quasar'
 import { GoggleInstructionActionOptionKey } from 'goggledy'
 import { GoggleActionRule } from 'src/types'
+import GoggleEditRule from './GoggleEditRule.vue'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey

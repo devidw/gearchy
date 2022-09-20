@@ -2,12 +2,12 @@
 import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
-import { useGistStore } from 'stores/gist'
+import { useGoggleFileStore } from 'src/stores/goggle-file'
 import BreadcrumbsNavigation from 'components/BreadcrumbsNavigation.vue'
 
 const $q = useQuasar()
-const gistStore = useGistStore()
-const { isLoading, error } = storeToRefs(gistStore)
+const goggleFileStore = useGoggleFileStore()
+const { isLoading, error } = storeToRefs(goggleFileStore)
 let rightDrawerOpen = $ref(false)
 let version = $ref(process.env.VERSION)
 
@@ -15,7 +15,6 @@ const menuLinks = [
   { to: '/', label: 'Goggles' },
   { to: '/settings', label: 'Settings' },
 ]
-
 const footerLinks = [
   {
     href: 'https://gearchy.wolf.gdn',
@@ -32,8 +31,12 @@ const footerLinks = [
   },
 ]
 
-watch(isLoading, (newVal) => {
-  if (newVal) {
+watch(isLoading, (newValue) => {
+  if (newValue === false) {
+    $q.loading.hide()
+  }
+
+  if (newValue === 'foreground') {
     $q.loading.show({
       spinnerSize: 0,
       html: true,
@@ -44,8 +47,6 @@ watch(isLoading, (newVal) => {
         </div>
         `,
     })
-  } else {
-    $q.loading.hide()
   }
 })
 
@@ -137,7 +138,9 @@ function toggleRightDrawer() {
     </q-drawer>
 
     <q-page-container class="max-w-3xl mx-auto">
-      <router-view class="pt-6 md:pt-20" />
+      <Suspense>
+        <router-view class="pt-6 md:pt-20" />
+      </Suspense>
     </q-page-container>
   </q-layout>
 </template>
