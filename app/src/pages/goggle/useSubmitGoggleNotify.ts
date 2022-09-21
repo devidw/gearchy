@@ -1,6 +1,6 @@
 import { openURL, copyToClipboard, Notify, Dialog } from 'quasar'
 import { useBraveStore } from 'src/stores/brave'
-import CustomDialog from 'components/CustomDialog.vue'
+import GDialog from 'src/components/GDialog.vue'
 import { storeToRefs } from 'pinia'
 
 export default async function (url: string) {
@@ -33,7 +33,7 @@ async function automaticallySubmitGoggle(url: string) {
 
 function manuallySubmitGoggle(url: string) {
   Dialog.create({
-    component: CustomDialog,
+    component: GDialog,
     componentProps: {
       title: 'Manually Submit Goggle',
       message:

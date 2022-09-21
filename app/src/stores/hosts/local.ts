@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { GoggleFile, GoggleFileHostInfo } from 'src/types'
+import type { GoggleFile, GoggleFileHostInfo } from 'src/types'
 
 export const useGoggleHostLocalStore = defineStore('goggleHostLocal', {
   state: () => ({}),

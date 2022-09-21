@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, Ref, onBeforeUnmount } from 'vue'
+import { ref, type Ref, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
-import { useGoggleStore } from 'stores/goggle'
-import { useEditorStore } from 'stores/editor'
-import GoggleActionBar from 'components/GoggleActionBar.vue'
+import { useGoggleStore } from 'src/stores/goggle'
+import { useEditorStore } from 'src/stores/editor'
+import GoggleActionBar from '../GoggleActionBar.vue'
 import GoggleEditMetaData from './GoggleEditMetaData.vue'
 import GoggleEditRuleList from './GoggleEditRuleList.vue'
 import GoggleCode from './GoggleCode.vue'
-import { GoggleEditTab } from 'src/types'
-import updateGoggleNotify from './useUpdateGoggleNotify'
-import submitGoggleNotify from './useSubmitGoggleNotify'
+import updateGoggleNotify from '../useUpdateGoggleNotify'
+import submitGoggleNotify from '../useSubmitGoggleNotify'
+import type { GoggleEditTab } from 'src/types'
 
 const route = useRoute()
 const router = useRouter()

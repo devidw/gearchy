@@ -2,9 +2,9 @@
 import { computed, ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar, type QMenu } from 'quasar'
-import { GoggleInstructionActionOptionKey } from 'goggledy'
-import { useGoggleStore } from 'stores/goggle'
-import CustomDialog from 'src/components/CustomDialog.vue'
+import { useGoggleStore } from 'src/stores/goggle'
+import GDialog from 'src/components/GDialog.vue'
+import type { GoggleInstructionActionOptionKey } from 'goggledy'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey
@@ -49,7 +49,7 @@ function changeRuleActionHandler() {
   )
 
   $q.dialog({
-    component: CustomDialog,
+    component: GDialog,
     componentProps: {
       title: 'Change rule action',
       message: 'To which action do you want to change this rule?',

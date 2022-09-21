@@ -3,7 +3,7 @@ import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
-import BreadcrumbsNavigation from 'components/BreadcrumbsNavigation.vue'
+import BreadcrumbsNavigation from './BreadcrumbsNavigation.vue'
 
 const $q = useQuasar()
 const goggleFileStore = useGoggleFileStore()

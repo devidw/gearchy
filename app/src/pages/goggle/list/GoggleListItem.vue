@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { GoggleFilePreview } from 'src/types'
 import { availableHosts } from 'src/stores/hosts'
+import type { GoggleFilePreview } from 'src/types'
 
 const props = defineProps<{
   goggleFilePreview: GoggleFilePreview

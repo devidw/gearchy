@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { copyToClipboard, useQuasar } from 'quasar'
-import { useGoggleStore } from 'stores/goggle'
+import { useGoggleStore } from 'src/stores/goggle'
 
 const $q = useQuasar()
 const { stringifiedGoggle } = useGoggleStore()

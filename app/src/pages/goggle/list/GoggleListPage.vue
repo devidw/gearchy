@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
 import GoggleListItem from './GoggleListItem.vue'
-import createGoggleDialog from './useCreateGoggleDialog'
+import createGoggleDialog from '../useCreateGoggleDialog'
 
 const { goggleFilePreviews } = storeToRefs(useGoggleFileStore())
 const goggleFileStore = useGoggleFileStore()
@@ -19,7 +19,10 @@ await goggleFileStore.list()
 <template>
   <q-page padding>
     <div class="flex justify-center mb-8 text-(gray)">
-      <g-btn icon="eva-plus-circle-outline" @click="createGoggleDialog" />
+      <g-btn
+        icon="eva-plus-circle-outline"
+        @click="createGoggleDialog($router)"
+      />
     </div>
 
     <q-infinite-scroll

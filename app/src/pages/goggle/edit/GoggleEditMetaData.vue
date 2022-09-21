@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useGoggleStore } from 'stores/goggle'
+import { useGoggleStore } from 'src/stores/goggle'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
 
 const { goggleFile } = storeToRefs(useGoggleFileStore())

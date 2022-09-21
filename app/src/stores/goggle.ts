@@ -3,14 +3,14 @@ import { v4 as uuidv4 } from 'uuid'
 import {
   Goggle,
   GoggleInstruction,
+  GoggleEmpty,
+  GoggleComment,
   GoggleInstructionActionOptionKey,
   GoggleInstructionContextOptionKey,
   GoggleInstructionOptions,
   GoggleMetaData,
-  GoggleEmpty,
-  GoggleComment,
 } from 'goggledy'
-import { GoggleFile, GoggleActionRule } from 'src/types'
+import type { GoggleFile, GoggleActionRule } from 'src/types'
 
 export const useGoggleStore = defineStore('goggle', {
   state: () => ({

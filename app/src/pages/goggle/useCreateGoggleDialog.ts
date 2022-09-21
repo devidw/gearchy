@@ -1,13 +1,13 @@
 import { Dialog } from 'quasar'
-import { useRouter } from 'vue-router'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
 import { availableHosts } from 'src/stores/hosts'
-import CustomDialog from 'src/components/CustomDialog.vue'
+import GDialog from 'src/components/GDialog.vue'
 import { storeToRefs } from 'pinia'
+import type { Router } from 'vue-router'
 
-export default function () {
+export default function (router: Router) {
   Dialog.create({
-    component: CustomDialog,
+    component: GDialog,
     componentProps: {
       title: 'Create new Goggle',
       message: 'Choose a host to create a new Goggle',
@@ -21,7 +21,6 @@ export default function () {
       ],
     },
   }).onOk(async ({ host }) => {
-    const router = useRouter()
     const goggleFileStore = useGoggleFileStore()
     const { goggleFile } = storeToRefs(goggleFileStore)
     await goggleFileStore.create(host)

@@ -2,7 +2,6 @@
 import { openURL } from 'quasar'
 import { storeToRefs } from 'pinia'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
-import submitGoggleNotify from 'src/pages/goggle/edit/useSubmitGoggleNotify'
 
 const { goggleFile } = storeToRefs(useGoggleFileStore())
 const goggleFileStore = useGoggleFileStore()

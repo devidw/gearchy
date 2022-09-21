@@ -3,10 +3,10 @@ import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
-import { useGoggleStore } from 'stores/goggle'
-import GoggleActionBar from 'components/GoggleActionBar.vue'
+import { useGoggleStore } from 'src/stores/goggle'
+import GoggleActionBar from '../GoggleActionBar.vue'
 import GoggleDetailRuleList from './GoggleDetailRuleList.vue'
-import deleteGoggleDialog from './useDeleteGoggleDialog'
+import deleteGoggleDialog from '../useDeleteGoggleDialog'
 
 const route = useRoute()
 const router = useRouter()

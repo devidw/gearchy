@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useGoggleStore } from 'stores/goggle'
+import { useGoggleStore } from 'src/stores/goggle'
 
 const { goggle } = storeToRefs(useGoggleStore())
 </script>

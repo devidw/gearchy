@@ -1,7 +1,11 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import { Octokit } from 'https://cdn.skypack.dev/octokit'
-import { GoggleFileHostInfo, GoggleFilePreview, GoggleFile } from 'src/types'
+import type {
+  GoggleFileHostInfo,
+  GoggleFilePreview,
+  GoggleFile,
+} from 'src/types'
 
 export const useGoggleHostGitHubStore = defineStore('goggleHostGitHub', {
   state: () => ({
@@ -9,7 +13,7 @@ export const useGoggleHostGitHubStore = defineStore('goggleHostGitHub', {
     pagination: {
       gistsPerPage: 100,
       gogglesPerPage: 10,
-      endCursor: undefined,
+      endCursor: undefined as string | undefined,
       hasNextPage: true,
     },
   }),
@@ -56,6 +60,13 @@ export const useGoggleHostGitHubStore = defineStore('goggleHostGitHub', {
             .join(', '),
         )
       }
+    },
+    /**
+     * We need a way for the mgmt store to reset the pagination
+     */
+    resetPagination() {
+      this.pagination.endCursor = undefined
+      this.pagination.hasNextPage = true
     },
     async list(): Promise<GoggleFilePreview[]> {
       let goggleFilePreviews: GoggleFilePreview[] = []
