@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { watch } from 'vue'
+import { watch, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
 import BreadcrumbsNavigation from './BreadcrumbsNavigation.vue'
 
 const $q = useQuasar()
-const goggleFileStore = useGoggleFileStore()
-const { isLoading, error } = storeToRefs(goggleFileStore)
+const { isLoading, error } = storeToRefs(useGoggleFileStore())
 let rightDrawerOpen = $ref(false)
 let version = $ref(process.env.VERSION)
 
@@ -31,12 +30,9 @@ const footerLinks = [
   },
 ]
 
+// TODO: only show main loading when page and action are intended to load mainly
 watch(isLoading, (newValue) => {
-  if (newValue === false) {
-    $q.loading.hide()
-  }
-
-  if (newValue === 'foreground') {
+  if (newValue) {
     $q.loading.show({
       spinnerSize: 0,
       html: true,
@@ -47,6 +43,8 @@ watch(isLoading, (newValue) => {
         </div>
         `,
     })
+  } else {
+    $q.loading.hide()
   }
 })
 

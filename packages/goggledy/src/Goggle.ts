@@ -107,6 +107,7 @@ export class Goggle {
     })
     // Add all meta data
     Object.entries(metaData)
+      .filter(([, value]) => value !== undefined)
       .reverse()
       .forEach(([key, value]) => {
         this.lines = [

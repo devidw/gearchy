@@ -21,6 +21,7 @@
     "@quasar/extras": "^1.0.0",
     "@types/uuid": "^8.3.4",
     "@vueuse/core": "^9.2.0",
+    "dexie": "^3.2.2",
     "goggledy": "workspace:*",
     "highlight.js": "^11.6.0",
     "highlightjs-goggles": "workspace:*",

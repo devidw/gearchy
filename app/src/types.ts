@@ -12,12 +12,18 @@ export type GoggleFileHostInfo = {
 
 export type GoggleFilePreview = {
   host: string
-  id: string
+  id: string | number
   name: string
   url?: string
 }
 
 export type GoggleFile = GoggleFilePreview & {
+  content: string
+}
+
+export type IndexedDBGoggleFile = {
+  id?: number
+  name: string
   content: string
 }
 

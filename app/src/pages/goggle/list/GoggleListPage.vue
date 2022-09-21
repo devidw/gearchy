@@ -13,7 +13,11 @@ async function onLoad(index: number, done: (stop: boolean) => void) {
   // console.info('onLoad', index, goggleFileStore.hasNextPage)
 }
 
-await goggleFileStore.list()
+// function refresh() {
+//   goggleFileStore.resetPagination()
+// }
+
+goggleFileStore.list()
 </script>
 
 <template>
@@ -23,6 +27,7 @@ await goggleFileStore.list()
         icon="eva-plus-circle-outline"
         @click="createGoggleDialog($router)"
       />
+      <!-- <g-btn icon="eva-refresh-outline" @click="refresh" /> -->
     </div>
 
     <q-infinite-scroll
@@ -36,6 +41,10 @@ await goggleFileStore.list()
         :goggle-file-preview="goggleFilePreview"
       />
     </q-infinite-scroll>
+
+    <div v-else class="text-(center gray opacity-75) font-mono">
+      You don't have any Goggles yet.
+    </div>
   </q-page>
 </template>
 

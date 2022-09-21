@@ -7,7 +7,7 @@ const goggleStore = useGoggleStore()
 
 export const useGoggleFileStore = defineStore('goggleFile', {
   state: () => ({
-    isLoading: false as 'foreground' | 'background' | false,
+    isLoading: false,
     error: undefined as Error | unknown | undefined,
     goggleFilePreviews: [] as GoggleFilePreview[],
     goggleFile: undefined as GoggleFile | undefined,
@@ -34,13 +34,12 @@ export const useGoggleFileStore = defineStore('goggleFile', {
      */
     async list() {
       try {
-        this.isLoading = 'foreground'
+        this.isLoading = true
         this.error = undefined
-        Object.values(availableHosts).forEach(async (host) => {
-          this.goggleFilePreviews = this.goggleFilePreviews.concat(
-            await host.list(),
-          )
-        })
+        const goggleFilePreviews = await Promise.all(
+          Object.values(availableHosts).map((host) => host.list()),
+        )
+        this.goggleFilePreviews = goggleFilePreviews.flat()
       } catch (error) {
         this.error = error
       } finally {
@@ -60,7 +59,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
           this.goggleFile.id === id
         )
           return
-        this.isLoading = 'foreground'
+        this.isLoading = true
         this.error = undefined
         this.goggleFile = await availableHosts[host].retrieve(id)
         goggleStore.parse(this.goggleFile)
@@ -76,7 +75,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
      */
     async create(host: string) {
       try {
-        this.isLoading = 'foreground'
+        this.isLoading = true
         this.error = undefined
         this.goggleFile = await availableHosts[host].create(
           'New Goggle',
@@ -97,7 +96,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
     async update() {
       try {
         if (!this.goggleFile || !this.host) throw new Error('No goggle file')
-        this.isLoading = 'background'
+        this.isLoading = false
         this.error = undefined
         this.goggleFile.content = goggleStore.stringifiedGoggle
         await availableHosts[this.host.hostInfo.handle].update(this.goggleFile)
@@ -114,7 +113,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
     async delete() {
       try {
         if (!this.goggleFile || !this.host) throw new Error('No goggle file')
-        this.isLoading = 'background'
+        this.isLoading = false
         this.error = undefined
         await availableHosts[this.host.hostInfo.handle].delete(
           this.goggleFile.id,
@@ -138,6 +137,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
           host.resetPagination()
         }
       })
+      this.list()
     },
   },
 })

@@ -1,8 +1,8 @@
-// import { useGoggleHostLocalStore } from './local'
+import { useGoggleHostLocalStore } from './local'
 import { useGoggleHostGitHubStore } from './github'
 
 const stores = {
-  // local: useGoggleHostLocalStore(),
+  local: useGoggleHostLocalStore(),
   github: useGoggleHostGitHubStore(),
 }
 

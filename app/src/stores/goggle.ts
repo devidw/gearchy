@@ -44,6 +44,8 @@ export const useGoggleStore = defineStore('goggle', {
       ]
     },
     stringifiedGoggle(state): string {
+      if (!state.goggle) return ''
+
       const goggle = new Goggle(
         [
           new GoggleComment(
@@ -97,20 +99,16 @@ export const useGoggleStore = defineStore('goggle', {
         metaData.public = false
       }
 
-      if (!metaData.description && goggleFile.name) {
-        metaData.description = goggleFile.name
-      }
-
       // TODO: meta data defaults?
       // if (!metaData.author) {
       //   metaData.author = login
       // }
 
-      if (!metaData.homepage) {
+      if (!metaData.homepage && goggleFile.url) {
         metaData.homepage = goggleFile.url
       }
 
-      if (!metaData.issues) {
+      if (!metaData.issues && goggleFile.url) {
         metaData.issues = goggleFile.url
       }
 

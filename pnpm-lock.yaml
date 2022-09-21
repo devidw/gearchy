@@ -34,6 +34,7 @@ importers:
       '@typescript-eslint/parser': ^5.10.0
       '@vueuse/core': ^9.2.0
       autoprefixer: ^10.4.2
+      dexie: ^3.2.2
       eslint: ^8.10.0
       eslint-config-prettier: ^8.1.0
       eslint-plugin-vue: ^9.0.0
@@ -60,6 +61,7 @@ importers:
       '@quasar/extras': 1.15.3
       '@types/uuid': 8.3.4
       '@vueuse/core': 9.2.0_vue@3.2.39
+      dexie: 3.2.2
       goggledy: link:../packages/goggledy
       highlight.js: 11.6.0
       highlightjs-goggles: link:../packages/highlightjs-goggles
@@ -4231,6 +4233,11 @@ packages:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
     dev: true
+
+  /dexie/3.2.2:
+    resolution: {integrity: sha512-q5dC3HPmir2DERlX+toCBbHQXW5MsyrFqPFcovkH9N2S/UW/H3H5AWAB6iEOExeraAu+j+zRDG+zg/D7YhH0qg==}
+    engines: {node: '>=6.0'}
+    dev: false
 
   /diff-sequences/28.1.1:
     resolution: {integrity: sha512-FU0iFaH/E23a+a718l8Qa/19bF9p06kgE0KipMOMadwa3SjnaElKzPaUC0vnibs6/B/9ni97s61mcejk8W1fQw==}
