@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { availableHosts } from 'src/stores/hosts'
+import { useGoggleFileStore } from 'src/stores/goggle-file'
 import type { GoggleFilePreview } from 'src/types'
 
 const props = defineProps<{
@@ -8,6 +8,7 @@ const props = defineProps<{
 }>()
 
 const router = useRouter()
+const { availableHosts } = useGoggleFileStore()
 
 function openDetail() {
   router.push({

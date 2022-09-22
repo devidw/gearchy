@@ -208,6 +208,7 @@ export const useGoggleStore = defineStore('goggle', {
       this.removeRule(sourceAction, index)
       this.addRule(targetAction, rule)
     },
+    // TODO: Refactor into getter: https://pinia.vuejs.org/core-concepts/getters.html#passing-arguments-to-getters
     getRuleIndexById(
       action: GoggleInstructionActionOptionKey,
       id: string,
