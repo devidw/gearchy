@@ -29,7 +29,7 @@ const { goggle } = storeToRefs(useGoggleStore())
 
     <q-breadcrumbs-el
       v-if="$route.name === 'goggle-edit'"
-      :label="goggle?.metaData?.name || 'Untitled Goggle'"
+      :label="goggle?.metaData?.name || 'Unnamed Goggle'"
       :to="{ name: 'goggle-detail', params: { id: $route.params.id } }"
       class="capitalize lt-sm:max-w-[200px]"
     />

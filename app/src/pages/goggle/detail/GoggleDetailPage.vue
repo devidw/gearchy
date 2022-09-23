@@ -38,7 +38,7 @@ const filteredActions = computed(() => {
               class="mb-2 tracking-wider font-(extrabold [heading]) text-(3xl stone-3) grid grid-cols-[1fr_2.5rem]"
             >
               <div>
-                {{ goggle?.metaData?.name || 'Untitled Goggle' }}
+                {{ goggle?.metaData?.name || 'Unnamed Goggle' }}
               </div>
               <div class="flex justify-end sm:items-end">
                 <q-icon

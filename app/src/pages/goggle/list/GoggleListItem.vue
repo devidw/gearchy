@@ -37,7 +37,7 @@ function openDetail() {
       </q-icon>
     </div>
     <div class="flex items-center">
-      {{ goggleFilePreview.name || 'Untitled Goggle' }}
+      {{ goggleFilePreview.name || 'Unnamed Goggle' }}
     </div>
   </div>
 </template>
