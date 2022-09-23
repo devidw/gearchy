@@ -17,7 +17,7 @@ async function onLoad(index: number, done: (stop: boolean) => void) {
 //   goggleFileStore.resetPagination()
 // }
 
-goggleFileStore.list()
+await goggleFileStore.list()
 </script>
 
 <template>

@@ -11,10 +11,9 @@ export const useGoggleHostGitHubStore = defineStore('goggleHostGitHub', {
   state: () => ({
     accessToken: useStorage('accessToken', ''),
     pagination: {
-      gistsPerPage: 100,
-      gogglesPerPage: 10,
-      endCursor: undefined as string | undefined,
       hasNextPage: true,
+      endCursor: undefined as string | undefined,
+      gistsPerPage: 100,
     },
   }),
 
@@ -36,44 +35,12 @@ export const useGoggleHostGitHubStore = defineStore('goggleHostGitHub', {
   },
 
   actions: {
-    /**
-     * make request and see if success also check the scope x-header to see if it contains the required gist scope
-     */
-    async isValidAccessToken(accessToken: string) {
-      const api = new Octokit({ auth: accessToken })
-      try {
-        const { headers } = await api.request('GET /user')
-        return headers['x-oauth-scopes']?.includes('gist')
-      } catch (e) {
-        return false
-      }
-    },
-    maybeThrowOnResponse(response: unknown) {
-      if (
-        !response ||
-        typeof response !== 'object' ||
-        response.hasOwnProperty('errors')
-      ) {
-        throw new Error(
-          (response as { errors: { message: string }[] }).errors
-            .map((error) => error.message)
-            .join(', '),
-        )
-      }
-    },
-    /**
-     * We need a way for the mgmt store to reset the pagination
-     */
-    resetPagination() {
-      this.pagination.endCursor = undefined
-      this.pagination.hasNextPage = true
-    },
-    async list(): Promise<GoggleFilePreview[]> {
+    async list(perPage: number): Promise<GoggleFilePreview[]> {
       let goggleFilePreviews: GoggleFilePreview[] = []
 
       while (
         this.pagination.hasNextPage &&
-        goggleFilePreviews.length < this.pagination.gogglesPerPage
+        goggleFilePreviews.length < perPage
       ) {
         const response = await this.api.graphql(
           `query GetGists ($perPage: Int!, $after: String) {
@@ -215,6 +182,38 @@ export const useGoggleHostGitHubStore = defineStore('goggleHostGitHub', {
     },
     async delete(id: string) {
       return await this.api.request(`DELETE /gists/${id}`)
+    },
+    /**
+     * We need a way for the mgmt store to reset the pagination
+     */
+    resetPagination() {
+      this.pagination.endCursor = undefined
+      this.pagination.hasNextPage = true
+    },
+    maybeThrowOnResponse(response: unknown) {
+      if (
+        !response ||
+        typeof response !== 'object' ||
+        response.hasOwnProperty('errors')
+      ) {
+        throw new Error(
+          (response as { errors: { message: string }[] }).errors
+            .map((error) => error.message)
+            .join(', '),
+        )
+      }
+    },
+    /**
+     * make request and see if success also check the scope x-header to see if it contains the required gist scope
+     */
+    async isValidAccessToken(accessToken: string) {
+      const api = new Octokit({ auth: accessToken })
+      try {
+        const { headers } = await api.request('GET /user')
+        return headers['x-oauth-scopes']?.includes('gist')
+      } catch (e) {
+        return false
+      }
     },
   },
 })

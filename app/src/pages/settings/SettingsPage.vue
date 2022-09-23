@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar, openURL } from 'quasar'
 import { useGoggleHostGitHubStore } from 'src/stores/hosts/github'
@@ -10,8 +10,6 @@ const isPwd = ref(true)
 const { accessToken } = storeToRefs(useGoggleHostGitHubStore())
 const { isValidAccessToken } = useGoggleHostGitHubStore()
 const { apiUrl } = storeToRefs(useBraveStore())
-
-const isValidApiUrl = computed(() => /^https:\/\/.+%s.*/.test(apiUrl.value))
 
 async function validateAccessToken() {
   const accessTokenIsValid = await isValidAccessToken(accessToken.value)
@@ -28,6 +26,10 @@ async function validateAccessToken() {
       caption: 'Make sure the token is not expired and has the "gist" scope',
     })
   }
+}
+
+function validateApiUrl(value: string) {
+  return /^https:\/\/.+%s.*/.test(value)
 }
 </script>
 
@@ -82,8 +84,11 @@ async function validateAccessToken() {
         input-class="!text-stone-3 font-mono"
         borderless
         bottom-slots
-        :error="!isValidApiUrl"
-        error-message="Invalid API URL, make sure it starts with https:// and contains %s"
+        :rules="[
+          (v) =>
+            validateApiUrl(v) ||
+            'Invalid API URL, make sure it starts with https:// and contains %s',
+        ]"
       >
         <template #append>
           <g-btn

@@ -18,13 +18,13 @@ const router = useRouter()
 const tab: Ref<GoggleEditTab> = ref('meta')
 const goggleEditRulesRef = $ref<InstanceType<typeof GoggleEditRuleList>[]>()
 const goggleFileStore = useGoggleFileStore()
-const { isLoading } = storeToRefs(useGoggleFileStore())
+const { isLoading, goggleFile } = storeToRefs(useGoggleFileStore())
 const { actions } = storeToRefs(useGoggleStore())
 
 async function updateAndSubmitGoggle() {
   await updateGoggleNotify()
-  if (goggleFileStore.goggleFile?.url) {
-    submitGoggleNotify(goggleFileStore.goggleFile.url)
+  if (goggleFile.value?.url) {
+    submitGoggleNotify(goggleFile.value.url)
   }
 }
 
@@ -87,7 +87,9 @@ await goggleFileStore.retrieve(
             :disable="!!isLoading"
             @click="updateGoggleNotify"
           />
-          <template v-if="goggleFileStore.host?.hostInfo.canSubmit">
+          <template
+            v-if="goggleFileStore.host?.hostInfo.canSubmit && goggleFile.url"
+          >
             <g-btn
               icon="eva-cloud-upload-outline"
               :disable="!!isLoading"

@@ -7,7 +7,12 @@ import type {
 import { db } from 'src/boot/db'
 
 export const useGoggleHostLocalStore = defineStore('goggleHostLocal', {
-  state: () => ({}),
+  state: () => ({
+    pagination: {
+      hasNextPage: true,
+      count: 0,
+    },
+  }),
 
   getters: {
     hostInfo(): GoggleFileHostInfo {
@@ -19,19 +24,33 @@ export const useGoggleHostLocalStore = defineStore('goggleHostLocal', {
       }
     },
     isAvailable() {
+      // TODO: Actually check if indexedDB is supported by the client
       return true
     },
   },
 
   actions: {
-    async list(): Promise<GoggleFilePreview[]> {
-      return (await db.goggles.toArray())
-        .map((goggle) => ({
-          host: this.hostInfo.handle,
-          id: goggle.id as number,
-          name: goggle.name,
-        }))
-        .reverse() // TODO: can we sort this in the db?
+    async list(perPage: number): Promise<GoggleFilePreview[]> {
+      if (!this.pagination.hasNextPage) return []
+
+      const goggles = await db.goggles
+        .orderBy('id')
+        .reverse()
+        .offset(this.pagination.count)
+        .limit(perPage)
+        .toArray()
+
+      // console.log(goggles)
+
+      this.pagination.count += goggles.length
+      this.pagination.hasNextPage =
+        (await db.goggles.count()) > this.pagination.count
+
+      return goggles.map((goggle) => ({
+        host: this.hostInfo.handle,
+        id: goggle.id as number,
+        name: goggle.name,
+      }))
     },
     async retrieve(id: string): Promise<GoggleFile> {
       const goggle = await db.goggles.get(Number(id))
@@ -61,6 +80,12 @@ export const useGoggleHostLocalStore = defineStore('goggleHostLocal', {
     },
     async delete(id: string) {
       await db.goggles.delete(Number(id))
+    },
+    resetPagination() {
+      this.pagination = {
+        hasNextPage: true,
+        count: 0,
+      }
     },
   },
 })

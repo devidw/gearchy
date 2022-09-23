@@ -11,6 +11,16 @@ export const useGoggleFileStore = defineStore('goggleFile', {
     error: undefined as Error | unknown | undefined,
     goggleFilePreviews: [] as GoggleFilePreview[],
     goggleFile: undefined as GoggleFile | undefined,
+    /**
+     * One pagination system managed for this store and all other hosts have to
+     * implement it, we define a per page limit here and they fetch with this
+     * limit based on the last fetched one, which they have to store in the
+     * store for reference. When there is a list call here, we will pull the
+     * hosts and append the complete list here.
+     */
+    pagination: {
+      perPage: 10,
+    },
   }),
 
   getters: {
@@ -47,10 +57,15 @@ export const useGoggleFileStore = defineStore('goggleFile', {
         this.isLoading = true
         this.error = undefined
         const goggleFilePreviews = await Promise.all(
-          Object.values(this.availableHosts).map((host) => host.list()),
+          Object.values(this.availableHosts).map((host) =>
+            host.list(this.pagination.perPage),
+          ),
         )
-        this.goggleFilePreviews = goggleFilePreviews.flat()
-        console.log('list', this.goggleFilePreviews)
+        // append to existing previews
+        this.goggleFilePreviews = [
+          ...this.goggleFilePreviews,
+          ...goggleFilePreviews.flat(),
+        ]
       } catch (error) {
         this.error = error
       } finally {
@@ -145,7 +160,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
      */
     resetPagination() {
       this.goggleFilePreviews = []
-      Object.values(availableHosts).forEach((host) => {
+      Object.values(this.availableHosts).forEach((host) => {
         if (typeof host.resetPagination === 'function') {
           host.resetPagination()
         }
