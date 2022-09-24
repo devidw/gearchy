@@ -22,5 +22,8 @@
     "stylus": "^0.55.0",
     "svelte": "^3.50.1",
     "unocss": "^0.45.6"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^2.0.0"
   }
 }

@@ -17,7 +17,7 @@ open-source$boost=3,inurl`
   let error: Error | undefined
 
   $: {
-    highlighted = hljs.highlight('goggles', goggle).value
+    highlighted = hljs.highlight(goggle, { language: 'goggles' }).value
     try {
       parsed = Goggle.parse(goggle)
       jsonStringfied = JSON.stringify(parsed.lines, null, 2)
