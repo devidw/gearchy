@@ -2,6 +2,11 @@ import type {
   GoggleInstructionActionOptionKey,
   GoggleInstructionGenericOptionValue,
 } from 'goggledy'
+// import type { Store } from 'pinia'
+
+// export type GoggleFileHostStore = Store<string, {}, {}, {}>
+
+export type GoggleFileHostKey = 'local' | 'github'
 
 export type GoggleFileHostInfo = {
   name: string

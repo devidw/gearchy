@@ -18,7 +18,7 @@ const router = useRouter()
 const tab: Ref<GoggleEditTab> = ref('meta')
 const goggleEditRulesRef = $ref<InstanceType<typeof GoggleEditRuleList>[]>()
 const goggleFileStore = useGoggleFileStore()
-const { isLoading, error, goggleFile } = storeToRefs(useGoggleFileStore())
+const { isLoading, goggleFile } = storeToRefs(useGoggleFileStore())
 const { actions } = storeToRefs(useGoggleStore())
 
 async function updateAndSubmitGoggle() {

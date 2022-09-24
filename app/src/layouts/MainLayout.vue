@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, watchEffect } from 'vue'
+import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
@@ -136,9 +136,17 @@ function toggleRightDrawer() {
     </q-drawer>
 
     <q-page-container class="max-w-3xl mx-auto">
-      <Suspense>
-        <router-view class="pt-6 md:pt-20" />
-      </Suspense>
+      <!-- https://github.com/vuejs/router/issues/1319#issuecomment-1054157888 -->
+      <router-view v-slot="{ Component }" class="pt-6 md:pt-20">
+        <Suspense>
+          <template #default>
+            <component :is="Component" />
+          </template>
+          <template #fallback>
+            {{ error }}
+          </template>
+        </Suspense>
+      </router-view>
     </q-page-container>
   </q-layout>
 </template>

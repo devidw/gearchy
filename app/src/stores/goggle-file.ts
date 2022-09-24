@@ -35,7 +35,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
       )
     },
     host() {
-      if (!this.goggleFile) return undefined
+      if (!this.goggleFile || !this.availableHosts[this.goggleFile.host]) return
       return this.availableHosts[this.goggleFile.host]
     },
     /**
@@ -89,6 +89,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
         this.isLoading = true
         this.error = undefined
         this.goggleFile = await this.availableHosts[host].retrieve(id)
+        if (!this.goggleFile) throw new Error('Goggle file not found')
         goggleStore.parse(this.goggleFile)
       } catch (error) {
         this.error = error
@@ -109,6 +110,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
           'Unnamed Goggle',
           '! This is the default template for a new Goggle created with Gearchy\n! You can edit the Goggle on https://app.gearchy.wolf.gdn',
         )
+        if (!this.goggleFile) throw new Error('Goggle file not found')
         goggleStore.parse(this.goggleFile)
         this.resetPagination()
       } catch (error) {

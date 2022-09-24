@@ -3,5 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "importsNotUsedAsValues": "error",
-  }
+    "skipLibCheck": true,
+  },
+  "exclude": [
+    "node_modules",
+  ]
 }
