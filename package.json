@@ -3,7 +3,8 @@
     "version": "0.2.0",
     "private": true,
     "scripts": {
-        "build": "turbo run build --filter=!site",
+        "build:app": "turbo run build --filter=!site",
+        "build:site": "turbo run build --filter=!app",
         "pretty": "prettier --write \"./**/*.{js,ts}\"",
         "prepublishOnly": "pnpm -F './packages/**' build",
         "pkg:publish": "pnpm publish --filter './packages/**'",
