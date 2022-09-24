@@ -9,7 +9,7 @@ const goggleFileStore = useGoggleFileStore()
 
 async function onLoad(index: number, done: (stop: boolean) => void) {
   await goggleFileStore.list()
-  done(!goggleFileStore.hasNextPage)
+  done(goggleFileStore.error !== undefined || !goggleFileStore.hasNextPage)
   // console.info('onLoad', index, goggleFileStore.hasNextPage)
 }
 
