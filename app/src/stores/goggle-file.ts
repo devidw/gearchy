@@ -83,14 +83,16 @@ export const useGoggleFileStore = defineStore('goggleFile', {
           this.goggleFile &&
           this.goggleFile.host === host &&
           this.goggleFile.id === id
-        )
+        ) {
           return
+        }
         this.isLoading = true
         this.error = undefined
         this.goggleFile = await this.availableHosts[host].retrieve(id)
         goggleStore.parse(this.goggleFile)
       } catch (error) {
         this.error = error
+        this.goggleFile = undefined
       } finally {
         this.isLoading = false
       }

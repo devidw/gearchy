@@ -23,6 +23,10 @@ await goggleFileStore.retrieve(
   route.params.id as string,
 )
 
+if (goggleFileStore.error) {
+  router.push({ name: 'goggle-list' })
+}
+
 const filteredActions = computed(() => {
   return actions.filter((action) => goggle.value?.rules[action.key].length)
 })
