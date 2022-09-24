@@ -28,7 +28,13 @@ const { goggle, actions } = storeToRefs(useGoggleStore())
 const { removeRule, duplicateRule } = useGoggleStore()
 const { changeRuleAction } = useGoggleStore()
 
-const rule = computed(() => goggle.value.rules[props.action][props.index])
+const rule = computed(() => {
+  if (goggle.value) {
+    return goggle.value.rules[props.action][props.index]
+  } else {
+    return null
+  }
+})
 
 function removeRuleHandler() {
   moreMenu.value?.hide()
@@ -41,6 +47,8 @@ function duplicateRuleHandler() {
 }
 
 function changeRuleActionHandler() {
+  if (!goggle.value) return
+
   moreMenu.value?.hide()
 
   // create an array of action where the current action is not included
@@ -72,9 +80,7 @@ function changeRuleActionHandler() {
 }
 
 function shiftRuleValue() {
-  if (!rule.value.value) {
-    return
-  }
+  if (!rule.value || !rule.value.value) return
   if (rule.value.value === 10) {
     rule.value.value = 2
   } else {

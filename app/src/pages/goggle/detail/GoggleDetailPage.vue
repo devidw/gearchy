@@ -5,7 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
 import { useGoggleStore } from 'src/stores/goggle'
 import GoggleActionBar from '../GoggleActionBar.vue'
-import GoggleDetailRuleList from './GoggleDetailRuleList.vue'
+import GoggleDetailRuleList from './components/GoggleDetailRuleList.vue'
 import deleteGoggleDialog from '../useDeleteGoggleDialog'
 
 const route = useRoute()

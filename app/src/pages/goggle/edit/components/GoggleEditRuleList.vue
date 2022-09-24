@@ -29,9 +29,17 @@ const { addRule } = useGoggleStore()
 const { tabScrollIndexes } = storeToRefs(useEditorStore())
 
 const rules = computed({
-  get: () => goggle.value.rules[props.action],
+  get: () => {
+    if (goggle.value) {
+      return goggle.value.rules[props.action]
+    } else {
+      return []
+    }
+  },
   set: (value: GoggleActionRule[]) => {
-    goggle.value.rules[props.action] = value
+    if (goggle.value) {
+      goggle.value.rules[props.action] = value
+    }
   },
 })
 

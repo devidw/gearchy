@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
-import GoggleListItem from './GoggleListItem.vue'
+import GoggleListItem from './components/GoggleListItem.vue'
 import createGoggleDialog from '../useCreateGoggleDialog'
 
 const { goggleFilePreviews } = storeToRefs(useGoggleFileStore())
