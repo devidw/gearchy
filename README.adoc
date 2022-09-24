@@ -18,7 +18,7 @@ endif::[]
 </h1>
 ++++
 
-NOTE: {product} uses multiple link:./app/[experimental Vue features] if you encounter any
+NOTE: {product} uses multiple link:./app/#readme[experimental Vue features] if you encounter any
 issues, please rise an https://github.com/devidw/gearchy/issues/new[issue].
 
 {product} (https://gearchy.wolf.gdn/gearchy.mp3[pronounced like "gearky"]) has two main goals:
