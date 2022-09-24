@@ -18,7 +18,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div v-if="goggle" class="g-box p-5 h-full overflow-y-scroll">
+  <div class="g-box p-5 h-full overflow-y-scroll">
     <div class="flex">
       <q-input
         v-model="goggle.metaData.name"

@@ -139,7 +139,6 @@ watchEffect(() => {
         <q-input
           v-model="rule.site"
           type="text"
-          autogrow
           placeholder="Site"
           borderless
           dense
@@ -149,7 +148,6 @@ watchEffect(() => {
         <q-input
           v-model="rule.pattern"
           type="text"
-          autogrow
           placeholder="Pattern"
           borderless
           dense

@@ -1,5 +1,5 @@
 {
-    // "unocss.root": "app",
-    "unocss.root": "site",
+    "unocss.root": "app",
+    // "unocss.root": "site",
     "jest.rootPath": "packages/goggledy"
 }

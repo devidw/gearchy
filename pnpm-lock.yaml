@@ -132,6 +132,7 @@ importers:
       stylus: ^0.55.0
       svelte: ^3.50.1
       unocss: ^0.45.6
+      vercel: ^28.2.5
     devDependencies:
       '@astrojs/image': 0.3.7
       '@astrojs/svelte': 1.0.0_6tabsit356xfooi4g26vwacm7a
@@ -146,6 +147,7 @@ importers:
       stylus: 0.55.0
       svelte: 3.50.1
       unocss: 0.45.21_vite@3.0.9
+      vercel: 28.2.5
 
 packages:
 

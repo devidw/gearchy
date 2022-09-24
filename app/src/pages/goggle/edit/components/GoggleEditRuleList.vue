@@ -79,11 +79,11 @@ if (
     v-slot="{ index }"
     ref="virtualScroll"
     :items="rules"
-    :virtual-scroll-item-size="100"
+    :virtual-scroll-item-size="90"
     class="g-visual-rules h-full overflow-y-scroll"
     @virtual-scroll="onVirtualScroll"
   >
-    <div class="pb-[18px]">
+    <div class="pb-[14px]">
       <goggle-edit-rule
         :action="action"
         :index="index"

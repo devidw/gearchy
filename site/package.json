@@ -6,7 +6,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "vercel build --prod && vercel deploy --prebuilt --prod"
   },
   "devDependencies": {
     "@astrojs/image": "^0.3.6",
@@ -21,7 +22,7 @@
     "scrollreveal": "^4.0.9",
     "stylus": "^0.55.0",
     "svelte": "^3.50.1",
-    "unocss": "^0.45.6"
-  },
-  "dependencies": {}
+    "unocss": "^0.45.6",
+    "vercel": "^28.2.5"
+  }
 }

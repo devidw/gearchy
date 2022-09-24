@@ -187,8 +187,11 @@ export const useGoggleStore = defineStore('goggle', {
       )
     },
     duplicateRule(action: GoggleInstructionActionOptionKey, index: number) {
-      const clone = { ...this.goggle.rules[action][index] }
-      clone.id = uuidv4()
+      if (!this.goggle) return
+      const clone = {
+        ...this.goggle.rules[action][index],
+        id: uuidv4(),
+      }
       this.goggle.rules[action] = [
         ...this.goggle.rules[action].slice(0, index),
         { ...clone },

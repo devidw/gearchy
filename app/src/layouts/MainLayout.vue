@@ -1,4 +1,8 @@
 <script setup lang="ts">
+/**
+ * regarding suspense and vue-router
+ * @see https://github.com/vuejs/router/issues/1319#issuecomment-1054157888
+ */
 import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
@@ -136,7 +140,6 @@ function toggleRightDrawer() {
     </q-drawer>
 
     <q-page-container class="max-w-3xl mx-auto">
-      <!-- https://github.com/vuejs/router/issues/1319#issuecomment-1054157888 -->
       <router-view v-slot="{ Component }" class="pt-6 md:pt-20">
         <Suspense>
           <template #default>

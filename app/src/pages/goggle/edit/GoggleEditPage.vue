@@ -92,7 +92,11 @@ if (goggleFileStore.error) {
             @click="updateGoggleNotify"
           />
           <template
-            v-if="goggleFileStore.host?.hostInfo.canSubmit && goggleFile.url"
+            v-if="
+              goggleFileStore.host?.hostInfo.canSubmit &&
+              goggleFile &&
+              goggleFile.url
+            "
           >
             <g-btn
               icon="eva-cloud-upload-outline"
@@ -128,14 +132,15 @@ if (goggleFileStore.error) {
             indicator-color="transparent"
             content-class="g-tabs"
           >
-            <q-tab name="meta" icon="eva-edit-outline" />
+            <q-tab name="meta" label="meta" icon="eva-edit-outline" />
             <q-tab
               v-for="(action, index) in actions"
               :key="index"
               :name="action.key"
+              :label="action.key + 's'"
               :icon="action.icon"
             />
-            <q-tab name="code" icon="eva-code-outline" />
+            <q-tab name="code" label="source" icon="eva-code-outline" />
           </q-tabs>
         </template>
       </goggle-action-bar>
@@ -144,17 +149,21 @@ if (goggleFileStore.error) {
 </template>
 
 <style lang="sass">
-.g-tabs .q-tab
-  @apply rounded-4 bg-stone-7 text-stone-4 tracking-widest sm:py-4 lt-sm:px-0
+.g-tabs
+  .q-tab
+    @apply rounded-4 bg-stone-7 text-stone-4 sm:py-2 md:(pb-1) lt-sm:px-0 flex-(grow-1 shrink-1 basis-0)
 
-  & + .q-tab
-    @apply ml-2 sm:ml-4
+    & + .q-tab
+      @apply ml-2 sm:ml-4
 
-  &.q-tab--active
-    @apply bg-stone-6 text-stone-3
+    &.q-tab--active
+      @apply bg-stone-6 text-stone-3
 
-  .q-tab__label
-    @apply font-extrabold
+    .q-tab__content
+      @apply md:space-y-2
+
+      .q-tab__label
+        @apply lt-md:hidden font-([heading] bold) text-([10px]) tracking-[2px] opacity-65
 
 .g-tab-panels
   @apply bg-transparent
