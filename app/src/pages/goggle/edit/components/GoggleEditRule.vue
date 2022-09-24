@@ -2,9 +2,9 @@
 import { computed, ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar, type QMenu } from 'quasar'
-import { useGoggleStore } from 'stores/goggle'
-import CustomDialogVue from './CustomDialog.vue'
-import { GoggleInstructionActionOptionKey } from 'goggledy'
+import { useGoggleStore } from 'src/stores/goggle'
+import GDialog from 'src/components/GDialog.vue'
+import type { GoggleInstructionActionOptionKey } from 'goggledy'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey
@@ -28,7 +28,13 @@ const { goggle, actions } = storeToRefs(useGoggleStore())
 const { removeRule, duplicateRule } = useGoggleStore()
 const { changeRuleAction } = useGoggleStore()
 
-const rule = computed(() => goggle.value.rules[props.action][props.index])
+const rule = computed(() => {
+  if (goggle.value) {
+    return goggle.value.rules[props.action][props.index]
+  } else {
+    return null
+  }
+})
 
 function removeRuleHandler() {
   moreMenu.value?.hide()
@@ -41,6 +47,8 @@ function duplicateRuleHandler() {
 }
 
 function changeRuleActionHandler() {
+  if (!goggle.value) return
+
   moreMenu.value?.hide()
 
   // create an array of action where the current action is not included
@@ -49,7 +57,7 @@ function changeRuleActionHandler() {
   )
 
   $q.dialog({
-    component: CustomDialogVue,
+    component: GDialog,
     componentProps: {
       title: 'Change rule action',
       message: 'To which action do you want to change this rule?',
@@ -72,9 +80,7 @@ function changeRuleActionHandler() {
 }
 
 function shiftRuleValue() {
-  if (!rule.value.value) {
-    return
-  }
+  if (!rule.value || !rule.value.value) return
   if (rule.value.value === 10) {
     rule.value.value = 2
   } else {

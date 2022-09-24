@@ -18,6 +18,9 @@ endif::[]
 </h1>
 ++++
 
+NOTE: {product} uses multiple link:./app/#readme[experimental Vue features] if you encounter any
+issues, please rise an https://github.com/devidw/gearchy/issues/new[issue].
+
 {product} (https://gearchy.wolf.gdn/gearchy.mp3[pronounced like "gearky"]) has two main goals:
 
 . Enhance the overall experience of interacting with
@@ -33,9 +36,5 @@ interactive Goggle editor which does not require any knowledge of the Goggle's s
 store Goggles
 * Integrating with the Brave Search API to automatically submit Goggles without
 the need to reenter the Goggle URL on every change made to the Goggle
-
-NOTE: A GitHub account as well as a
-https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token[GitHub
-personal access token] are required to use {product}.
 
 //

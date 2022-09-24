@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar, openURL } from 'quasar'
-import { useGitHubStore } from 'stores/github'
-import { useBraveStore } from 'stores/brave'
-import CustomPageHeader from 'components/CustomPageHeader.vue'
+import { useGoggleHostGitHubStore } from 'src/stores/hosts/github'
+import { useBraveStore } from 'src/stores/brave'
 
 const $q = useQuasar()
 const isPwd = ref(true)
-const { accessToken } = storeToRefs(useGitHubStore())
-const { isValidAccessToken } = useGitHubStore()
+const { accessToken } = storeToRefs(useGoggleHostGitHubStore())
+const { isValidAccessToken } = useGoggleHostGitHubStore()
 const { apiUrl } = storeToRefs(useBraveStore())
-
-const isValidApiUrl = computed(() => /^https:\/\/.+%s.*/.test(apiUrl.value))
 
 async function validateAccessToken() {
   const accessTokenIsValid = await isValidAccessToken(accessToken.value)
@@ -30,13 +27,17 @@ async function validateAccessToken() {
     })
   }
 }
+
+function validateApiUrl(value: string) {
+  return /^https:\/\/.+%s.*/.test(value)
+}
 </script>
 
 <template>
   <q-page padding>
-    <custom-page-header>
-      <template #title> Settings </template>
-    </custom-page-header>
+    <div class="mb-8 text-(gray)">
+      <div class="g-heading">Settings</div>
+    </div>
 
     <div class="g-box px-6 py-5 text-stone-3">
       <q-input
@@ -83,8 +84,11 @@ async function validateAccessToken() {
         input-class="!text-stone-3 font-mono"
         borderless
         bottom-slots
-        :error="!isValidApiUrl"
-        error-message="Invalid API URL, make sure it starts with https:// and contains %s"
+        :rules="[
+          (v) =>
+            validateApiUrl(v) ||
+            'Invalid API URL, make sure it starts with https:// and contains %s',
+        ]"
       >
         <template #append>
           <g-btn

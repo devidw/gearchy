@@ -1,1 +1,10 @@
-* pinning vue version because of enabled experimental reactivity transform
+* pinning vue version
+* https://vuejs.org/guide/extras/reactivity-transform.html
+* https://vuejs.org/guide/built-ins/suspense.html
+
+---
+
+* supports multiple goggle hosting apis, each one has its own store
+implementation
+* same refactoring could be done with the search engine store, to be able to
+extend multiple search providers easily

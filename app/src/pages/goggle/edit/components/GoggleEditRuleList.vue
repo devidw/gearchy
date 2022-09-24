@@ -2,12 +2,12 @@
 import { ref, computed, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { useGoggleStore } from 'stores/goggle'
-import { useEditorStore } from 'stores/editor'
-import GoggleEditRule from 'components/GoggleEditRule.vue'
+import { useGoggleStore } from 'src/stores/goggle'
+import { useEditorStore } from 'src/stores/editor'
+import GoggleEditRule from './GoggleEditRule.vue'
 import type { QVirtualScroll } from 'quasar'
-import { GoggleInstructionActionOptionKey } from 'goggledy'
-import { GoggleActionRule } from 'src/types'
+import type { GoggleInstructionActionOptionKey } from 'goggledy'
+import type { GoggleActionRule } from 'src/types'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey
@@ -29,9 +29,17 @@ const { addRule } = useGoggleStore()
 const { tabScrollIndexes } = storeToRefs(useEditorStore())
 
 const rules = computed({
-  get: () => goggle.value.rules[props.action],
+  get: () => {
+    if (goggle.value) {
+      return goggle.value.rules[props.action]
+    } else {
+      return []
+    }
+  },
   set: (value: GoggleActionRule[]) => {
-    goggle.value.rules[props.action] = value
+    if (goggle.value) {
+      goggle.value.rules[props.action] = value
+    }
   },
 })
 

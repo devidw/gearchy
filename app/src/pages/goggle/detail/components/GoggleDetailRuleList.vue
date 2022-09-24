@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useGoggleStore } from 'stores/goggle'
-import { GoggleActionRule } from 'src/types'
-import { GoggleInstructionActionOptionKey } from 'goggledy'
+import { useGoggleStore } from 'src/stores/goggle'
+import type { GoggleActionRule } from 'src/types'
+import type { GoggleInstructionActionOptionKey } from 'goggledy'
 
 const props = defineProps<{
   action: GoggleInstructionActionOptionKey

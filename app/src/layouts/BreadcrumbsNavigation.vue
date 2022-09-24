@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useGoggleStore } from 'stores/goggle'
-import { useGistStore } from 'src/stores/gist'
+import { useGoggleStore } from 'src/stores/goggle'
 
 const { goggle } = storeToRefs(useGoggleStore())
-const { gist } = storeToRefs(useGistStore())
 </script>
 
 <template>
@@ -31,8 +29,8 @@ const { gist } = storeToRefs(useGistStore())
 
     <q-breadcrumbs-el
       v-if="$route.name === 'goggle-edit'"
-      :label="goggle.metaData?.name || 'Untitled Goggle'"
-      :to="{ name: 'goggle-detail', params: { id: gist.id } }"
+      :label="goggle?.metaData?.name || 'Unnamed Goggle'"
+      :to="{ name: 'goggle-detail', params: { id: $route.params.id } }"
       class="capitalize lt-sm:max-w-[200px]"
     />
   </q-breadcrumbs>
