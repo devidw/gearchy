@@ -1,11 +1,13 @@
 <h1 align="center">
-    <img src="./sticker.svg" width="75" />
+    <img src="./img/sticker.svg" width="75" />
     <br>
     Goggledy
 </h1>
 
 _Goggledy_ is a TypeScript library that lets you easily interact with
 [Brave Search Goggles](https://github.com/brave/goggles-quickstart/).
+
+> Try out the [REPL](https://gearchy.wolf.gdn/repl).
 
 It can be used to parse Goggle code into a JavaScript representation, or to
 generate goggle code from a Goggle object.

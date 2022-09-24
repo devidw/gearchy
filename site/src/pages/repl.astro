@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro'
+import REPL from '../components/REPL.svelte'
+
+const description = "Internet's first Goggles manager."
+---
+
+<Layout title="Gearchy" {description}>
+  <REPL client:load />
+</Layout>
+
+<script lang="ts"></script>

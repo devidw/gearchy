@@ -54,6 +54,7 @@ export class Goggle {
   }
 
   static parse(str: string): Goggle {
+    const errors: [number, Error][] = []
     const rawLines = str.split('\n')
     const lines: GoggleLine[] = []
 
@@ -70,12 +71,18 @@ export class Goggle {
         try {
           lines.push(parse(rawLine))
         } catch (error) {
-          throw new Error(
-            `Error parsing line ${lineNumber}: ${(error as Error).message}`,
-          )
+          errors.push([lineNumber, error as Error])
         }
       })
     })
+
+    if (errors.length) {
+      throw new Error(
+        `Error parsing Goggle:\n${errors
+          .map(([lineNumber, error]) => `Line ${lineNumber}: ${error.message}`)
+          .join('\n')}`,
+      )
+    }
 
     return new Goggle(lines)
   }

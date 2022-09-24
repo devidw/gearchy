@@ -1,9 +1,9 @@
 ---
 import { Image } from '@astrojs/image/components'
 import Layout from '../layouts/Layout.astro'
-import Header from '../components/Header.astro'
-import Cards from '../components/Cards.astro'
-import GetStarted from '../components/GetStarted.astro'
+import Hero from '../components/landing/Hero.astro'
+import Cards from '../components/landing/Cards.astro'
+import GetStarted from '../components/landing/GetStarted.astro'
 import '../styles/global.styl'
 import bg from '../assets/bg.webp'
 
@@ -14,7 +14,7 @@ const description = "Internet's first Goggles manager."
   <div class="g-bg fixed top-0 w-full h-[100vh] -z-1">
     <Image src={bg} class="object-cover w-full h-full" />
   </div>
-  <Header />
+  <Hero />
   <Cards />
   <GetStarted />
 </Layout>

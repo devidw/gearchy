@@ -130,6 +130,7 @@ export class GoggleInstruction extends GoggleBaseLine {
             )
             break
           default:
+            throw new Error(`Invalid option in instruction: ${optionLine}`)
             break
         }
       })

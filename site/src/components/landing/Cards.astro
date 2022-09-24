@@ -1,7 +1,7 @@
 ---
-import Card from '../components/Card.astro'
+import Card from './Card.astro'
 
-const cards = await Astro.glob('../data/*.md')
+const cards = await Astro.glob('./copy/*.md')
 ---
 
 <div class="space-y-48 lt-md:mt-48">

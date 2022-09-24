@@ -90,6 +90,6 @@ describe('Goggle', () => {
         `! name: foo
          ! public: bar`,
       ),
-    ).toThrow(/line 2/)
+    ).toThrow(/Line 2/)
   })
 })
