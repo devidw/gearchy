@@ -1,0 +1,14 @@
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  call-reusable-release-workflow:
+    uses: devidw/reusable-workflows/.github/workflows/mono.yaml@main
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
