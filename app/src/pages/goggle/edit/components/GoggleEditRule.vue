@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar, type QMenu } from 'quasar'
@@ -142,6 +142,7 @@ watchEffect(() => {
           placeholder="Site"
           borderless
           dense
+          spellcheck="false"
           input-class="text-xs !text-gray"
           class="w-full"
         />
@@ -151,6 +152,7 @@ watchEffect(() => {
           placeholder="Pattern"
           borderless
           dense
+          spellcheck="false"
           input-class="text-lg font-bold !text-stone-3 !leading-normal"
           class="w-full"
         />

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 /**
  * regarding suspense and vue-router
  * @see https://github.com/vuejs/router/issues/1319#issuecomment-1054157888

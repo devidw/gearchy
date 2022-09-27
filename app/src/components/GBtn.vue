@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 // TODO: how to register ts intllisense for custom wrapper components? see quasar conf
 // vid myb
 </script>

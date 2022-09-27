@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { copyToClipboard, useQuasar } from 'quasar'
 import { useGoggleStore } from 'src/stores/goggle'
 

@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import { ref, type Ref, onBeforeUnmount } from 'vue'
+<script lang="ts" setup>
+import { ref, type Ref, onBeforeUnmount, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
@@ -19,7 +19,7 @@ const tab: Ref<GoggleEditTab> = ref('meta')
 const goggleEditRulesRef = $ref<InstanceType<typeof GoggleEditRuleList>[]>()
 const goggleFileStore = useGoggleFileStore()
 const { isLoading, goggleFile } = storeToRefs(useGoggleFileStore())
-const { actions } = storeToRefs(useGoggleStore())
+const { actions, goggle } = storeToRefs(useGoggleStore())
 
 async function updateAndSubmitGoggle() {
   await updateGoggleNotify()
@@ -32,6 +32,18 @@ function addRuleHandler() {
   goggleEditRulesRef?.[0].addRuleHandler()
 }
 
+/**
+ * Keep the goggle name in sync with the goggle file name
+ */
+watchEffect(() => {
+  if (goggleFile.value && goggle.value && goggle.value.metaData.name) {
+    goggleFile.value.name = goggle.value.metaData.name
+  }
+})
+
+/**
+ * Clear remembered scroll indexes of the different editor action tabs
+ */
 onBeforeUnmount(() => {
   // TODO: Anyway to get this working inside a action of the store itself?
   useEditorStore().tabScrollIndexes = {
@@ -54,7 +66,7 @@ await goggleFileStore.retrieve(
   route.params.id as string,
 )
 
-if (goggleFileStore.error) {
+if (goggleFileStore.error || !goggle.value) {
   router.push({ name: 'goggle-list' })
 }
 </script>
@@ -70,7 +82,7 @@ if (goggleFileStore.error) {
         class="g-tab-panels h-[70vh] md:h-[55vh]"
       >
         <q-tab-panel name="meta">
-          <GoggleEditMetaData />
+          <GoggleEditMetaData v-model="goggle.metaData" />
         </q-tab-panel>
         <q-tab-panel name="code">
           <goggle-code />
