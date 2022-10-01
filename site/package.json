@@ -10,11 +10,11 @@
     "deploy": "vercel build --prod && vercel deploy --prebuilt --prod"
   },
   "devDependencies": {
-    "@astrojs/image": "^0.3.6",
-    "@astrojs/svelte": "^1.0.0",
+    "@astrojs/image": "^0.3.7",
+    "@astrojs/svelte": "^1.0.1",
     "@types/scrollreveal": "^0.0.8",
-    "@unocss/reset": "^0.45.21",
-    "astro": "^1.1.1",
+    "@unocss/reset": "^0.45.26",
+    "astro": "^1.4.0",
     "github-markdown-css": "^5.1.0",
     "goggledy": "workspace:*",
     "highlight.js": "^11.6.0",
@@ -22,7 +22,7 @@
     "scrollreveal": "^4.0.9",
     "stylus": "^0.55.0",
     "svelte": "^3.50.1",
-    "unocss": "^0.45.6",
-    "vercel": "^28.2.5"
+    "unocss": "^0.45.26",
+    "vercel": "^28.4.5"
   }
 }

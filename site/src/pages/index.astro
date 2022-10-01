@@ -5,14 +5,22 @@ import Hero from '../components/landing/Hero.astro'
 import Cards from '../components/landing/Cards.astro'
 import GetStarted from '../components/landing/GetStarted.astro'
 import '../styles/global.styl'
-import bg from '../assets/bg.webp'
+import bg from '../assets/bg.jpg'
 
 const description = "Internet's first Goggles manager."
 ---
 
 <Layout title="Gearchy" {description}>
-  <div class="g-bg fixed top-0 w-full h-[100vh] -z-1">
-    <Image src={bg} class="object-cover w-full h-full" />
+  <div
+    class="g-bg fixed -left-[20px] -top-[20px] w-[calc(100%_+_40px)] h-[calc(100vh_+_40px)] -z-1"
+  >
+    <Image
+      src={bg}
+      class="object-cover w-full h-full"
+      format={'webp'}
+      width={4000}
+      aspectRatio="16:9"
+    />
   </div>
   <Hero />
   <Cards />
@@ -20,10 +28,14 @@ const description = "Internet's first Goggles manager."
 </Layout>
 
 <script lang="ts">
-  // Blur the .g-bg element on scroll
+  // Blur the .g-bg element on scroll and make it darker
   const bg = document.querySelector('.g-bg')
   window.addEventListener('scroll', () => {
     if (!bg) return
-    bg.style.filter = `blur(${window.scrollY / 100}px)`
+    const scroll = window.scrollY
+    const blur = scroll / 50
+    const brightness = 1 - scroll / 4000
+    // console.log(blur, brightness)
+    bg.style.filter = `blur(${blur}px) brightness(${brightness})`
   })
 </script>
