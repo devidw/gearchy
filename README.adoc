@@ -39,5 +39,5 @@ the need to reenter the Goggle URL on every change made to the Goggle
 
 ***
 
-Graphics by https://robert.wolf.gdn[Robert Wolf]
+Graphics by http://robert.wolf.gdn[Robert Wolf]
 //
