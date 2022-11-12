@@ -21,10 +21,11 @@ await goggleFileStore.list()
 </script>
 
 <template>
-  <q-page padding>
+  <q-page>
     <div class="flex justify-center mb-8 text-(gray)">
       <g-btn
         icon="eva-plus-circle-outline"
+        data-test="create-goggle"
         @click="createGoggleDialog($router)"
       />
       <!-- <g-btn icon="eva-refresh-outline" @click="refresh" /> -->
@@ -42,8 +43,12 @@ await goggleFileStore.list()
       />
     </q-infinite-scroll>
 
-    <div v-else class="text-(center gray opacity-75) font-mono">
-      You don't have any Goggles yet.
+    <div
+      v-else
+      class="text-(center gray opacity-75) font-mono"
+      data-test="empty-message"
+    >
+      No Goggles
     </div>
   </q-page>
 </template>

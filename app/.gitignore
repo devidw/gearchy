@@ -32,3 +32,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 .vercel
+
+.nyc_output
+coverage/
+cypress.env.json

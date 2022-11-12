@@ -1,38 +1,25 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/javascript-node
 {
   "name": "Gearchy",
-  "build": {
-    "dockerfile": "Dockerfile",
-    // Update 'VARIANT' to pick a Node version: 18, 16, 14.
-    // Append -bullseye or -buster to pin to an OS version.
-    // Use -bullseye variants on local arm64/Apple Silicon.
-    "args": {
-      "VARIANT": "18"
-    }
-  },
-  // Configure tool-specific properties.
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspace",
   "customizations": {
-    // Configure properties specific to VS Code.
     "vscode": {
-      // Add the IDs of extensions you want installed when the container is created.
       "extensions": [
-		"dbaeumer.vscode-eslint",
-		"esbenp.prettier-vscode",
-		"vue.volar",
-		"wayou.vscode-todo-highlight",
-		"GitHub.copilot",
-		"syler.sass-indented",
-		"asciidoctor.asciidoctor-vscode",
-		"antfu.unocss",
-		"MichaelCurrin.auto-commit-msg",
-		"Tobermory.es6-string-html",
-		"wix.vscode-import-cost",
-		"GraphQL.vscode-graphql",
-		"astro-build.astro-vscode",
-		"sysoev.language-stylus",
-		"svelte.svelte-vscode"
-	],
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "vue.volar",
+        "wayou.vscode-todo-highlight",
+        "GitHub.copilot",
+        "syler.sass-indented",
+        "asciidoctor.asciidoctor-vscode",
+        "antfu.unocss",
+        "MichaelCurrin.auto-commit-msg",
+        "GraphQL.vscode-graphql",
+        "astro-build.astro-vscode",
+        "sysoev.language-stylus",
+        "svelte.svelte-vscode"
+      ],
       "settings": {
         "editor.bracketPairColorization.enabled": true,
         "editor.guides.bracketPairs": true,
@@ -47,14 +34,12 @@
           "typescript",
           "vue"
         ],
-        "typescript.tsdk": "node_modules/typescript/lib"
+        "typescript.tsdk": "node_modules/typescript/lib",
+        // @see https://github.com/unocss/unocss/issues/1563
+        "unocss.root": "app",
+        // "unocss.root": "site",
+        "jest.rootPath": "packages/goggledy"
       }
     }
   },
-  // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  // "forwardPorts": [],
-  // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "pnpm install",
-  // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-  "remoteUser": "node"
 }

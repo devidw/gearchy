@@ -40,8 +40,8 @@ watch(isLoading, (newValue) => {
     $q.loading.show({
       spinnerSize: 0,
       html: true,
-      message: /* html */ `
-        <div class="-left-[100px] -top-[100px] relative animate-(pulse count-infinit)">
+      message: `
+        <div class="-left-[100px] -top-[100px] relative animate-(pulse count-infinit)" data-test="loading-animation">
           <img class="absolute animate-spin" src="/circle.svg" width="200" />
           <img class="absolute" src="/face.svg" width="200" />
         </div>
@@ -49,16 +49,6 @@ watch(isLoading, (newValue) => {
     })
   } else {
     $q.loading.hide()
-  }
-})
-
-watch(error, (error) => {
-  if (error instanceof Error) {
-    console.error(error)
-    $q.notify({
-      type: 'negative',
-      message: error.message,
-    })
   }
 })
 
@@ -139,8 +129,16 @@ function toggleRightDrawer() {
       </div>
     </q-drawer>
 
-    <q-page-container class="max-w-3xl mx-auto">
-      <router-view v-slot="{ Component }" class="pt-6 md:pt-20">
+    <q-page-container class="max-w-3xl mx-auto pt-6 md:pt-20">
+      <template v-if="error">
+        <div
+          class="fixed bg-amber-900 text-amber-200 px-7 py-4 rounded-4 font-mono z-1 drop-shadow-2xl"
+          data-test="error-message"
+        >
+          {{ error }}
+        </div>
+      </template>
+      <router-view v-slot="{ Component }">
         <Suspense>
           <template #default>
             <component :is="Component" />

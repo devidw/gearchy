@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useQuasar, openURL } from 'quasar'
+import { useQuasar } from 'quasar'
 import { useGoggleHostGitHubStore } from 'src/stores/hosts/github'
 import { useBraveStore } from 'src/stores/brave'
 
@@ -28,13 +28,17 @@ async function validateAccessToken() {
   }
 }
 
+function preValidateAccessToken(value: string) {
+  return /.+/.test(value)
+}
+
 function validateApiUrl(value: string) {
   return /^https:\/\/.+%s.*/.test(value)
 }
 </script>
 
 <template>
-  <q-page padding>
+  <q-page>
     <div class="mb-8 text-(gray)">
       <div class="g-heading">Settings</div>
     </div>
@@ -45,10 +49,10 @@ function validateApiUrl(value: string) {
         :type="isPwd ? 'password' : 'text'"
         label="GitHub Personal access token"
         placeholder="ghp_*"
-        hide-hint
+        input-class="!text-stone-3 font-mono"
         bottom-slots
         borderless
-        input-class="!text-stone-3 font-mono"
+        :rules="[(v) => preValidateAccessToken(v) || 'Invalid Access token']"
       >
         <template #append>
           <div class="text-stone-5">
@@ -56,23 +60,23 @@ function validateApiUrl(value: string) {
               :icon="isPwd ? 'eva-eye-off-outline' : 'eva-eye-outline'"
               @click="() => (isPwd = !isPwd)"
             />
-            <g-btn icon="eva-done-all-outline" @click="validateAccessToken">
+            <g-btn
+              v-if="preValidateAccessToken(accessToken)"
+              icon="eva-done-all-outline"
+              @click="validateAccessToken"
+            >
               <q-tooltip> Validate token </q-tooltip>
             </g-btn>
-          </div>
-        </template>
-        <template #hint>
-          <span class="text-stone-5">
-            <q-icon name="eva-question-mark-circle-outline" />
-            See GitHub docs for
-            <a
+            <g-btn
+              icon="eva-question-mark-outline"
+              class="text-stone-5"
               href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
               target="_blank"
               rel="noopener noreferrer"
             >
-              how to create a personal access token
-            </a>
-          </span>
+              <q-tooltip> GitHub docs </q-tooltip>
+            </g-btn>
+          </div>
         </template>
       </q-input>
 
@@ -94,11 +98,9 @@ function validateApiUrl(value: string) {
           <g-btn
             icon="eva-question-mark-outline"
             class="text-stone-5"
-            @click="
-              openURL(
-                'https://github.com/devidw/gearchy/blob/master/FAQ.adoc#how-to-automatically-submit-updated-goggles-to-brave-search',
-              )
-            "
+            href="https://github.com/devidw/gearchy/blob/master/FAQ.adoc#how-to-automatically-submit-updated-goggles-to-brave-search"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <q-tooltip> What is this? </q-tooltip>
           </g-btn>

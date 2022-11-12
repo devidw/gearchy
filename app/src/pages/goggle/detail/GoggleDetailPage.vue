@@ -33,7 +33,7 @@ const filteredActions = computed(() => {
 </script>
 
 <template>
-  <q-page padding>
+  <q-page>
     <div class="space-y-12">
       <goggle-action-bar>
         <template #before>

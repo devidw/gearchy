@@ -72,7 +72,7 @@ if (goggleFileStore.error || !goggle.value) {
 </script>
 
 <template>
-  <q-page padding>
+  <q-page>
     <div class="space-y-10">
       <q-tab-panels
         v-model="tab"

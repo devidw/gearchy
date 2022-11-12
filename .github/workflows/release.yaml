@@ -1,14 +1,31 @@
-# https://docs.github.com/en/actions/using-workflows/reusing-workflows#calling-a-reusable-workflow
-
 name: Release
 
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 
 jobs:
-  call-reusable-release-workflow:
-    uses: devidw/reusable-workflows/.github/workflows/mono.yaml@main
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm --filter="./packages/**" --parallel run build
+
+      - name: Publish to NPM
+        run: pnpm --filter="./packages/**" publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
