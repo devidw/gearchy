@@ -129,7 +129,7 @@ function toggleRightDrawer() {
       </div>
     </q-drawer>
 
-    <q-page-container class="max-w-3xl mx-auto pt-6 md:pt-20">
+    <q-page-container class="max-w-3xl mx-auto">
       <template v-if="error">
         <div
           class="fixed bg-amber-900 text-amber-200 px-7 py-4 rounded-4 font-mono z-1 drop-shadow-2xl"

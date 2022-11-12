@@ -1,0 +1,23 @@
+{
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": [
+    "source.fixAll.eslint"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "vue"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // @see https://github.com/unocss/unocss/issues/1563
+  "unocss.root": "app",
+  // "unocss.root": "site",
+  "jest.rootPath": "packages/goggledy",
+  "[sass]": {
+    "editor.defaultFormatter": "syler.sass-indented"
+  }
+}
