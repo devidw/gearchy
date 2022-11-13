@@ -2,22 +2,22 @@ import type {
   GoggleInstructionActionOptionKey,
   GoggleInstructionGenericOptionValue,
 } from 'goggledy'
-// import type { Store } from 'pinia'
+import type { allGoggleHostStores } from './stores/hosts'
 
-// export type GoggleFileHostStore = Store<string, {}, {}, {}>
+export type GoggleFileHostHandle = keyof typeof allGoggleHostStores
 
-export type GoggleFileHostKey = 'local' | 'github'
+export type GoggleFileHost = ReturnType<typeof allGoggleHostStores[GoggleFileHostHandle]>
 
 export type GoggleFileHostInfo = {
   name: string
-  handle: string
+  handle: GoggleFileHostHandle
   icon: string
   canSubmit: boolean
 }
 
 export type GoggleFilePreview = {
-  host: string
-  id: string | number
+  host: GoggleFileHostHandle
+  id: string
   name: string
   url?: string
 }
@@ -25,14 +25,6 @@ export type GoggleFilePreview = {
 export type GoggleFile = GoggleFilePreview & {
   content: string
 }
-
-export type IndexedDBGoggleFile = {
-  id?: number
-  name: string
-  content: string
-}
-
-export type GoggleEditTab = 'meta' | 'code' | GoggleInstructionActionOptionKey
 
 export type GoggleActionRule = {
   id: string

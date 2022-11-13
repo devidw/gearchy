@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { watch } from 'vue'
 import { useVModel } from '@vueuse/core'
 import type { GoggleMetaData } from 'goggledy'
 
@@ -9,17 +8,6 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelValue'])
 
 const metaData = useVModel(props, 'modelValue', emit)
-
-// NOTE: due to passing reactive obj newValue and oldValue are the same because
-// of the fact they point to the same reference, so we can not set the value
-// back to the oldValue and have to clear up instead
-watch(metaData.value, (newValue) => {
-  if (newValue.name && newValue.name.includes('\n'))
-    metaData.value.name = newValue.name.replace(/\n/g, '')
-
-  if (newValue.description && newValue.description.includes('\n'))
-    metaData.value.description = newValue.description.replace(/\n/g, '')
-})
 </script>
 
 <template>
@@ -29,7 +17,6 @@ watch(metaData.value, (newValue) => {
       type="text"
       placeholder="Name"
       borderless
-      autogrow
       class="w-full"
       input-class="!pt-0 !leading-snug tracking-wider !text-(3xl stone-3) font-(extrabold [heading])"
     >
@@ -50,7 +37,6 @@ watch(metaData.value, (newValue) => {
         v-model="metaData.description"
         type="text"
         placeholder="Description"
-        autogrow
         borderless
         input-class="leading-snug !pt-0 !text-stone-4"
       />

@@ -12,7 +12,7 @@ it('shows message on network error', () => {
     forceNetworkError: true,
   }).as('github')
 
-  cy.get('[data-test="error-message"]').should('be.visible')
+  cy.get('[data-cy="error-message"]').should('be.visible')
 })
 
 it.only('shows loading animation on loading', () => {
@@ -23,7 +23,7 @@ it.only('shows loading animation on loading', () => {
     delayMs: 10000,
   }).as('github')
 
-  cy.get('[data-test="loading-animation"] img').should('be.visible')
+  cy.get('[data-cy="loading-animation"] img').should('be.visible')
 })
 
 export { }

@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
 import { useGoggleStore } from './goggle'
-import { hosts } from 'src/stores/hosts'
-import type { GoggleFile, GoggleFilePreview } from 'src/types'
-
-const goggleStore = useGoggleStore()
+import { allGoggleHostStores } from './hosts'
+import type { GoggleFile, GoggleFilePreview, GoggleFileHostHandle, GoggleFileHost } from 'src/types'
 
 export const useGoggleFileStore = defineStore('goggleFile', {
   state: () => ({
@@ -26,16 +24,27 @@ export const useGoggleFileStore = defineStore('goggleFile', {
   getters: {
     /**
      * Available hosts
-     * Filter objects with `isAvailable` getter
+     * Reduce objects to only those with `isAvailable` getter and turn the
+     * creation function into a instance of the store.
+     * We don' want to handle already instantiated stores here, cause of Cypress
+     * component testing issues.
      * Return object with only those key/value pairs that are available
      */
-    availableHosts() {
-      return Object.fromEntries(
-        Object.entries(hosts).filter(([, host]) => host.isAvailable),
-      )
+    availableHosts(): Record<GoggleFileHostHandle, GoggleFileHost> {
+      const out = []
+      for (const [key, value] of Object.entries(allGoggleHostStores)) {
+        const theHost = value()
+        if (theHost.isAvailable) {
+          out.push([key, theHost])
+        }
+      }
+      return Object.fromEntries(out)
     },
-    host() {
-      if (!this.goggleFile || !this.availableHosts[this.goggleFile.host]) return
+    /**
+     * Shortcut to get the current host out of the available hosts
+     */
+    host(): GoggleFileHost | undefined {
+      if (!this.goggleFile) return
       return this.availableHosts[this.goggleFile.host]
     },
     /**
@@ -46,6 +55,13 @@ export const useGoggleFileStore = defineStore('goggleFile', {
         (host) => host.pagination?.hasNextPage,
       )
     },
+    /**
+     * To avoid having to call the host store directly outside of this store,
+     * use this getter
+     */
+    goggleStore() {
+      return useGoggleStore()
+    }
   },
 
   actions: {
@@ -76,7 +92,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
      * Retrieve a given goggle file from a given host
      * And set it as the current goggle file
      */
-    async retrieve(host: string, id: string) {
+    async retrieve(host: GoggleFileHostHandle, id: string) {
       try {
         // Only retrieve the goggle file if it is not already loaded in the current store
         if (
@@ -90,7 +106,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
         this.error = undefined
         this.goggleFile = await this.availableHosts[host].retrieve(id)
         if (!this.goggleFile) throw new Error('Goggle file not found')
-        goggleStore.parse(this.goggleFile)
+        this.goggleStore.parse(this.goggleFile)
       } catch (error) {
         this.error = error
         this.goggleFile = undefined
@@ -102,7 +118,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
      * Create a new goggle file under the given host
      * And set the current goggle file to the newly created one
      */
-    async create(host: string) {
+    async create(host: GoggleFileHostHandle) {
       try {
         this.isLoading = true
         this.error = undefined
@@ -111,7 +127,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
           '! This is the default template for a new Goggle created with Gearchy\n! You can edit the Goggle on https://app.gearchy.wolf.gdn',
         )
         if (!this.goggleFile) throw new Error('Goggle file not found')
-        goggleStore.parse(this.goggleFile)
+        this.goggleStore.parse(this.goggleFile)
         this.resetPagination()
       } catch (error) {
         this.error = error
@@ -128,7 +144,7 @@ export const useGoggleFileStore = defineStore('goggleFile', {
         if (!this.goggleFile || !this.host) throw new Error('No goggle file')
         this.isLoading = false
         this.error = undefined
-        this.goggleFile.content = goggleStore.stringifiedGoggle
+        this.goggleFile.content = this.goggleStore.stringifiedGoggle
         await this.availableHosts[this.host.hostInfo.handle].update(
           this.goggleFile,
         )
@@ -148,10 +164,10 @@ export const useGoggleFileStore = defineStore('goggleFile', {
         this.isLoading = false
         this.error = undefined
         await this.availableHosts[this.host.hostInfo.handle].delete(
-          this.goggleFile.id,
+          String(this.goggleFile.id),
         )
         this.goggleFile = undefined
-        goggleStore.goggle = undefined
+        this.goggleStore.goggle = undefined
         this.resetPagination()
       } catch (error) {
         this.error = error

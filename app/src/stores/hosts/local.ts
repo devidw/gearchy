@@ -66,7 +66,7 @@ export const useGoggleHostLocalStore = defineStore('goggleHostLocal', {
       const id = await db.goggles.add({ name, content })
       return {
         host: this.hostInfo.handle,
-        id: id as number,
+        id: id as string,
         name,
         content,
       }

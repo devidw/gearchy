@@ -1,7 +1,12 @@
 import Dexie, { Table } from 'dexie'
-import type { IndexedDBGoggleFile } from 'src/types'
 
-export class MySubClassedDexie extends Dexie {
+export type IndexedDBGoggleFile = {
+  id?: number
+  name: string
+  content: string
+}
+
+export class GogglesDexie extends Dexie {
   goggles!: Table<IndexedDBGoggleFile>
 
   constructor() {
@@ -12,4 +17,4 @@ export class MySubClassedDexie extends Dexie {
   }
 }
 
-export const db = new MySubClassedDexie()
+export const db = new GogglesDexie()

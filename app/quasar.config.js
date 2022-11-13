@@ -78,7 +78,11 @@ module.exports = configure(function (/* ctx */) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf(viteConf) {},
+      extendViteConf(viteConf) {
+        // console.log('viteConf', viteConf)
+        viteConf.server.fs.allow = ['..']
+        return viteConf
+      },
       // https://github.com/vitejs/vite/tree/main/packages/plugin-vue#options
       viteVuePluginOptions: {
         // https://vuejs.org/guide/extras/reactivity-transform.html

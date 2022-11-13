@@ -11,7 +11,10 @@ import GoggleEditRuleList from './components/GoggleEditRuleList.vue'
 import GoggleCode from './components/GoggleCode.vue'
 import updateGoggleNotify from '../useUpdateGoggleNotify'
 import submitGoggleNotify from '../useSubmitGoggleNotify'
-import type { GoggleEditTab } from 'src/types'
+import type { GoggleInstructionActionOptionKey } from 'goggledy'
+import type { GoggleFileHostHandle } from 'src/types'
+
+export type GoggleEditTab = 'meta' | 'code' | GoggleInstructionActionOptionKey
 
 const route = useRoute()
 const router = useRouter()
@@ -62,7 +65,7 @@ if (route.params.action) {
 }
 
 await goggleFileStore.retrieve(
-  route.params.host as string,
+  route.params.host as GoggleFileHostHandle,
   route.params.id as string,
 )
 

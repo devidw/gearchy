@@ -25,7 +25,7 @@ await goggleFileStore.list()
     <div class="flex justify-center mb-8 text-(gray)">
       <g-btn
         icon="eva-plus-circle-outline"
-        data-test="create-goggle"
+        data-cy="create-goggle"
         @click="createGoggleDialog($router)"
       />
       <!-- <g-btn icon="eva-refresh-outline" @click="refresh" /> -->
@@ -46,7 +46,7 @@ await goggleFileStore.list()
     <div
       v-else
       class="text-(center gray opacity-75) font-mono"
-      data-test="empty-message"
+      data-cy="empty-message"
     >
       No Goggles
     </div>

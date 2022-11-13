@@ -10,7 +10,7 @@ const props = defineProps<{
 const router = useRouter()
 const { availableHosts } = useGoggleFileStore()
 
-function openDetail() {
+function gotoDetailPage() {
   router.push({
     name: 'goggle-detail',
     params: {
@@ -24,7 +24,7 @@ function openDetail() {
 <template>
   <div
     class="g-box px-7 py-4 min-h-20 cursor-pointer tracking-wide font-(bold [heading]) text-(xl stone-3) transition grid grid-cols-[2.5rem_1fr]"
-    @click="openDetail"
+    @click="gotoDetailPage"
   >
     <div class="flex items-center">
       <q-icon
@@ -36,7 +36,7 @@ function openDetail() {
         </q-tooltip>
       </q-icon>
     </div>
-    <div class="flex items-center">
+    <div class="flex items-center" data-cy="goggle-list-item-name">
       {{ goggleFilePreview.name || 'Unnamed Goggle' }}
     </div>
   </div>

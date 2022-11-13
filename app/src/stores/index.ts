@@ -30,3 +30,6 @@ export default store((/* { ssrContext } */) => {
 
   return pinia
 })
+
+// const pinia = createPinia()
+// export default pinia

@@ -41,7 +41,7 @@ watch(isLoading, (newValue) => {
       spinnerSize: 0,
       html: true,
       message: `
-        <div class="-left-[100px] -top-[100px] relative animate-(pulse count-infinit)" data-test="loading-animation">
+        <div class="-left-[100px] -top-[100px] relative animate-(pulse count-infinit)" data-cy="loading-animation">
           <img class="absolute animate-spin" src="/circle.svg" width="200" />
           <img class="absolute" src="/face.svg" width="200" />
         </div>
@@ -133,7 +133,7 @@ function toggleRightDrawer() {
       <template v-if="error">
         <div
           class="fixed bg-amber-900 text-amber-200 px-7 py-4 rounded-4 font-mono z-1 drop-shadow-2xl"
-          data-test="error-message"
+          data-cy="error-message"
         >
           {{ error }}
         </div>

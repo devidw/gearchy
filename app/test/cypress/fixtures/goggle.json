@@ -1,0 +1,18 @@
+{
+  "metaData": {
+    "public": false,
+    "name": "foo",
+    "description": "bar",
+    "author": "baz",
+    "avatar": "#a11f1f",
+    "homepage": "https://search.brave.com",
+    "issues": "https://search.brave.com",
+    "license": "MIT",
+    "transferred_to": "https://search.brave.com"
+  },
+  "rules": {
+    "discard": [],
+    "boost": [],
+    "downrank": []
+  }
+}

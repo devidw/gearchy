@@ -16,13 +16,13 @@ export const useGoggleStore = defineStore('goggle', {
   state: () => ({
     goggle: undefined as
       | {
-          metaData: GoggleMetaData
-          rules: {
-            discard: GoggleActionRule[]
-            boost: GoggleActionRule[]
-            downrank: GoggleActionRule[]
-          }
+        metaData: GoggleMetaData
+        rules: {
+          discard: GoggleActionRule[]
+          boost: GoggleActionRule[]
+          downrank: GoggleActionRule[]
         }
+      }
       | undefined,
   }),
 
@@ -58,7 +58,7 @@ export const useGoggleStore = defineStore('goggle', {
       // Convert action rules to instructions
       Object.keys(state.goggle.rules).forEach((action) => {
         const rules =
-          state.goggle.rules[action as GoggleInstructionActionOptionKey]
+          state.goggle?.rules[action as GoggleInstructionActionOptionKey]
 
         if (!rules || rules.length === 0) {
           return
@@ -120,8 +120,8 @@ export const useGoggleStore = defineStore('goggle', {
           action === 'discard'
             ? 'discards'
             : action === 'boost'
-            ? 'boosts'
-            : 'downranks'
+              ? 'boosts'
+              : 'downranks'
         return goggle[key].map((inObj): GoggleActionRule => {
           const outObj: GoggleActionRule = {
             id: uuidv4(),
