@@ -80,7 +80,9 @@ module.exports = configure(function (/* ctx */) {
 
       extendViteConf(viteConf) {
         // console.log('viteConf', viteConf)
-        viteConf.server.fs.allow = ['..']
+        if (viteConf.hasOwnProperty('server')) {
+          viteConf.server.fs.allow = ['..']
+        }
         return viteConf
       },
       // https://github.com/vitejs/vite/tree/main/packages/plugin-vue#options
