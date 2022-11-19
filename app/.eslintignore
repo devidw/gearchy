@@ -6,4 +6,4 @@
 .eslintrc.js
 /src-ssr
 
-../packages
+..

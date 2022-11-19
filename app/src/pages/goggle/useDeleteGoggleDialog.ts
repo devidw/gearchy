@@ -10,7 +10,7 @@ export default function (router: Router) {
     componentProps: {
       title: 'Delete this Goggle?',
       message:
-        'This will permanently remove the associated goggle from its host. Once the Goggle is deleted, it has to be resubmitted on Brave to remove it from the search engine as well.',
+        'This will permanently remove the associated Goggle from its host. If this Goggle was submitted to Brave, after deletion, it has to be resubmitted to trigger deletion on Brave.',
       actions: [{ type: 'ok', label: 'Delete' }, { type: 'cancel' }],
     },
   }).onOk(async () => {

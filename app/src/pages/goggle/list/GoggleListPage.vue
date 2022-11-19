@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
 import GoggleListItem from './components/GoggleListItem.vue'
@@ -6,6 +7,10 @@ import createGoggleDialog from '../useCreateGoggleDialog'
 
 const { goggleFilePreviews } = storeToRefs(useGoggleFileStore())
 const goggleFileStore = useGoggleFileStore()
+
+onBeforeMount(async () => {
+  await goggleFileStore.list()
+})
 
 async function onLoad(index: number, done: (stop: boolean) => void) {
   await goggleFileStore.list()
@@ -16,8 +21,6 @@ async function onLoad(index: number, done: (stop: boolean) => void) {
 // function refresh() {
 //   goggleFileStore.resetPagination()
 // }
-
-await goggleFileStore.list()
 </script>
 
 <template>

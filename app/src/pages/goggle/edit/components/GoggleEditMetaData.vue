@@ -18,11 +18,11 @@ const metaData = useVModel(props, 'modelValue', emit)
       placeholder="Name"
       borderless
       class="w-full"
-      input-class="!pt-0 !leading-snug tracking-wider !text-(3xl stone-3) font-(extrabold [heading])"
+      input-class="!py-0 !leading-snug tracking-wider !text-(3xl stone-3) font-(extrabold [heading])"
     >
       <template #prepend>
         <q-icon
-          class="cursor-pointer !mb-3"
+          class="cursor-pointer"
           :name="metaData.public ? 'eva-eye-outline' : 'eva-eye-off-outline'"
           @click="() => (metaData.public = !metaData.public)"
         >
@@ -38,7 +38,8 @@ const metaData = useVModel(props, 'modelValue', emit)
         type="text"
         placeholder="Description"
         borderless
-        input-class="leading-snug !pt-0 !text-stone-4"
+        class="-mt-4"
+        input-class="!py-0 !text-stone-4"
       />
       <q-input
         v-model="metaData.author"
@@ -46,7 +47,7 @@ const metaData = useVModel(props, 'modelValue', emit)
         placeholder="Author"
         borderless
         prefix="by"
-        class="sm:-mt-10"
+        class="-mt-6 -mb-2"
         input-class="!text-stone-4"
       />
 

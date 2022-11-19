@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
@@ -7,6 +7,7 @@ import { useGoggleStore } from 'src/stores/goggle'
 import GoggleActionBar from '../GoggleActionBar.vue'
 import GoggleDetailRuleList from './components/GoggleDetailRuleList.vue'
 import deleteGoggleDialog from '../useDeleteGoggleDialog'
+import type { GoggleFileHostHandle } from 'src/types'
 
 const route = useRoute()
 const router = useRouter()
@@ -14,16 +15,17 @@ const goggleFileStore = useGoggleFileStore()
 const { actions } = useGoggleStore()
 const { goggle } = storeToRefs(useGoggleStore())
 
+onBeforeMount(async () => {
+  await goggleFileStore.retrieve(
+    route.params.host as GoggleFileHostHandle,
+    route.params.id as string,
+  )
+  if (goggleFileStore.error) {
+    router.push({ name: 'goggle-list' })
+  }
+})
+
 if (!route.params.host || !route.params.id) {
-  router.push({ name: 'goggle-list' })
-}
-
-await goggleFileStore.retrieve(
-  route.params.host as string,
-  route.params.id as string,
-)
-
-if (goggleFileStore.error) {
   router.push({ name: 'goggle-list' })
 }
 

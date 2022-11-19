@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, type Ref, onBeforeUnmount, watchEffect } from 'vue'
+import { ref, type Ref, onBeforeMount, onBeforeUnmount, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
@@ -19,7 +19,7 @@ export type GoggleEditTab = 'meta' | 'code' | GoggleInstructionActionOptionKey
 const route = useRoute()
 const router = useRouter()
 const tab: Ref<GoggleEditTab> = ref('meta')
-const goggleEditRulesRef = $ref<InstanceType<typeof GoggleEditRuleList>[]>()
+const goggleEditRulesRef = ref<InstanceType<typeof GoggleEditRuleList>[]>()
 const goggleFileStore = useGoggleFileStore()
 const { isLoading, goggleFile } = storeToRefs(useGoggleFileStore())
 const { actions, goggle } = storeToRefs(useGoggleStore())
@@ -32,7 +32,7 @@ async function updateAndSubmitGoggle() {
 }
 
 function addRuleHandler() {
-  goggleEditRulesRef?.[0].addRuleHandler()
+  goggleEditRulesRef.value?.[0].addRuleHandler()
 }
 
 /**
@@ -41,6 +41,16 @@ function addRuleHandler() {
 watchEffect(() => {
   if (goggleFile.value && goggle.value && goggle.value.metaData.name) {
     goggleFile.value.name = goggle.value.metaData.name
+  }
+})
+
+onBeforeMount(async () => {
+  await goggleFileStore.retrieve(
+    route.params.host as GoggleFileHostHandle,
+    route.params.id as string,
+  )
+  if (goggleFileStore.error || !goggle.value) {
+    router.push({ name: 'goggle-list' })
   }
 })
 
@@ -63,19 +73,10 @@ if (!route.params.host || !route.params.id) {
 if (route.params.action) {
   tab.value = route.params.action as GoggleEditTab
 }
-
-await goggleFileStore.retrieve(
-  route.params.host as GoggleFileHostHandle,
-  route.params.id as string,
-)
-
-if (goggleFileStore.error || !goggle.value) {
-  router.push({ name: 'goggle-list' })
-}
 </script>
 
 <template>
-  <q-page>
+  <q-page v-if="goggle">
     <div class="space-y-10">
       <q-tab-panels
         v-model="tab"

@@ -60,7 +60,7 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16',
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -86,10 +86,10 @@ module.exports = configure(function (/* ctx */) {
         return viteConf
       },
       // https://github.com/vitejs/vite/tree/main/packages/plugin-vue#options
-      viteVuePluginOptions: {
-        // https://vuejs.org/guide/extras/reactivity-transform.html
-        reactivityTransform: true,
-      },
+      // viteVuePluginOptions: {
+      // https://vuejs.org/guide/extras/reactivity-transform.html
+      // reactivityTransform: true,
+      // },
 
       vitePlugins: [['unocss/vite', {}]],
     },

@@ -47,4 +47,15 @@ const routes: RouteRecordRaw[] = [
   },
 ]
 
+const devOnlyRoutes: RouteRecordRaw[] = [
+  {
+    path: '/iso',
+    component: () => import('pages/IsolationPage.vue'),
+  }
+]
+
+if (import.meta.env.DEV) {
+  routes.push(...devOnlyRoutes)
+}
+
 export default routes

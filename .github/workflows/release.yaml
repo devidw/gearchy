@@ -19,6 +19,9 @@ jobs:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Enable pnpm
+        run: corepack enable
+
       - name: Install dependencies
         run: pnpm install
 
@@ -26,6 +29,6 @@ jobs:
         run: pnpm --filter="./packages/**" --parallel run build
 
       - name: Publish to NPM
-        run: pnpm --filter="./packages/**" publish
+        run: pnpm --filter="./packages/**" publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -1,9 +1,5 @@
 <script lang="ts" setup>
-/**
- * regarding suspense and vue-router
- * @see https://github.com/vuejs/router/issues/1319#issuecomment-1054157888
- */
-import { watch } from 'vue'
+import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
@@ -11,9 +7,9 @@ import BreadcrumbsNavigation from './BreadcrumbsNavigation.vue'
 
 const $q = useQuasar()
 const { isLoading, error } = storeToRefs(useGoggleFileStore())
-let rightDrawerOpen = $ref(false)
-let version = $ref(process.env.VERSION)
+let rightDrawerOpen = ref(false)
 
+const version = process.env.VERSION
 const menuLinks = [
   { to: '/', label: 'Goggles' },
   { to: '/settings', label: 'Settings' },
@@ -41,7 +37,7 @@ watch(isLoading, (newValue) => {
       spinnerSize: 0,
       html: true,
       message: `
-        <div class="-left-[100px] -top-[100px] relative animate-(pulse count-infinit)" data-cy="loading-animation">
+        <div class="-left-[100px] -top-[100px] relative animate-(pulse scount-infinit)" data-cy="loading-animation">
           <img class="absolute animate-spin" src="/circle.svg" width="200" />
           <img class="absolute" src="/face.svg" width="200" />
         </div>
@@ -53,7 +49,7 @@ watch(isLoading, (newValue) => {
 })
 
 function toggleRightDrawer() {
-  rightDrawerOpen = !rightDrawerOpen
+  rightDrawerOpen.value = !rightDrawerOpen.value
 }
 </script>
 
@@ -85,7 +81,7 @@ function toggleRightDrawer() {
               dense
               icon="eva-menu-arrow-outline"
               class="text-(gray opacity-50) rotate-180"
-              @click="() => (rightDrawerOpen = false)"
+              @click="toggleRightDrawer"
             />
           </q-item>
           <q-separator class="my-4 bg-transparent" />
@@ -130,24 +126,14 @@ function toggleRightDrawer() {
     </q-drawer>
 
     <q-page-container class="max-w-3xl mx-auto">
-      <template v-if="error">
-        <div
-          class="fixed bg-amber-900 text-amber-200 px-7 py-4 rounded-4 font-mono z-1 drop-shadow-2xl"
-          data-cy="error-message"
-        >
-          {{ error }}
-        </div>
-      </template>
-      <router-view v-slot="{ Component }">
-        <Suspense>
-          <template #default>
-            <component :is="Component" />
-          </template>
-          <template #fallback>
-            {{ error }}
-          </template>
-        </Suspense>
-      </router-view>
+      <div
+        v-if="error"
+        class="fixed bg-amber-900 text-amber-200 px-7 py-4 rounded-4 font-mono z-1 drop-shadow-2xl"
+        data-cy="error-message"
+      >
+        {{ error }}
+      </div>
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>

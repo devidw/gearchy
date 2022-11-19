@@ -16,10 +16,10 @@
 import './commands'
 // import '@cypress/code-coverage/support'
 
-// Change this if you have a different entrypoint for the main scss.
-import 'src/css/app.sass'
 // Quasar styles
 import 'quasar/src/css/index.sass'
+// Change this if you have a different entrypoint for the main scss.
+import 'src/css/app.sass'
 
 // ICON SETS
 // If you use multiple or different icon-sets then the default, be sure to import them here.
@@ -50,6 +50,6 @@ config.global.mocks = {
 // We do want transitions to show when doing visual testing :)
 config.global.stubs = {}
 
-installQuasarPlugin({ plugins: { Dialog } })
+installQuasarPlugin({ plugins: { Dialog }, config: { dark: true } })
 
 import 'uno.css'
