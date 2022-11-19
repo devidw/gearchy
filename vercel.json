@@ -3,14 +3,13 @@
     "github": {
         "silent": true
     },
-    "rewrites": [
+    "routes": [
         {
-            "source": "/api/(.*)",
-            "destination": "/api"
+            "handle": "filesystem"
         },
         {
-            "source": "/(.*)",
-            "destination": "/index.html"
+            "src": "/.*",
+            "dest": "/index.html"
         }
     ]
 }
