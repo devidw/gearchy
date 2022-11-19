@@ -68,6 +68,7 @@ function validateApiUrl(value: string) {
               <q-tooltip> Validate token </q-tooltip>
             </g-btn>
             <g-btn
+              @click.stop
               icon="eva-question-mark-outline"
               class="text-stone-5"
               href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token"
@@ -96,6 +97,7 @@ function validateApiUrl(value: string) {
       >
         <template #append>
           <g-btn
+            @click.stop
             icon="eva-question-mark-outline"
             class="text-stone-5"
             href="https://github.com/devidw/gearchy/blob/master/FAQ.adoc#how-to-automatically-submit-updated-goggles-to-brave-search"
