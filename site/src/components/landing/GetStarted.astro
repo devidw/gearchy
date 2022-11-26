@@ -1,12 +1,13 @@
 ---
 import logo from '../../assets/logo.png'
-import { Image } from '@astrojs/image/components'
+// import { Image } from '@astrojs/image/components'
 ---
 
 <div class="mx-auto min-h-screen flex justify-center items-center">
   <div class="text-center space-y-10">
     <div class="flex justify-center mb-25">
-      <Image src={logo} width={100} height={100} format={'webp'} />
+      <!-- <Image src={logo} width={100} height={100} format={'webp'} /> -->
+      <img src={logo} width={100} height={100} alt="logo" loading="lazy" />
     </div>
 
     <p class="text-(light-5 opacity-90) lt-sm:(w-2/3 mx-auto)">

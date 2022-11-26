@@ -8,22 +8,24 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "vercel build --prod && vercel deploy --prebuilt --prod"
+    "redeploy": "netlify deploy --prod --dir=dist",
+    "republish": "pnpm build && pnpm redeploy"
   },
   "devDependencies": {
-    "@astrojs/image": "^0.3.7",
-    "@astrojs/svelte": "^1.0.1",
+    "@astrojs/image": "^0.11.6",
+    "@astrojs/sitemap": "^1.0.0",
+    "@astrojs/svelte": "^1.0.2",
     "@types/scrollreveal": "^0.0.8",
-    "@unocss/reset": "^0.45.26",
-    "astro": "^1.4.0",
+    "@unocss/reset": "^0.45.30",
+    "astro": "^1.6.11",
     "github-markdown-css": "^5.1.0",
     "goggledy": "workspace:*",
-    "highlight.js": "^11.6.0",
+    "highlight.js": "^11.7.0",
     "highlightjs-goggles": "workspace:*",
+    "netlify-cli": "^12.2.7",
     "scrollreveal": "^4.0.9",
     "stylus": "^0.55.0",
-    "svelte": "^3.50.1",
-    "unocss": "^0.45.26",
-    "vercel": "^28.4.5"
+    "svelte": "^3.53.1",
+    "unocss": "^0.45.30"
   }
 }
