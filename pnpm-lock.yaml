@@ -16,6 +16,7 @@ importers:
 
   app:
     specifiers:
+      '@devidw/components': ^0.1.1
       '@highlightjs/vue-plugin': ^2.1.2
       '@octokit/core': ^4.1.0
       '@octokit/openapi-types': ^13.13.1
@@ -48,6 +49,7 @@ importers:
       vue-iso: latest
       vue-router: ^4.1.6
     dependencies:
+      '@devidw/components': 0.1.1
       '@highlightjs/vue-plugin': 2.1.2_62e56mzxq4vvfdmbqfc6rfr2wi
       '@quasar/extras': 1.15.5
       '@types/uuid': 8.3.4
@@ -121,6 +123,7 @@ importers:
       '@astrojs/image': ^0.11.6
       '@astrojs/sitemap': ^1.0.0
       '@astrojs/svelte': ^1.0.2
+      '@devidw/components': latest
       '@types/scrollreveal': ^0.0.8
       '@unocss/reset': ^0.45.30
       astro: ^1.6.11
@@ -137,6 +140,7 @@ importers:
       '@astrojs/image': 0.11.6
       '@astrojs/sitemap': 1.0.0
       '@astrojs/svelte': 1.0.2_fjopo7oi5g5hlj56upnjcleq3e
+      '@devidw/components': 0.1.1
       '@types/scrollreveal': 0.0.8
       '@unocss/reset': 0.45.30
       astro: 1.6.11_hgtwtzsf5qbp6t5a6xcobuljsu
@@ -1673,6 +1677,9 @@ packages:
       enabled: 2.0.0
       kuler: 2.0.0
     dev: true
+
+  /@devidw/components/0.1.1:
+    resolution: {integrity: sha512-qnMM65LHkbWDE5uzGmNpIOJ3KEXAdoOhp4woLHEAFIpGqWgMTMQKZbqCOYAIL001aDpSsoXpC5aI8frHTLLc6w==}
 
   /@edge-runtime/format/1.1.0:
     resolution: {integrity: sha512-MkLDDtPhXZIMx83NykdFmOpF7gVWIdd6GBHYb8V/E+PKWvD2pK/qWx9B30oN1iDJ2XBm0SGDjz02S8nDHI9lMQ==}
@@ -4221,7 +4228,7 @@ packages:
       '@unocss/scope': 0.45.30
       '@unocss/transformer-directives': 0.45.30
       magic-string: 0.26.7
-      vite: 3.2.4_hgtwtzsf5qbp6t5a6xcobuljsu
+      vite: 3.2.4_@types+node@12.20.55
     transitivePeerDependencies:
       - rollup
     dev: true

@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
 import { useGoggleFileStore } from 'src/stores/goggle-file'
 import BreadcrumbsNavigation from './BreadcrumbsNavigation.vue'
+import '@devidw/components'
 
 const $q = useQuasar()
 const { isLoading, error } = storeToRefs(useGoggleFileStore())
@@ -135,6 +136,8 @@ function toggleRightDrawer() {
       </div>
       <router-view />
     </q-page-container>
+
+    <dw-legal></dw-legal>
   </q-layout>
 </template>
 

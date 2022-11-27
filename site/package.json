@@ -26,6 +26,7 @@
     "scrollreveal": "^4.0.9",
     "stylus": "^0.55.0",
     "svelte": "^3.53.1",
-    "unocss": "^0.45.30"
+    "unocss": "^0.45.30",
+    "@devidw/components": "latest"
   }
 }

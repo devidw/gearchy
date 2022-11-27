@@ -1,6 +1,5 @@
 {
   "name": "Gearchy",
-  "workspaceFolder": "/workspace",
   "build": {
     "dockerfile": "Dockerfile"
   },
@@ -26,7 +25,9 @@
         "editor.guides.bracketPairs": true,
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.codeActionsOnSave": ["source.fixAll.eslint"],
+        "editor.codeActionsOnSave": [
+          "source.fixAll.eslint"
+        ],
         "eslint.validate": [
           "javascript",
           "javascriptreact",

@@ -86,10 +86,15 @@ module.exports = configure(function (/* ctx */) {
         return viteConf
       },
       // https://github.com/vitejs/vite/tree/main/packages/plugin-vue#options
-      // viteVuePluginOptions: {
-      // https://vuejs.org/guide/extras/reactivity-transform.html
-      // reactivityTransform: true,
-      // },
+      viteVuePluginOptions: {
+        // https://vuejs.org/guide/extras/reactivity-transform.html
+        // reactivityTransform: true,
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag) => /^dw-*/.test(tag),
+          }
+        }
+      },
 
       vitePlugins: [['unocss/vite', {}]],
     },

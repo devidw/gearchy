@@ -30,6 +30,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@devidw/components": "^0.1.1",
     "@octokit/core": "^4.1.0",
     "@octokit/openapi-types": "^13.13.1",
     "@octokit/types": "^7.5.1",
